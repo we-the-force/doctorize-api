@@ -1,0 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cmtb.doctorize.core.user;
+
+import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
+import com.cmtb.doctorize.domain.user.LoginDisplayObject;
+import com.cmtb.doctorize.domain.user.User;
+
+/**
+ *
+ * @author pc
+ */
+public interface UserDomain {
+
+    public User login(LoginDisplayObject loginDisplayObject);
+    
+    public Boolean forgotPassword(String email);
+            
+    public User save(User user);
+    
+    public boolean update(User user);
+    
+    public User getUserByEmail(String email);
+    
+    public Boolean existAssociatedCodeByPatient(ChangePasswordDisplayObject changePasswordDisplayObject);
+    
+    public Boolean resetPassword(User user);
+    
+    public User getUserById(Long userId);
+    
+    public Boolean changePassword(User user);
+    
+}
