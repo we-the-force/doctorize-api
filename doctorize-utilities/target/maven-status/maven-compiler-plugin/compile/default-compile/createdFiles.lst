@@ -1,0 +1,4 @@
+com\cmtb\doctorize\utilities\email\EmailUtilsComponent.class
+com\cmtb\doctorize\utilities\PasswordEncrypt.class
+com\cmtb\doctorize\utilities\email\EmailSender.class
+com\cmtb\doctorize\utilities\RandomStringGenerator.class

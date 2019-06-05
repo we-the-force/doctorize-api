@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.core.user;
 
+import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
@@ -38,6 +39,9 @@ public class UserDomainImpl implements UserDomain {
     @Resource(name = "UserDao")
     private UserDao userDao;
     
+    @Autowired
+    private SecurityComponent securityComponent;
+    
     private User assembleUser(User userTemp){
         User user = new User();
         
@@ -48,6 +52,7 @@ public class UserDomainImpl implements UserDomain {
         user.setPhoto(userTemp.getPhoto());
         user.setPassword(userTemp.getPassword());
         user.setRoleId(userTemp.getRoleId());
+//        user.setToken(userTemp.getToken());
         
 //        try{
 //            for(Address addressItem: userTemp.getAddresses()){
@@ -115,6 +120,9 @@ public class UserDomainImpl implements UserDomain {
             throw new UserNotFoundException();
         }
         
+//        String token = securityComponent.createToken(user);
+//        user.setToken(token);
+//        
         return this.assembleUser(user);
     }
     

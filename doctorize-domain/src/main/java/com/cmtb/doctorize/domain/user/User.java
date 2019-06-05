@@ -51,6 +51,9 @@ public class User implements Serializable{
     
     @Transient
     private String imageData;
+    
+    @Transient
+    private String token;
 
     /**
      * @return the id
@@ -176,6 +179,20 @@ public class User implements Serializable{
      */
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    /**
+     * @return the token
+     */
+    public String getToken() {
+        return token;
+    }
+
+    /**
+     * @param token the token to set
+     */
+    public void setToken(String token) {
+        this.token = token;
     }
     
 }

@@ -38,7 +38,7 @@ public class UserService {
     @Resource(name = "UserDomain")
     UserDomain userDomain;
     
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody LoginDisplayObject loginDisplayObject) {
         try {        
             
@@ -53,7 +53,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/password/reset", method = RequestMethod.POST)
     public ResponseEntity<?> forgotpassword(@RequestBody LoginDisplayObject loginDisplayObject) {
         try {
             
@@ -68,7 +68,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/password/change", method = RequestMethod.POST)
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDisplayObject changePasswordDisplayObject) {
         try {
 
@@ -85,7 +85,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/password/confirmation", method = RequestMethod.POST)
     public ResponseEntity<?> resetPassword(@RequestBody ChangePasswordDisplayObject changePasswordDisplayObject) {
         try {
 

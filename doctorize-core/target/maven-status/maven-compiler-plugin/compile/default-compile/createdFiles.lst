@@ -1,0 +1,15 @@
+com\cmtb\doctorize\core\shared\Validation.class
+com\cmtb\doctorize\core\user\UserDomain.class
+com\cmtb\doctorize\core\user\UserNotifyCodeChangePasswordComponentImpl.class
+com\cmtb\doctorize\core\shared\SecurityComponent.class
+com\cmtb\doctorize\core\user\MatchPasswordBusinessRule.class
+com\cmtb\doctorize\core\user\UserNotifyCodeChangePasswordComponent.class
+com\cmtb\doctorize\core\shared\ClusterValidationAbstract.class
+com\cmtb\doctorize\core\user\UserOrchestratorImpl.class
+com\cmtb\doctorize\core\user\UserMatchOldPasswordBusinessRule.class
+com\cmtb\doctorize\core\user\UserResetPasswordClusterValidator.class
+com\cmtb\doctorize\core\user\UserDomainImpl.class
+com\cmtb\doctorize\core\user\UserExistCodeBusinessRule.class
+com\cmtb\doctorize\core\user\UserChangePasswordClusterValidator.class
+com\cmtb\doctorize\core\shared\SecurityComponentImpl.class
+com\cmtb\doctorize\core\user\UserOrchestrator.class
