@@ -50,6 +50,12 @@ public class UserNotifyCodeChangePasswordComponentImpl implements UserNotifyCode
 
     @Value("${doctorize.base.url.api}")
     private String BASE_URL_API;
+    
+    @Value("${doctorize.url.confirm_password}")
+    private String URL_CONFIRM_PASS;
+    
+    @Value("${doctorize.url.confirm_password2}")
+    private String URL_CONFIRM_PASS2;
 
     @Override
     public void notify(ChangePasswordDisplayObject changePasswordDisplayObject) {
@@ -70,6 +76,11 @@ public class UserNotifyCodeChangePasswordComponentImpl implements UserNotifyCode
         content.put("url_facebook_image", BASE_URL_API + URL_FACEBOOK_IMAGE);
         content.put("url_instagram_image", BASE_URL_API + URL_INSTAGRAM_IMAGE);
         content.put("code", changePasswordDisplayObject.getCode());
+        content.put("user_name", changePasswordDisplayObject.getUser().getName());
+        content.put("user_email", changePasswordDisplayObject.getUser().getEmail());
+        content.put("url_confirm_password", URL_CONFIRM_PASS + changePasswordDisplayObject.getUser().getEmail() + URL_CONFIRM_PASS2 + changePasswordDisplayObject.getCode());
+        
+        
         email.setContent(content);
 
         emailUtils.send(email);
