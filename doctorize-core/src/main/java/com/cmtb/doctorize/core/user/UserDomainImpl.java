@@ -13,6 +13,7 @@ import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
+import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
 import com.cmtb.doctorize.utilities.RandomStringGenerator;
 import java.util.Date;
@@ -38,6 +39,9 @@ public class UserDomainImpl implements UserDomain {
     
     @Resource(name = "UserDao")
     private UserDao userDao;
+    
+    @Resource(name = "UserAttachmentImagesComponent")
+    private UserAttachmentImagesComponent userAttachmentImagesComponent;
     
     @Autowired
     private SecurityComponent securityComponent;
@@ -168,11 +172,11 @@ public class UserDomainImpl implements UserDomain {
             
             userDao.save(user);
             
-//            AttachmentResultDisplayObject results = userAttachmentImagesComponent.attachementPhoto(user);
+            AttachmentResultDisplayObject results = userAttachmentImagesComponent.attachementPhoto(user);
         
-//            if (results.getUpdated()) {
-//                user.setPhoto(results.getPath());
-//            }
+            if (results.getUpdated()) {
+                user.setPhoto(results.getPath());
+            }
             
         }else{
             this.update(user);
