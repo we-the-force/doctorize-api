@@ -23,6 +23,8 @@ public interface UserDomain {
     
     public boolean update(User user);
     
+    public boolean updatePhoto(User user);
+    
     public User getUserByEmail(String email);
     
     public Boolean existAssociatedCodeByPatient(ChangePasswordDisplayObject changePasswordDisplayObject);

@@ -73,6 +73,23 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
+    public boolean updatePhoto(User user){
+        
+        String hql = "update User U"
+                + " set U.photo=:photo"
+                + " where (U.id=:userId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setString("photo", user.getPhoto());
+        
+        query.setLong("userId", user.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
+    
+    @Override
     public int changePassword(User user) {
         String hql = "update User U"
                 + " set U.password=:password"

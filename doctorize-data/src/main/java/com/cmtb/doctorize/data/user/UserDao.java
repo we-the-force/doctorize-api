@@ -19,6 +19,8 @@ public interface UserDao {
     
     public boolean update(User user);
     
+    public boolean updatePhoto(User user);
+    
     public int changePassword(User user);
     
     public User getUserById(Long userId);

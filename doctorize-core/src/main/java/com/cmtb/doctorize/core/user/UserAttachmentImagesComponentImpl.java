@@ -6,10 +6,15 @@
 package com.cmtb.doctorize.core.user;
 
 import com.cmtb.doctorize.core.shared.AttachmentComponent;
+import com.cmtb.doctorize.domain.shared.ModuleEnum;
 import com.cmtb.doctorize.domain.shared.ProcessAttachmentEnum;
 import com.cmtb.doctorize.domain.user.User;
+import com.cmtb.doctorize.domain.user.UserPhotoThumbnailEnum;
 import com.cmtb.doctorize.domain.utilities.AttachmentDisplayObject;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
+import com.cmtb.doctorize.domain.utilities.SourceFileAttachmentEnum;
+import com.cmtb.doctorize.domain.utilities.ThumbnailDisplayObject;
+import com.cmtb.doctorize.domain.utilities.TypeAssociationFileAttachmentEnum;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Component("UserAttachmentImagesComponent")
 public class UserAttachmentImagesComponentImpl implements UserAttachmentImagesComponent {
 
-    @Value("${sugardreams.user.default.avatar}")
+    @Value("${doctorize.user.default.avatar}")
     private String DEFAULT_AVATAR;
 
     @Resource(name = "AttachmentComponent")

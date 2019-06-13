@@ -160,11 +160,6 @@ public class UserDomainImpl implements UserDomain {
         String email = (user.getEmail() != null ? user.getEmail().toLowerCase() : "");
         user.setEmail(email);
         
-//        userClusterValidation.run(user);
-//        
-//        user.setImageData(user.getPhoto());
-//        user.setPhoto(null);
-        
         if(user.getId() == null){
             String hash = passwordEncrypt.hashPassword(user.getPassword());
             user.setPassword(hash);
@@ -188,14 +183,19 @@ public class UserDomainImpl implements UserDomain {
     @Override
     public boolean update(User user){
         
-//        AttachmentResultDisplayObject results = userAttachmentImagesComponent.attachementPhoto(user);
-//        
-//        if (results.getUpdated()) {
-//            user.setPhoto(results.getPath());
-//            this.updatePhoto(user);
-//        }
+        AttachmentResultDisplayObject results = userAttachmentImagesComponent.attachementPhoto(user);
+        
+        if (results.getUpdated()) {
+            user.setPhoto(results.getPath());
+            this.updatePhoto(user);
+        }
         
         return userDao.update(user);
+    }
+    
+    @Override
+    public boolean updatePhoto(User user){
+        return userDao.updatePhoto(user);
     }
     
     @Override
