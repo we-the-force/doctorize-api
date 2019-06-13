@@ -97,7 +97,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/user/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/save2", method = RequestMethod.POST)
     public ResponseEntity<?> save(@RequestBody User user) {
         try {
             User result = userOrchestrator.save(user);

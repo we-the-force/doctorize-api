@@ -1,2 +1,5 @@
-*.class
-*/target/**
+/doctorize-core/target/
+/doctorize-data/target/
+/doctorize-domain/target/
+/doctorize-rest/target/
+/doctorize-utilities/target/
