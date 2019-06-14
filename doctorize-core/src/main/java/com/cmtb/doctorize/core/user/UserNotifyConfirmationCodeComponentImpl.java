@@ -41,7 +41,7 @@ public class UserNotifyConfirmationCodeComponentImpl implements UserNotifyConfir
         content.put("code", changePasswordDisplayObject.getCode());
         content.put("user_name", changePasswordDisplayObject.getUser().getName());
         content.put("user_email", changePasswordDisplayObject.getUser().getEmail());
-        content.put("url_confirm_password", URL_CONFIRM_PASS + changePasswordDisplayObject.getUser().getEmail() + URL_CONFIRM_PASS2 + changePasswordDisplayObject.getCode());
+        content.put("url_confirm_account", URL_CONFIRM_PASS + changePasswordDisplayObject.getUser().getEmail() + URL_CONFIRM_PASS2 + changePasswordDisplayObject.getCode());
         
         email.setContent(content);
 

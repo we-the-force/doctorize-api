@@ -35,4 +35,6 @@ public interface UserDomain {
     
     public Boolean changePassword(User user);
     
+    public Boolean confirmationAccount(ChangePasswordDisplayObject displayObject);
+    
 }
