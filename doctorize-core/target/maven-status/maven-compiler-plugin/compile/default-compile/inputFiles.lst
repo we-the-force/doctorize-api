@@ -1,4 +1,5 @@
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserOrchestrator.java
+C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserNotifyConfirmationCodeComponent.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\ClusterValidationAbstract.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserAttachmentImagesComponentImpl.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserAttachmentImagesComponent.java
@@ -8,6 +9,7 @@ C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\co
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserChangePasswordClusterValidator.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserNotifyCodeChangePasswordComponent.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\AttachmentComponent.java
+C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserNotifyConfirmationCodeComponentImpl.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserNotifyCodeChangePasswordComponentImpl.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\MatchPasswordBusinessRule.java
 C:\Repositorios\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserExistCodeBusinessRule.java

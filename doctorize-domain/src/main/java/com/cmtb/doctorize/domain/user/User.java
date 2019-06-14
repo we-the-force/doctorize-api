@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.domain.user;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 /**
@@ -46,8 +48,15 @@ public class User implements Serializable{
     @Column(name = "`photo`")
     private String photo;
     
-    @Column(name = "`active`")
-    private Boolean active;
+    @Column(name = "`status`")
+    private Byte status;
+    
+    @Column(name = "`confirmationCode`")
+    private String confirmationCode;
+    
+    @Column(name = "`createDate`", columnDefinition = "timestamp with time zone")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date createDate;
     
     @Transient
     private String imageData;
@@ -168,20 +177,6 @@ public class User implements Serializable{
     }
 
     /**
-     * @return the active
-     */
-    public Boolean getActive() {
-        return active;
-    }
-
-    /**
-     * @param active the active to set
-     */
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    /**
      * @return the token
      */
     public String getToken() {
@@ -193,6 +188,48 @@ public class User implements Serializable{
      */
     public void setToken(String token) {
         this.token = token;
+    }
+
+    /**
+     * @return the status
+     */
+    public Byte getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the confirmationCode
+     */
+    public String getConfirmationCode() {
+        return confirmationCode;
+    }
+
+    /**
+     * @param confirmationCode the confirmationCode to set
+     */
+    public void setConfirmationCode(String confirmationCode) {
+        this.confirmationCode = confirmationCode;
+    }
+
+    /**
+     * @return the createDate
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * @param createDate the createDate to set
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
     
 }

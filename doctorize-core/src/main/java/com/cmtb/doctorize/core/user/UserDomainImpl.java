@@ -13,6 +13,7 @@ import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
+import com.cmtb.doctorize.domain.user.UserStatusEnum;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
 import com.cmtb.doctorize.utilities.RandomStringGenerator;
@@ -36,6 +37,9 @@ public class UserDomainImpl implements UserDomain {
     
     @Resource(name="UserNotifyCodeChangePasswordComponent")
     private UserNotifyCodeChangePasswordComponent userNotifyCodeChangePasswordComponent;
+    
+    @Resource(name="UserNotifyConfirmationCodeComponent")
+    private UserNotifyConfirmationCodeComponent userNotifyConfirmationCodeComponent;
     
     @Resource(name = "UserDao")
     private UserDao userDao;
@@ -163,11 +167,21 @@ public class UserDomainImpl implements UserDomain {
         if(user.getId() == null){
             String hash = passwordEncrypt.hashPassword(user.getPassword());
             user.setPassword(hash);
-            user.setActive(true);
+            user.setStatus(UserStatusEnum.UNCONFIRMED.getId());
+            
+            char[] code = RandomStringGenerator.generate();
+            user.setConfirmationCode(new String(code));
             
             userDao.save(user);
             
+            ChangePasswordDisplayObject displayObject = new ChangePasswordDisplayObject();
+            displayObject.setCode(new String(code));
+            displayObject.setEmail(email);
+            displayObject.setUser(user);
+            
             AttachmentResultDisplayObject results = userAttachmentImagesComponent.attachementPhoto(user);
+            
+            userNotifyConfirmationCodeComponent.notify(displayObject);
         
             if (results.getUpdated()) {
                 user.setPhoto(results.getPath());
@@ -177,6 +191,7 @@ public class UserDomainImpl implements UserDomain {
             this.update(user);
         }
         
+        user.setImageData("");
         return user;
     }
     

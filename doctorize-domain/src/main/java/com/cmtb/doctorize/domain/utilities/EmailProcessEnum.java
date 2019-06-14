@@ -21,7 +21,8 @@ public enum EmailProcessEnum {
     QUOTE_SENT("quote_sent", "Cotización enviada"),
     CHECKING_QUOTE("checking_quote", "Revisando cotización"),
     NEW_QUOTE("new_quote", "Nueva Cotización"),
-    USER_SEND_CODE_CHANGE_PASSWORD("user_send_code_change_password", "Solicitud de cambio de contraseña");
+    USER_SEND_CODE_CHANGE_PASSWORD("user_send_code_change_password", "Solicitud de cambio de contraseña"),
+    USER_SEND_CONFIRMATION_CODE("user_send_confirmation_code", "Confirmación de cuenta Doctorize");
 
     private final String template;
     private final String subject;
