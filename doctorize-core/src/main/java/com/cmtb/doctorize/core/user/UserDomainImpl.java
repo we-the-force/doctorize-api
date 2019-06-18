@@ -314,4 +314,24 @@ public class UserDomainImpl implements UserDomain {
         }
     }
     
+    @Override
+    public Boolean confirmationAssistantAccount(AssistantDisplayObject assistantDisplayObject){
+        
+        User user = this.getUserByEmail(assistantDisplayObject.getEmail());
+        
+        if(user != null && !user.getConfirmationCode().equals("") && user.getConfirmationCode().equals(assistantDisplayObject.getCode())){
+            
+            String hash = passwordEncrypt.hashPassword(assistantDisplayObject.getPassword());
+            user.setPassword(hash);
+            
+            user.setName(assistantDisplayObject.getName());
+            
+            this.update(user);
+            
+            return userDao.confirmationAssistantAccount(user);
+        }else{
+            throw new UserNotFoundException();
+        }
+    }
+    
 }

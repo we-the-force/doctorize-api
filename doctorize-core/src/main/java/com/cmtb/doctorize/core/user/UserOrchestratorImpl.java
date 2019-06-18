@@ -60,6 +60,7 @@ public class UserOrchestratorImpl implements UserOrchestrator {
         return userDomain.changePassword(user);
     }
     
+    @Transactional
     @Override
     public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject){
         return userDomain.inviteAssistant(assistantDisplayObject);
@@ -70,6 +71,12 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     public Boolean confirmationAccount(ChangePasswordDisplayObject changePasswordDisplayObject){
         
         return userDomain.confirmationAccount(changePasswordDisplayObject);
+    }
+    
+    @Transactional
+    @Override
+    public Boolean confirmationAssistantAccount(AssistantDisplayObject assistantDisplayObject){
+        return userDomain.confirmationAssistantAccount(assistantDisplayObject);
     }
     
 }

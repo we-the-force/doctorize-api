@@ -27,4 +27,6 @@ public interface UserDao {
     
     public boolean confirmationAccount(String email);
     
+    public boolean confirmationAssistantAccount(User user);
+    
 }

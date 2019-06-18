@@ -132,4 +132,24 @@ public class UserDaoImpl implements UserDao {
         
     }
     
+    @Override
+    public boolean confirmationAssistantAccount(User user){
+        
+        String hql = "update User U"
+                + " set U.status=:status,"
+                + " U.confirmationCode=:confirmationCode,"
+                + " U.password=:password"
+                + " where (U.email=:email)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setString("email", user.getEmail());
+        query.setString("confirmationCode", "");        
+        query.setByte("status", UserStatusEnum.ACTIVE.getId());
+        query.setString("password", user.getPassword());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
+    
 }

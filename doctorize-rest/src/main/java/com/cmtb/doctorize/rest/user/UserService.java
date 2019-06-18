@@ -133,4 +133,20 @@ public class UserService {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @RequestMapping(value = "/account/confirmationAssistant", method = RequestMethod.POST)
+    public ResponseEntity<?> confirmationAssistantAccount(@RequestBody AssistantDisplayObject assistantDisplayObject) {
+        try {
+
+            Boolean result = userOrchestrator.confirmationAssistantAccount(assistantDisplayObject);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (UserNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    
 }

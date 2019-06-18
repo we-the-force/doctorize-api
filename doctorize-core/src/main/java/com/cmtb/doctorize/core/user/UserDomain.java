@@ -40,4 +40,6 @@ public interface UserDomain {
     
     public Boolean confirmationAccount(ChangePasswordDisplayObject displayObject);
     
+    public Boolean confirmationAssistantAccount(AssistantDisplayObject assistantDisplayObject);
+    
 }

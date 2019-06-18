@@ -26,4 +26,6 @@ public interface UserOrchestrator {
     
     public Boolean confirmationAccount(ChangePasswordDisplayObject changePasswordDisplayObject);
     
+    public Boolean confirmationAssistantAccount(AssistantDisplayObject assistantDisplayObject);
+    
 }
