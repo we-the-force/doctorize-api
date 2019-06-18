@@ -115,6 +115,20 @@ public class UserService {
         try {
             Boolean result = userOrchestrator.inviteAssistant(assitantDO);
             return new ResponseEntity(result, HttpStatus.OK);
+        }catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/account/confirmation", method = RequestMethod.POST)
+    public ResponseEntity<?> confirmationAccount(@RequestBody ChangePasswordDisplayObject changePasswordDisplayObject) {
+        try {
+
+            Boolean result = userOrchestrator.confirmationAccount(changePasswordDisplayObject);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (UserNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

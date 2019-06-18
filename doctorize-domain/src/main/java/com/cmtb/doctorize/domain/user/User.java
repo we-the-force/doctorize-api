@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.domain.user;
 
+import com.cmtb.doctorize.domain.specialty.Specialty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -70,6 +71,10 @@ public class User implements Serializable{
     @Column(name = "`createDate`", columnDefinition = "timestamp with time zone")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createDate;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`specialtyId`")
+    private Specialty specialty;
     
     @Transient
     private String imageData;
@@ -271,6 +276,20 @@ public class User implements Serializable{
      */
     public void setAssistants(Set<User> assistants) {
         this.assistants = assistants;
+    }
+
+    /**
+     * @return the specialty
+     */
+    public Specialty getSpecialty() {
+        return specialty;
+    }
+
+    /**
+     * @param specialty the specialty to set
+     */
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
     }
     
 }

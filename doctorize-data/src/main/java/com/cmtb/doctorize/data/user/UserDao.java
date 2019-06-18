@@ -25,4 +25,6 @@ public interface UserDao {
     
     public User getUserById(Long userId);
     
+    public boolean confirmationAccount(String email);
+    
 }

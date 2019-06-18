@@ -1,4 +1,14 @@
+com\cmtb\doctorize\utilities\attachment\AttachmentFactory.class
+com\cmtb\doctorize\utilities\attachment\AttachmentException.class
+com\cmtb\doctorize\utilities\image\ImageGenerator.class
+com\cmtb\doctorize\utilities\thumbnail\ThumbnailException.class
+com\cmtb\doctorize\utilities\attachment\AttachmentFactory$1.class
 com\cmtb\doctorize\utilities\email\EmailUtilsComponent.class
 com\cmtb\doctorize\utilities\PasswordEncrypt.class
+com\cmtb\doctorize\utilities\image\ImageGeneratorException.class
 com\cmtb\doctorize\utilities\email\EmailSender.class
 com\cmtb\doctorize\utilities\RandomStringGenerator.class
+com\cmtb\doctorize\utilities\attachment\CleanFilesException.class
+com\cmtb\doctorize\utilities\thumbnail\ThumbnailGenerator.class
+com\cmtb\doctorize\utilities\attachment\AttachmentOrchestratorComponent.class
+com\cmtb\doctorize\utilities\attachment\CleanFiles.class

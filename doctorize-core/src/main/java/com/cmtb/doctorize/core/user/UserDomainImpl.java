@@ -9,6 +9,7 @@ import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.specialty.Specialty;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.RoleEnum;
@@ -16,6 +17,7 @@ import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
 import com.cmtb.doctorize.domain.user.UserStatusEnum;
+import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
 import com.cmtb.doctorize.utilities.RandomStringGenerator;
@@ -65,6 +67,13 @@ public class UserDomainImpl implements UserDomain {
         user.setPhoto(userTemp.getPhoto());
         user.setPassword(userTemp.getPassword());
         user.setRoleId(userTemp.getRoleId());
+        
+        if(userTemp.getSpecialty() != null){
+            Specialty specialty = new Specialty();
+            specialty.setId(userTemp.getSpecialty().getId());
+            specialty.setName(userTemp.getSpecialty().getName());
+            user.setSpecialty(specialty);
+        }
 //        user.setToken(userTemp.getToken());
         
 //        try{
@@ -123,8 +132,12 @@ public class UserDomainImpl implements UserDomain {
         
         user = this.getUserByEmail(loginDisplayObject.getEmail());
         
-        if (user == null) {
+        if (user == null || user.getStatus().equals(UserStatusEnum.DISABLE.getId())) {
             throw new UserNotFoundException();
+        }
+        
+        if(user.getStatus().equals(UserStatusEnum.UNCONFIRMED.getId())){
+           throw new UserUnconfirmedException(); 
         }
 
         Boolean match = passwordEncrypt.checkPassword(loginDisplayObject.getPassword(), user.getPassword());
@@ -287,6 +300,18 @@ public class UserDomainImpl implements UserDomain {
         assistantNotifyConfirmationCodeComponent.notify(assistantDisplayObject);
         
         return true;
+    }
+
+    @Override
+    public Boolean confirmationAccount(ChangePasswordDisplayObject displayObject){
+        
+        User user = this.getUserByEmail(displayObject.getEmail());
+        
+        if(user != null && !user.getConfirmationCode().equals("") && user.getConfirmationCode().equals(displayObject.getCode())){
+            return userDao.confirmationAccount(user.getEmail());
+        }else{
+            throw new UserNotFoundException();
+        }
     }
     
 }

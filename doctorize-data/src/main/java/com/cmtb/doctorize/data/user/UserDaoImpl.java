@@ -7,6 +7,7 @@ package com.cmtb.doctorize.data.user;
 
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import com.cmtb.doctorize.domain.user.User;
+import com.cmtb.doctorize.domain.user.UserStatusEnum;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,6 +45,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserByEmail(String email) {
         String hql = "select U from User U"
+                + " left join fetch U.specialty US"
                 + " where (U.email = :email)";
 
         Query query = this.getSession().createQuery(hql);
@@ -110,6 +112,24 @@ public class UserDaoImpl implements UserDao {
         query.setLong("userId", userId);
 
         return (User) query.uniqueResult();
+    }
+    
+    @Override
+    public boolean confirmationAccount(String email){
+        String hql = "update User U"
+                + " set U.status=:status,"
+                + " U.confirmationCode=:confirmationCode"
+                + " where (U.email=:email)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setString("email", email);
+        query.setString("confirmationCode", "");        
+        query.setByte("status", UserStatusEnum.ACTIVE.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+        
     }
     
 }

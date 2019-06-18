@@ -65,4 +65,11 @@ public class UserOrchestratorImpl implements UserOrchestrator {
         return userDomain.inviteAssistant(assistantDisplayObject);
     }
     
+    @Transactional
+    @Override
+    public Boolean confirmationAccount(ChangePasswordDisplayObject changePasswordDisplayObject){
+        
+        return userDomain.confirmationAccount(changePasswordDisplayObject);
+    }
+    
 }

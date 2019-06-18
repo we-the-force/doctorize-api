@@ -38,4 +38,6 @@ public interface UserDomain {
     
     public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject);
     
+    public Boolean confirmationAccount(ChangePasswordDisplayObject displayObject);
+    
 }
