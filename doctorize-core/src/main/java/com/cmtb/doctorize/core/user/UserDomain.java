@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.core.user;
 
+import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
@@ -34,5 +35,7 @@ public interface UserDomain {
     public User getUserById(Long userId);
     
     public Boolean changePassword(User user);
+    
+    public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject);
     
 }

@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.user;
 
 import com.cmtb.doctorize.core.shared.ClusterValidationAbstract;
+import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import javax.annotation.Resource;
@@ -57,6 +58,11 @@ public class UserOrchestratorImpl implements UserOrchestrator {
         userChangePasswordClusterValidator.run(changePasswordDisplayObject);
         user.setPassword(changePasswordDisplayObject.getPassword());
         return userDomain.changePassword(user);
+    }
+    
+    @Override
+    public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject){
+        return userDomain.inviteAssistant(assistantDisplayObject);
     }
     
 }

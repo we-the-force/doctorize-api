@@ -8,8 +8,10 @@ package com.cmtb.doctorize.core.user;
 import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
+import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
+import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
@@ -40,6 +42,9 @@ public class UserDomainImpl implements UserDomain {
     
     @Resource(name="UserNotifyConfirmationCodeComponent")
     private UserNotifyConfirmationCodeComponent userNotifyConfirmationCodeComponent;
+    
+    @Resource(name="AssistantNotifyConfirmationCodeComponent")
+    private AssistantNotifyConfirmationCodeComponent assistantNotifyConfirmationCodeComponent;
     
     @Resource(name = "UserDao")
     private UserDao userDao;
@@ -253,6 +258,35 @@ public class UserDomainImpl implements UserDomain {
 
         int results = userDao.changePassword(user);
         return (results > 0);
+    }
+    
+    @Override
+    public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject){
+        
+        String email = (assistantDisplayObject.getEmail() != null ? assistantDisplayObject.getEmail().toLowerCase() : "");
+        assistantDisplayObject.setEmail(email);
+        
+        User user = new User();
+        user.setEmail(email);
+        
+        User doctor = new User();
+        doctor.setId(assistantDisplayObject.getDoctorId());
+        
+        user.setDoctor(doctor);
+        user.setRoleId(RoleEnum.ASSISTANT.getId());
+        user.setPassword("temp");
+        user.setStatus(UserStatusEnum.UNCONFIRMED.getId());
+        
+        char[] code = RandomStringGenerator.generate();
+        user.setConfirmationCode(new String(code));
+        
+        assistantDisplayObject.setCode(new String(code));
+        
+        userDao.save(user);
+        
+        assistantNotifyConfirmationCodeComponent.notify(assistantDisplayObject);
+        
+        return true;
     }
     
 }

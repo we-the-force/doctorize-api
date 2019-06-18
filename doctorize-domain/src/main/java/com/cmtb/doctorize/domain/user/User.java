@@ -7,11 +7,17 @@ package com.cmtb.doctorize.domain.user;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -53,6 +59,13 @@ public class User implements Serializable{
     
     @Column(name = "`confirmationCode`")
     private String confirmationCode;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`userId`")
+    private User doctor;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor")
+    private Set<User> assistants;
     
     @Column(name = "`createDate`", columnDefinition = "timestamp with time zone")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -230,6 +243,34 @@ public class User implements Serializable{
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    /**
+     * @return the doctor
+     */
+    public User getDoctor() {
+        return doctor;
+    }
+
+    /**
+     * @param doctor the doctor to set
+     */
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
+    }
+
+    /**
+     * @return the assistants
+     */
+    public Set<User> getAssistants() {
+        return assistants;
+    }
+
+    /**
+     * @param assistants the assistants to set
+     */
+    public void setAssistants(Set<User> assistants) {
+        this.assistants = assistants;
     }
     
 }

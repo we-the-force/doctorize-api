@@ -7,6 +7,7 @@ package com.cmtb.doctorize.rest.user;
 
 import com.cmtb.doctorize.core.user.UserDomain;
 import com.cmtb.doctorize.core.user.UserOrchestrator;
+import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
@@ -104,6 +105,16 @@ public class UserService {
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (UserDuplicateException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/user/inviteAssistant", method = RequestMethod.POST)
+    public ResponseEntity<?> inviteAssistant(@RequestBody AssistantDisplayObject assitantDO) {
+        try {
+            Boolean result = userOrchestrator.inviteAssistant(assitantDO);
+            return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
