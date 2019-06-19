@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.domain.user;
 
+import com.cmtb.doctorize.domain.shared.Permissions;
 import com.cmtb.doctorize.domain.specialty.Specialty;
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +18,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -75,6 +78,14 @@ public class User implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`specialtyId`")
     private Specialty specialty;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "`UserPermissions`", joinColumns = {
+        @JoinColumn(name = "`userId`", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "`permissionId`",
+                        nullable = false, updatable = false)})
+    private Set<Permissions> permissions = new HashSet<>();
     
     @Transient
     private String imageData;
@@ -290,6 +301,20 @@ public class User implements Serializable{
      */
     public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
+    }
+
+    /**
+     * @return the permissions
+     */
+    public Set<Permissions> getPermissions() {
+        return permissions;
+    }
+
+    /**
+     * @param permissions the permissions to set
+     */
+    public void setPermissions(Set<Permissions> permissions) {
+        this.permissions = permissions;
     }
     
 }

@@ -8,6 +8,8 @@ package com.cmtb.doctorize.core.user;
 import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
+import com.cmtb.doctorize.domain.shared.PermissionEnum;
+import com.cmtb.doctorize.domain.shared.Permissions;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.specialty.Specialty;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
@@ -21,6 +23,7 @@ import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
 import com.cmtb.doctorize.utilities.RandomStringGenerator;
+import java.security.Permission;
 import java.util.Date;
 import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +60,24 @@ public class UserDomainImpl implements UserDomain {
     @Autowired
     private SecurityComponent securityComponent;
     
+    private void setDoctorPermissions(User user){
+        Permissions medicalRecord = new Permissions();
+        medicalRecord.setId(PermissionEnum.MEDICAL_RECORD.getPermissionId());
+        user.getPermissions().add(medicalRecord);
+        
+        Permissions patients = new Permissions();
+        patients.setId(PermissionEnum.PATIENTS.getPermissionId());
+        user.getPermissions().add(patients);
+        
+        Permissions payments = new Permissions();
+        payments.setId(PermissionEnum.PAYMENTS.getPermissionId());
+        user.getPermissions().add(payments);
+        
+        Permissions schedule = new Permissions();
+        schedule.setId(PermissionEnum.SCHEDULE.getPermissionId());
+        user.getPermissions().add(schedule);
+    }
+    
     private User assembleUser(User userTemp){
         User user = new User();
         
@@ -73,6 +94,12 @@ public class UserDomainImpl implements UserDomain {
             specialty.setId(userTemp.getSpecialty().getId());
             specialty.setName(userTemp.getSpecialty().getName());
             user.setSpecialty(specialty);
+        }
+        
+        if(userTemp.getPermissions() != null){
+            for(Permissions permissionItem: userTemp.getPermissions()){
+                user.getPermissions().add(permissionItem);
+            }
         }
 //        user.setToken(userTemp.getToken());
         
@@ -190,6 +217,8 @@ public class UserDomainImpl implements UserDomain {
             char[] code = RandomStringGenerator.generate();
             user.setConfirmationCode(new String(code));
             
+            setDoctorPermissions(user);
+            
             userDao.save(user);
             
             ChangePasswordDisplayObject displayObject = new ChangePasswordDisplayObject();
@@ -289,6 +318,12 @@ public class UserDomainImpl implements UserDomain {
         user.setRoleId(RoleEnum.ASSISTANT.getId());
         user.setPassword("temp");
         user.setStatus(UserStatusEnum.UNCONFIRMED.getId());
+        
+        if(!assistantDisplayObject.getPermissions().isEmpty()){
+            for(Permissions permissionItem: assistantDisplayObject.getPermissions()){
+                user.getPermissions().add(permissionItem);
+            }
+        }
         
         char[] code = RandomStringGenerator.generate();
         user.setConfirmationCode(new String(code));

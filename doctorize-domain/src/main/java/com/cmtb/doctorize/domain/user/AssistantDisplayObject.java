@@ -5,6 +5,10 @@
  */
 package com.cmtb.doctorize.domain.user;
 
+import com.cmtb.doctorize.domain.shared.Permissions;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author pc
@@ -18,6 +22,7 @@ package com.cmtb.doctorize.domain.user;
     private String name;
     private String password;
     private String imageData;
+    private Set<Permissions> permissions = new HashSet<>();
 
     /**
      * @return the email
@@ -115,5 +120,19 @@ package com.cmtb.doctorize.domain.user;
      */
     public void setImageData(String imageData) {
         this.imageData = imageData;
+    }
+
+    /**
+     * @return the permissions
+     */
+    public Set<Permissions> getPermissions() {
+        return permissions;
+    }
+
+    /**
+     * @param permissions the permissions to set
+     */
+    public void setPermissions(Set<Permissions> permissions) {
+        this.permissions = permissions;
     }
 }

@@ -46,6 +46,7 @@ public class UserDaoImpl implements UserDao {
     public User getUserByEmail(String email) {
         String hql = "select U from User U"
                 + " left join fetch U.specialty US"
+                + " left join fetch U.permissions UP"
                 + " where (U.email = :email)";
 
         Query query = this.getSession().createQuery(hql);

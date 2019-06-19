@@ -10,6 +10,7 @@ import com.cmtb.doctorize.core.user.UserOrchestrator;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
+import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserDuplicateException;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
@@ -101,6 +102,7 @@ public class UserService {
     @RequestMapping(value = "/user/save", method = RequestMethod.POST)
     public ResponseEntity<?> save(@RequestBody User user) {
         try {
+            user.setRoleId(RoleEnum.DOCTOR.getId());
             User result = userOrchestrator.save(user);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (UserDuplicateException ex) {

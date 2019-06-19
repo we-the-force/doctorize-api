@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.domain.user;
 
 
+
 /**
  *
  * @author cmtb
