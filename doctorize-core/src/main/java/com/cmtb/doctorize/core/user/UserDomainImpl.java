@@ -17,6 +17,7 @@ import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
+import com.cmtb.doctorize.domain.user.UserConfirmedException;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
 import com.cmtb.doctorize.domain.user.UserStatusEnum;
 import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
@@ -341,6 +342,10 @@ public class UserDomainImpl implements UserDomain {
     public Boolean confirmationAccount(ChangePasswordDisplayObject displayObject){
         
         User user = this.getUserByEmail(displayObject.getEmail());
+        
+        if(user != null && user.getStatus().equals(UserStatusEnum.ACTIVE.getId())){
+            throw new UserConfirmedException();
+        }
         
         if(user != null && !user.getConfirmationCode().equals("") && user.getConfirmationCode().equals(displayObject.getCode())){
             return userDao.confirmationAccount(user.getEmail());
