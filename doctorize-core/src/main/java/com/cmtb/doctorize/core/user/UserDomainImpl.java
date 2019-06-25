@@ -369,4 +369,14 @@ public class UserDomainImpl implements UserDomain {
         }
     }
     
+    @Override
+    public Boolean delete(Long userId){
+        
+        if(userDao.delete(userId)){
+            return true;
+        }else{
+            throw new UserNotFoundException();
+        }
+    }
+    
 }

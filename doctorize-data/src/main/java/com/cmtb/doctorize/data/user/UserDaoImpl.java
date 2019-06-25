@@ -153,4 +153,19 @@ public class UserDaoImpl implements UserDao {
         return (records > 0);
     }
     
+    @Override
+    public Boolean delete(Long userId){
+        String hql = "update User U"
+                + " set U.status=:status"
+                + " where (U.id=:userId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("userId", userId);     
+        query.setByte("status", UserStatusEnum.DISABLE.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
+    
 }

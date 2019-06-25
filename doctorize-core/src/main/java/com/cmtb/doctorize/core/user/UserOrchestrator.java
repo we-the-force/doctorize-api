@@ -28,4 +28,6 @@ public interface UserOrchestrator {
     
     public Boolean confirmationAssistantAccount(AssistantDisplayObject assistantDisplayObject);
     
+    public Boolean delete(Long userId);
+    
 }

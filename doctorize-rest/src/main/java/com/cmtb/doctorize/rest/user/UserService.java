@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -150,5 +151,18 @@ public class UserService {
         }
     }
     
-    
+    @RequestMapping(value = "/user/delete", params = {"userId"}, method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@RequestParam Long userId) {
+        try {
+
+            Boolean result = userOrchestrator.delete(userId);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (UserNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -79,4 +79,10 @@ public class UserOrchestratorImpl implements UserOrchestrator {
         return userDomain.confirmationAssistantAccount(assistantDisplayObject);
     }
     
+    @Transactional
+    @Override
+    public Boolean delete(Long userId){
+        return userDomain.delete(userId);
+    }
+    
 }

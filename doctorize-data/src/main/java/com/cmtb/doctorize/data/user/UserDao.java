@@ -29,4 +29,6 @@ public interface UserDao {
     
     public boolean confirmationAssistantAccount(User user);
     
+    public Boolean delete(Long userId);
+    
 }
