@@ -8,6 +8,7 @@ package com.cmtb.doctorize.core.user;
 import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
+import com.cmtb.doctorize.domain.shared.ConfirmationCodeExceptoin;
 import com.cmtb.doctorize.domain.shared.PermissionEnum;
 import com.cmtb.doctorize.domain.shared.Permissions;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
@@ -18,6 +19,7 @@ import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
 import com.cmtb.doctorize.domain.user.UserConfirmedException;
+import com.cmtb.doctorize.domain.user.UserDisabledException;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
 import com.cmtb.doctorize.domain.user.UserStatusEnum;
 import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
@@ -160,12 +162,12 @@ public class UserDomainImpl implements UserDomain {
         
         user = this.getUserByEmail(loginDisplayObject.getEmail());
         
-        if (user == null || user.getStatus().equals(UserStatusEnum.DISABLE.getId())) {
+        if (user == null) {
             throw new UserNotFoundException();
-        }
-        
-        if(user.getStatus().equals(UserStatusEnum.UNCONFIRMED.getId())){
-           throw new UserUnconfirmedException(); 
+        }else if(user.getStatus().equals(UserStatusEnum.DISABLE.getId())){
+            throw new UserDisabledException();
+        }else if(user.getStatus().equals(UserStatusEnum.UNCONFIRMED.getId())){
+            throw new UserUnconfirmedException();
         }
 
         Boolean match = passwordEncrypt.checkPassword(loginDisplayObject.getPassword(), user.getPassword());
@@ -343,14 +345,14 @@ public class UserDomainImpl implements UserDomain {
         
         User user = this.getUserByEmail(displayObject.getEmail());
         
-        if(user != null && user.getStatus().equals(UserStatusEnum.ACTIVE.getId())){
-            throw new UserConfirmedException();
-        }
-        
-        if(user != null && !user.getConfirmationCode().equals("") && user.getConfirmationCode().equals(displayObject.getCode())){
-            return userDao.confirmationAccount(user.getEmail());
-        }else{
+        if(user == null){
             throw new UserNotFoundException();
+        }else if(user.getStatus().equals(UserStatusEnum.ACTIVE.getId())){
+            throw new UserConfirmedException();
+        }else if(!user.getConfirmationCode().equals(displayObject.getCode())){
+            throw new ConfirmationCodeExceptoin();
+        }else{
+            return userDao.confirmationAccount(user.getEmail());
         }
     }
     
@@ -359,8 +361,13 @@ public class UserDomainImpl implements UserDomain {
         
         User user = this.getUserByEmail(assistantDisplayObject.getEmail());
         
-        if(user != null && !user.getConfirmationCode().equals("") && user.getConfirmationCode().equals(assistantDisplayObject.getCode())){
-            
+        if(user == null){
+            throw new UserNotFoundException();
+        }else if(user.getStatus().equals(UserStatusEnum.ACTIVE.getId())){
+            throw new UserConfirmedException();
+        }else if(!user.getConfirmationCode().equals(assistantDisplayObject.getCode())){
+            throw new ConfirmationCodeExceptoin();
+        }else{
             String hash = passwordEncrypt.hashPassword(assistantDisplayObject.getPassword());
             user.setPassword(hash);
             
@@ -369,8 +376,6 @@ public class UserDomainImpl implements UserDomain {
             this.update(user);
             
             return userDao.confirmationAssistantAccount(user);
-        }else{
-            throw new UserNotFoundException();
         }
     }
     

@@ -7,11 +7,14 @@ package com.cmtb.doctorize.rest.user;
 
 import com.cmtb.doctorize.core.user.UserDomain;
 import com.cmtb.doctorize.core.user.UserOrchestrator;
+import com.cmtb.doctorize.domain.shared.ConfirmationCodeExceptoin;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
+import com.cmtb.doctorize.domain.user.UserConfirmedException;
+import com.cmtb.doctorize.domain.user.UserDisabledException;
 import com.cmtb.doctorize.domain.user.UserDuplicateException;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
 import com.cmtb.doctorize.domain.user.UserNotMatchPasswordException;
@@ -49,6 +52,8 @@ public class UserService {
             
         } catch (UserNotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (UserDisabledException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -130,8 +135,12 @@ public class UserService {
             Boolean result = userOrchestrator.confirmationAccount(changePasswordDisplayObject);
             
             return new ResponseEntity(result, HttpStatus.OK);
+        } catch (UserConfirmedException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
         } catch (UserNotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ConfirmationCodeExceptoin ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -144,8 +153,12 @@ public class UserService {
             Boolean result = userOrchestrator.confirmationAssistantAccount(assistantDisplayObject);
             
             return new ResponseEntity(result, HttpStatus.OK);
+        } catch (UserConfirmedException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
         } catch (UserNotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ConfirmationCodeExceptoin ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
