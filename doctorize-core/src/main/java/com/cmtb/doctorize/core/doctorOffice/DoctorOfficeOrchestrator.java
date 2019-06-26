@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.doctorOffice;
 
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 
 /**
  *
@@ -13,6 +14,6 @@ import com.cmtb.doctorize.domain.doctor.DoctorOffice;
  */
 public interface DoctorOfficeOrchestrator {
 
-    public DoctorOffice save(DoctorOffice doctorOffice);
+    public DoctorOffice save(DoctorOfficeDisplayObject doctorOfficeDisplayObject);
     
 }

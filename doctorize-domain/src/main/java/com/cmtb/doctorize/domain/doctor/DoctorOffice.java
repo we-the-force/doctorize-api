@@ -7,6 +7,9 @@ package com.cmtb.doctorize.domain.doctor;
 
 import com.cmtb.doctorize.domain.user.User;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,9 +17,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -55,9 +64,21 @@ public class DoctorOffice implements Serializable{
     @Column(name = "lng")
     private Double lng;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`userId`")
-    private User user;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office")
+    private Set<AvailableDays> availableDays = new HashSet<>();
+    
+    @Column(name = "startTime")
+    private String startTime;
+
+    @Column(name = "closeTime")
+    private String closeTime;
+    
+    @Column(name = "lunchStartTime")
+    private String lunchStartTime;
+
+    @Column(name = "lunchCloseTime")
+    private String lunchCloseTime;
+    
 
     /**
      * @return the id
@@ -186,16 +207,72 @@ public class DoctorOffice implements Serializable{
     }
 
     /**
-     * @return the user
+     * @return the availableDays
      */
-    public User getUser() {
-        return user;
+    public Set<AvailableDays> getAvailableDays() {
+        return availableDays;
     }
 
     /**
-     * @param user the user to set
+     * @param availableDays the availableDays to set
      */
-    public void setUser(User user) {
-        this.user = user;
+    public void setAvailableDays(Set<AvailableDays> availableDays) {
+        this.availableDays = availableDays;
+    }
+
+    /**
+     * @return the startTime
+     */
+    public String getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * @param startTime the startTime to set
+     */
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * @return the closeTime
+     */
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    /**
+     * @param closeTime the closeTime to set
+     */
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    /**
+     * @return the lunchStartTime
+     */
+    public String getLunchStartTime() {
+        return lunchStartTime;
+    }
+
+    /**
+     * @param lunchStartTime the lunchStartTime to set
+     */
+    public void setLunchStartTime(String lunchStartTime) {
+        this.lunchStartTime = lunchStartTime;
+    }
+
+    /**
+     * @return the lunchCloseTime
+     */
+    public String getLunchCloseTime() {
+        return lunchCloseTime;
+    }
+
+    /**
+     * @param lunchCloseTime the lunchCloseTime to set
+     */
+    public void setLunchCloseTime(String lunchCloseTime) {
+        this.lunchCloseTime = lunchCloseTime;
     }
 }
