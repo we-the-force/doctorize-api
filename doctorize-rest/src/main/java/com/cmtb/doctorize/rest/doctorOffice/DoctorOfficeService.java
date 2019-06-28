@@ -38,7 +38,7 @@ public class DoctorOfficeService {
     public ResponseEntity<?> getListByUserId(@RequestParam Long userId) {
         try {
 
-            List<DoctorOffice> result = doctorOfficeDomain.getListByUserId(userId);
+            List<DoctorOfficeDisplayObject> result = doctorOfficeDomain.getListByUserId(userId);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {
@@ -51,6 +51,18 @@ public class DoctorOfficeService {
         try {
             DoctorOffice result = doctorOfficeOrchestrator.save(doctorOfficeDisplayObject);
             return new ResponseEntity(result, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/doctorOffice", params = {"doctorOfficeId"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getById(@RequestParam Long doctorOfficeId) {
+        try {
+
+            DoctorOfficeDisplayObject result = doctorOfficeDomain.getById(doctorOfficeId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

@@ -18,4 +18,6 @@ public interface DoctorOfficeDao {
     
     public List<DoctorOffice> getListByUserId(Long userId);
     
+    public DoctorOffice getById(Long doctorOfficeId);
+    
 }

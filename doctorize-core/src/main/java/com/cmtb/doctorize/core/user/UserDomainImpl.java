@@ -20,6 +20,7 @@ import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
 import com.cmtb.doctorize.domain.user.UserConfirmedException;
 import com.cmtb.doctorize.domain.user.UserDisabledException;
+import com.cmtb.doctorize.domain.user.UserDisplayObject;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
 import com.cmtb.doctorize.domain.user.UserStatusEnum;
 import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
@@ -27,7 +28,9 @@ import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
 import com.cmtb.doctorize.utilities.RandomStringGenerator;
 import java.security.Permission;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -79,6 +82,20 @@ public class UserDomainImpl implements UserDomain {
         Permissions schedule = new Permissions();
         schedule.setId(PermissionEnum.SCHEDULE.getPermissionId());
         user.getPermissions().add(schedule);
+    }
+    
+    private UserDisplayObject assembleUserDisplayObject(User userTemp){
+        
+        UserDisplayObject userDisplayObject = new UserDisplayObject();
+        userDisplayObject.setCellphone(userTemp.getCellphone());
+        userDisplayObject.setEmail(userTemp.getEmail());
+        userDisplayObject.setId(userTemp.getId());
+        userDisplayObject.setName(userTemp.getName());
+        userDisplayObject.setPhoto(userTemp.getPhoto());
+        userDisplayObject.setRoleId(userTemp.getRoleId());
+        userDisplayObject.setStatus(userTemp.getStatus());
+        
+        return userDisplayObject;
     }
     
     private User assembleUser(User userTemp){
@@ -306,7 +323,7 @@ public class UserDomainImpl implements UserDomain {
     }
     
     @Override
-    public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject){
+    public User inviteAssistant(AssistantDisplayObject assistantDisplayObject){
         
         String email = (assistantDisplayObject.getEmail() != null ? assistantDisplayObject.getEmail().toLowerCase() : "");
         assistantDisplayObject.setEmail(email);
@@ -337,7 +354,7 @@ public class UserDomainImpl implements UserDomain {
         
         assistantNotifyConfirmationCodeComponent.notify(assistantDisplayObject);
         
-        return true;
+        return user;
     }
 
     @Override
@@ -387,6 +404,19 @@ public class UserDomainImpl implements UserDomain {
         }else{
             throw new UserNotFoundException();
         }
+    }
+    
+    @Override
+    public List<UserDisplayObject> getListByDoctorId(Long doctorId){
+        List<User> users = userDao.getListByDoctorId(doctorId);
+        
+        List<UserDisplayObject> usersDO = new ArrayList<>();
+        
+        for(User userItem: users){
+            usersDO.add(this.assembleUserDisplayObject(userItem));
+        }
+        
+        return usersDO;
     }
     
 }

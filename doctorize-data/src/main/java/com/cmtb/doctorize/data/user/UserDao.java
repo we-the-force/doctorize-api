@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.data.user;
 
 import com.cmtb.doctorize.domain.user.User;
+import java.util.List;
 
 /**
  *
@@ -30,5 +31,7 @@ public interface UserDao {
     public boolean confirmationAssistantAccount(User user);
     
     public Boolean delete(Long userId);
+    
+    public List<User> getListByDoctorId(Long doctorId);
     
 }

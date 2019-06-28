@@ -9,6 +9,8 @@ import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
+import com.cmtb.doctorize.domain.user.UserDisplayObject;
+import java.util.List;
 
 /**
  *
@@ -36,12 +38,14 @@ public interface UserDomain {
     
     public Boolean changePassword(User user);
     
-    public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject);
+    public User inviteAssistant(AssistantDisplayObject assistantDisplayObject);
     
     public Boolean confirmationAccount(ChangePasswordDisplayObject displayObject);
     
     public Boolean confirmationAssistantAccount(AssistantDisplayObject assistantDisplayObject);
     
     public Boolean delete(Long userId);
+    
+    public List<UserDisplayObject> getListByDoctorId(Long doctorId);
     
 }

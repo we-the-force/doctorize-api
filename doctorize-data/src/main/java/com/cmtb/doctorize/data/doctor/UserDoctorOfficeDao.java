@@ -5,7 +5,7 @@
  */
 package com.cmtb.doctorize.data.doctor;
 
-import com.cmtb.doctorize.domain.user.UserDoctorOffice;
+import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 
 /**
  *

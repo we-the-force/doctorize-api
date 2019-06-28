@@ -6,7 +6,7 @@
 package com.cmtb.doctorize.core.doctorOffice;
 
 import com.cmtb.doctorize.data.doctor.UserDoctorOfficeDao;
-import com.cmtb.doctorize.domain.user.UserDoctorOffice;
+import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 

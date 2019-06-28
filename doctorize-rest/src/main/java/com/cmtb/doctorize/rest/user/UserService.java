@@ -15,9 +15,11 @@ import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserConfirmedException;
 import com.cmtb.doctorize.domain.user.UserDisabledException;
+import com.cmtb.doctorize.domain.user.UserDisplayObject;
 import com.cmtb.doctorize.domain.user.UserDuplicateException;
 import com.cmtb.doctorize.domain.user.UserNotFoundException;
 import com.cmtb.doctorize.domain.user.UserNotMatchPasswordException;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -174,6 +176,18 @@ public class UserService {
 
         } catch (UserNotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/user/getListByDoctorId", params = {"doctorId"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getListByDoctorId(@RequestParam Long doctorId) {
+        try {
+
+            List<UserDisplayObject> result = userDomain.getListByDoctorId(doctorId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

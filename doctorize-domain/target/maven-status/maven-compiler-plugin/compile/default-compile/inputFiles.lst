@@ -9,6 +9,7 @@ C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\shared\PermissionEnum.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\shared\Permissions.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\user\AssistantDisplayObject.java
+C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\doctor\UserDoctorOffice.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\shared\ProcessAttachmentEnum.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\shared\RequiredException.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\shared\ResourcesEnum.java
@@ -18,8 +19,8 @@ C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\user\UserCodeForgotPassword.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\utilities\AttachmentDisplayObject.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\user\RoleEnum.java
-C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\user\UserDoctorOffice.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\doctor\DoctorOfficeDisplayObject.java
+C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\user\UserDisplayObject.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\user\UserDuplicateException.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\user\UserConfirmedException.java
 C:\Repositorios\doctorize-api\doctorize-domain\src\main\java\com\cmtb\doctorize\domain\shared\ConfirmationCodeExceptoin.java

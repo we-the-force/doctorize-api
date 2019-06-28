@@ -5,7 +5,10 @@
  */
 package com.cmtb.doctorize.core.user;
 
+import com.cmtb.doctorize.core.doctorOffice.UserDoctorOfficeDomain;
 import com.cmtb.doctorize.core.shared.ClusterValidationAbstract;
+import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
@@ -22,6 +25,9 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     
     @Resource(name = "UserDomain")
     private UserDomain userDomain;
+    
+    @Resource(name = "UserDoctorOfficeDomain")
+    private UserDoctorOfficeDomain userDoctorOfficeDomain;
     
     @Resource(name = "UserResetPasswordClusterValidator")
     private ClusterValidationAbstract userResetPasswordValidatorCluster;
@@ -63,7 +69,18 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     @Transactional
     @Override
     public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject){
-        return userDomain.inviteAssistant(assistantDisplayObject);
+        
+        User user = userDomain.inviteAssistant(assistantDisplayObject);
+        
+        UserDoctorOffice userDoctorOffice = new UserDoctorOffice();
+        userDoctorOffice.setUser(user);
+        DoctorOffice doctorOffice = new DoctorOffice();
+        doctorOffice.setId(assistantDisplayObject.getDoctorId());
+        userDoctorOffice.setDoctorOffice(doctorOffice);
+        
+        userDoctorOfficeDomain.save(userDoctorOffice);
+        
+        return true;
     }
     
     @Transactional

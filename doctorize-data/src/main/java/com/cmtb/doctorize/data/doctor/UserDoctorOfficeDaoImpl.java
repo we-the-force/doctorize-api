@@ -6,7 +6,7 @@
 package com.cmtb.doctorize.data.doctor;
 
 import com.cmtb.doctorize.domain.shared.RequiredException;
-import com.cmtb.doctorize.domain.user.UserDoctorOffice;
+import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientPropertyValueException;

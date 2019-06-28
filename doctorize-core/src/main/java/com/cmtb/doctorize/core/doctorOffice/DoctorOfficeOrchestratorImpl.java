@@ -9,7 +9,7 @@ import com.cmtb.doctorize.domain.doctor.AvailableDays;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
-import com.cmtb.doctorize.domain.user.UserDoctorOffice;
+import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

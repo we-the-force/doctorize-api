@@ -6,8 +6,10 @@
 package com.cmtb.doctorize.data.doctor;
 
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -45,11 +47,25 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
     @Override
     public List<DoctorOffice> getListByUserId(Long userId){
         String hql = "select DO from DoctorOffice DO"
-                + " join fetch user DOU"
-                + " where DOU.id=:userId";
+                + " left join fetch DO.availableDays"
+                + " join fetch DO.userDoctorOffices UDO"
+                + " where UDO.user.id=:userId";
 
         Query query = getSession().createQuery(hql);
+        query.setLong("userId", userId).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         
         return (List<DoctorOffice>) query.list();
+    }
+    
+    @Override
+    public DoctorOffice getById(Long doctorOfficeId){
+        String hql = "select DO from DoctorOffice DO"
+                + " left join fetch DO.availableDays"
+                + " where DO.id=:doctorOfficeId";
+
+        Query query = getSession().createQuery(hql);
+        query.setLong("doctorOfficeId", doctorOfficeId);
+        
+        return (DoctorOffice) query.uniqueResult();
     }
 }

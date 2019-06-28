@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.doctorOffice;
 
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import java.util.List;
 
 /**
@@ -14,8 +15,10 @@ import java.util.List;
  */
 public interface DoctorOfficeDomain {
 
-    public List<DoctorOffice> getListByUserId(Long userId);
+    public List<DoctorOfficeDisplayObject> getListByUserId(Long userId);
 
     public DoctorOffice save(DoctorOffice doctorOffice);
+    
+    public DoctorOfficeDisplayObject getById(Long doctorOfficeId);
     
 }

@@ -79,6 +79,9 @@ public class DoctorOffice implements Serializable{
     @Column(name = "lunchCloseTime")
     private String lunchCloseTime;
     
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorOffice")
+    private Set<UserDoctorOffice> userDoctorOffices = new HashSet<>();
+    
 
     /**
      * @return the id
@@ -274,5 +277,19 @@ public class DoctorOffice implements Serializable{
      */
     public void setLunchCloseTime(String lunchCloseTime) {
         this.lunchCloseTime = lunchCloseTime;
+    }
+
+    /**
+     * @return the userDoctorOffices
+     */
+    public Set<UserDoctorOffice> getUserDoctorOffices() {
+        return userDoctorOffices;
+    }
+
+    /**
+     * @param userDoctorOffices the userDoctorOffices to set
+     */
+    public void setUserDoctorOffices(Set<UserDoctorOffice> userDoctorOffices) {
+        this.userDoctorOffices = userDoctorOffices;
     }
 }

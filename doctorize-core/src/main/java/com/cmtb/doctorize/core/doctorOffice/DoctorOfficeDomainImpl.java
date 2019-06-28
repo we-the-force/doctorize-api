@@ -9,8 +9,10 @@ import com.cmtb.doctorize.data.doctor.AvailableDaysDao;
 import com.cmtb.doctorize.data.doctor.DoctorOfficeDao;
 import com.cmtb.doctorize.domain.doctor.AvailableDays;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
-import com.cmtb.doctorize.domain.user.UserDoctorOffice;
+import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,32 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
     
     @Resource(name = "UserDoctorOfficeDomain")
     private UserDoctorOfficeDomain userDoctorOfficeDomain;
+    
+    private DoctorOfficeDisplayObject doctorOfficeDisplayObjectAssembler(DoctorOffice doctorOfficeItem, Long userId){
+        
+            DoctorOfficeDisplayObject doctorOfficeDisplayObject = new DoctorOfficeDisplayObject();
+            doctorOfficeDisplayObject.setAddress(doctorOfficeItem.getAddress());
+            doctorOfficeDisplayObject.setCloseTime(doctorOfficeItem.getCloseTime());
+            
+            for(AvailableDays dayItem: doctorOfficeItem.getAvailableDays()){
+                doctorOfficeDisplayObject.getDays().add(dayItem.getDay());
+            }
+            
+            doctorOfficeDisplayObject.setEmail(doctorOfficeItem.getEmail());
+            doctorOfficeDisplayObject.setHospital(doctorOfficeItem.getHospital());
+            doctorOfficeDisplayObject.setId(doctorOfficeItem.getId());
+            doctorOfficeDisplayObject.setLat(doctorOfficeItem.getLat());
+            doctorOfficeDisplayObject.setLng(doctorOfficeItem.getLng());
+            doctorOfficeDisplayObject.setLunchCloseTime(doctorOfficeItem.getLunchCloseTime());
+            doctorOfficeDisplayObject.setLunchStartTime(doctorOfficeItem.getLunchStartTime());
+            doctorOfficeDisplayObject.setName(doctorOfficeItem.getName());
+            doctorOfficeDisplayObject.setNumber(doctorOfficeItem.getNumber());
+            doctorOfficeDisplayObject.setPhone(doctorOfficeItem.getPhone());
+            doctorOfficeDisplayObject.setStartTime(doctorOfficeItem.getStartTime());
+            doctorOfficeDisplayObject.setUserId(userId);
+        
+        return doctorOfficeDisplayObject;
+    }
     
     @Override
     public DoctorOffice save(DoctorOffice doctorOffice){
@@ -54,8 +82,25 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
     }
     
     @Override
-    public List<DoctorOffice> getListByUserId(Long userId){
-        return doctorOfficeDao.getListByUserId(userId);
+    public List<DoctorOfficeDisplayObject> getListByUserId(Long userId){
+        
+        List<DoctorOffice> doctorOffices = doctorOfficeDao.getListByUserId(userId);
+        
+        List<DoctorOfficeDisplayObject> doctorOfficesDisplayObject = new ArrayList<>();
+        
+        for(DoctorOffice doctorOfficeItem: doctorOffices){
+            doctorOfficesDisplayObject.add(this.doctorOfficeDisplayObjectAssembler(doctorOfficeItem, userId));
+        }
+        
+        return doctorOfficesDisplayObject;
+    }
+    
+    @Override
+    public DoctorOfficeDisplayObject getById(Long doctorOfficeId){
+        
+        DoctorOffice doctorOffice = doctorOfficeDao.getById(doctorOfficeId);
+        
+        return this.doctorOfficeDisplayObjectAssembler(doctorOffice, null);
     }
     
 }

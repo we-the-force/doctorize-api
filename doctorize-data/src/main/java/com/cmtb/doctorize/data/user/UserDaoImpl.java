@@ -8,6 +8,7 @@ package com.cmtb.doctorize.data.user;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserStatusEnum;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -166,6 +167,20 @@ public class UserDaoImpl implements UserDao {
         int records=query.executeUpdate();
         
         return (records > 0);
+    }
+    
+    @Override
+    public List<User> getListByDoctorId(Long doctorId) {
+        String hql = "select U from User U"
+                + " where U.doctor.id =:doctorId"
+                + " and (U.status=:active or U.status=:unconfirmed)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("doctorId", doctorId);
+        query.setByte("active", UserStatusEnum.ACTIVE.getId());
+        query.setByte("unconfirmed", UserStatusEnum.UNCONFIRMED.getId());
+
+        return (List<User>) query.list();
     }
     
 }
