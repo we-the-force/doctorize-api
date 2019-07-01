@@ -70,12 +70,14 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     @Override
     public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject){
         
+        
+        
         User user = userDomain.inviteAssistant(assistantDisplayObject);
         
         UserDoctorOffice userDoctorOffice = new UserDoctorOffice();
         userDoctorOffice.setUser(user);
         DoctorOffice doctorOffice = new DoctorOffice();
-        doctorOffice.setId(assistantDisplayObject.getDoctorId());
+        doctorOffice.setId(assistantDisplayObject.getDoctorOfficeId());
         userDoctorOffice.setDoctorOffice(doctorOffice);
         
         userDoctorOfficeDomain.save(userDoctorOffice);

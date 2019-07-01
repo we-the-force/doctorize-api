@@ -27,7 +27,6 @@ import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
 import com.cmtb.doctorize.utilities.RandomStringGenerator;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

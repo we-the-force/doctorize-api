@@ -5,7 +5,6 @@
  */
 package com.cmtb.doctorize.domain.doctor;
 
-import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.user.User;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -32,7 +31,7 @@ public class UserDoctorOffice implements Serializable{
     private Long id;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`userId`")
+    @JoinColumn(name = "`userId`", nullable = true)
     private User user;
     
     @ManyToOne(fetch = FetchType.LAZY)

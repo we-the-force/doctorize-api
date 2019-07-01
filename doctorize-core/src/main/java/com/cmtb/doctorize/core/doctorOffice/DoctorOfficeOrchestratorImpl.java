@@ -60,13 +60,13 @@ public class DoctorOfficeOrchestratorImpl implements DoctorOfficeOrchestrator {
         newOffice.setCloseTime(doctorOfficeDisplayObject.getCloseTime());
         
         
-        if (!doctorOfficeDisplayObject.getLunchStartTime().contains(":")) {
+        if (doctorOfficeDisplayObject.getLunchStartTime() != null && !doctorOfficeDisplayObject.getLunchStartTime().contains(":")) {
             throw new IllegalArgumentException("Hora de inicio de comida incorrecta");
         }
         
         newOffice.setLunchStartTime(doctorOfficeDisplayObject.getLunchStartTime());
 
-        if (!doctorOfficeDisplayObject.getLunchCloseTime().contains(":")) {
+        if (doctorOfficeDisplayObject.getLunchCloseTime() != null && !doctorOfficeDisplayObject.getLunchCloseTime().contains(":")) {
             throw new IllegalArgumentException("Hora de fin de comida incorrecta");
         }
         
