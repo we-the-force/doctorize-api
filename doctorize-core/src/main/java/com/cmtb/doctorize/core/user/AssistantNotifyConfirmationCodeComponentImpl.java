@@ -24,10 +24,10 @@ public class AssistantNotifyConfirmationCodeComponentImpl implements AssistantNo
     @Value("${doctorize.base.url.api}")
     private String BASE_URL_API;
     
-    @Value("${doctorize.url.confirm_account}")
+    @Value("${doctorize.url.confirm_account_assistant}")
     private String URL_CONFIRM_PASS;
     
-    @Value("${doctorize.url.confirm_account2}")
+    @Value("${doctorize.url.confirm_account_assistant2}")
     private String URL_CONFIRM_PASS2;
 
     @Override
@@ -41,7 +41,7 @@ public class AssistantNotifyConfirmationCodeComponentImpl implements AssistantNo
         content.put("code", assistantDisplayObject.getCode());
         content.put("user_name", assistantDisplayObject.getName());
         content.put("user_email", assistantDisplayObject.getEmail());
-        content.put("url_confirm_password", URL_CONFIRM_PASS + assistantDisplayObject.getEmail() + URL_CONFIRM_PASS2 + assistantDisplayObject.getCode());
+        content.put("url_confirm_account", URL_CONFIRM_PASS + assistantDisplayObject.getEmail() + URL_CONFIRM_PASS2 + assistantDisplayObject.getCode());
         
         email.setContent(content);
 
