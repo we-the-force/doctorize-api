@@ -23,6 +23,9 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
     @Resource(name = "MedicalAppointmentDao")
     private MedicalAppointmentDao medicalAppointmentDao;
     
+    @Resource(name="PatientNotifyNewAppointmentComponent")
+    private PatientNotifyNewAppointmentComponent patientNotifyNewAppointmentComponent;
+    
     private MedicalAppointmentDisplayObject assemblerMedicalAppointmentDisplayObject(MedicalAppointment medicalAppointment){
         MedicalAppointmentDisplayObject medicalAppointmentDO = new MedicalAppointmentDisplayObject();
         
@@ -60,6 +63,8 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
         MedicalAppointment medicalAppointment = assemblerMedicalAppointment(medicalAppointmentDO);
         
         medicalAppointmentDao.save(medicalAppointment);
+        
+        patientNotifyNewAppointmentComponent.notify(medicalAppointmentDO);
         
         return assemblerMedicalAppointmentDisplayObject(medicalAppointment);
     }
