@@ -48,7 +48,7 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
         doctor.setId(medicalAppointmentDO.getDoctorId());
         medicalAppointment.setDoctor(doctor);
         DoctorOffice doctorOffice = new DoctorOffice();
-        doctorOffice.setId(medicalAppointmentDO.getDoctorId());
+        doctorOffice.setId(medicalAppointmentDO.getDoctorOfficeId());
         medicalAppointment.setDoctorOffice(doctorOffice);
         medicalAppointment.setEmail(medicalAppointmentDO.getEmail());
         medicalAppointment.setName(medicalAppointmentDO.getName());

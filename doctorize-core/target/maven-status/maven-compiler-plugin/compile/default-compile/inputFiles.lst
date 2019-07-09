@@ -1,3 +1,4 @@
+C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\medicalAppointment\PatientNotifyNewAppointmentComponentImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserAttachmentImagesComponent.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\Validation.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserOrchestratorImpl.java
@@ -6,6 +7,7 @@ C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doct
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\doctorOffice\DoctorOfficeDomain.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\AttachmentComponent.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserResetPasswordClusterValidator.java
+C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\medicalAppointment\MedicalAppointmentOrchestrator.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\ClusterValidationAbstract.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserNotifyCodeChangePasswordComponent.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\SecurityComponentImpl.java
@@ -15,14 +17,18 @@ C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doct
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserNotifyConfirmationCodeComponentImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\MatchPasswordBusinessRule.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\AttachmentComponentImpl.java
+C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\medicalAppointment\PatientNotifyNewAppointmentComponent.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserChangePasswordClusterValidator.java
+C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\medicalAppointment\MedicalAppointmentDomainImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserNotifyConfirmationCodeComponent.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\specialty\SpecialtyDomainImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserDomainImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\doctorOffice\UserDoctorOfficeDomainImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserOrchestrator.java
+C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\medicalAppointment\MedicalAppointmentDomain.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\shared\SecurityComponent.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\AssistantNotifyConfirmationCodeComponentImpl.java
+C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\medicalAppointment\MedicalAppointmentOrchestratorImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\doctorOffice\DoctorOfficeOrchestratorImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\user\UserDomain.java
 C:\Personal\Repositorio\doctorize-api\doctorize-core\src\main\java\com\cmtb\doctorize\core\doctorOffice\DoctorOfficeOrchestrator.java
