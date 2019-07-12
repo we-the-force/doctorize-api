@@ -68,4 +68,29 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
         
         return (DoctorOffice) query.uniqueResult();
     }
+    
+    @Override
+    public boolean update(DoctorOffice doctorOffice){
+        
+        String hql = "update DoctorOffice DO"
+                + " set DO.name=:name, DO.email=:email,"
+                + " DO.phone=:phone, DO.hospital=:hospital,"
+                + " DO.number=:number, DO.address=:address,"
+                + " DO.lat=:lat, DO.lng=:lng,"
+                + " DO.startTime, DO.closeTime,"
+                + " DO.lunchStartTime=:lunchStartTime,"
+                + " DO.lunchCloseTime=:lunchCloseTime"
+                + " where (DO.id=:doctorOfficeId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setString("name", user.getName());
+        query.setString("email", user.getEmail());
+        query.setString("cellphone", user.getCellphone());
+        
+        query.setLong("userId", user.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
 }

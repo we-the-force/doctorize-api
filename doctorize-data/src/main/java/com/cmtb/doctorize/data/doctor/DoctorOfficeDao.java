@@ -20,4 +20,6 @@ public interface DoctorOfficeDao {
     
     public DoctorOffice getById(Long doctorOfficeId);
     
+    public boolean update(DoctorOffice doctorOffice);
+    
 }
