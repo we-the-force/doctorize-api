@@ -192,4 +192,16 @@ public class UserService {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @RequestMapping(value = "/user", params = {"userId"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getById(@RequestParam Long userId) {
+        try {
+
+            UserDisplayObject result = userDomain.getById(userId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -43,7 +43,7 @@ public class MedicalAppointment implements Serializable {
     @Column(name = "`phone`")
     private String phone;
     
-    @Column(name = "`date`", columnDefinition = "timestamp with time zone")
+    @Column(name = "`date`")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date date;
     

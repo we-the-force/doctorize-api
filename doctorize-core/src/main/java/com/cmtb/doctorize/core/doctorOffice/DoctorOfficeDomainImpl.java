@@ -67,6 +67,7 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
         if(isNew){
             doctorOfficeDao.save(doctorOffice);
         }else{
+            doctorOfficeDao.update(doctorOffice);
             availableDaysDao.deleteAvailableDaysByDoctorOffice(doctorOffice.getId());
         }
         

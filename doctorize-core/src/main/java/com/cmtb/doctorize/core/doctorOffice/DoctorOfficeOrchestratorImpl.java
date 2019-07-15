@@ -86,14 +86,16 @@ public class DoctorOfficeOrchestratorImpl implements DoctorOfficeOrchestrator {
         
         doctorOfficeDomain.save(newOffice);
         
+        if(doctorOfficeDisplayObject.getId() == null){
+            UserDoctorOffice userDoctorOffice = new UserDoctorOffice();
+            User user = new User();
+            user.setId(doctorOfficeDisplayObject.getUserId());
+            userDoctorOffice.setUser(user);
+            userDoctorOffice.setDoctorOffice(newOffice);
+
+            userDoctorOfficeDomain.save(userDoctorOffice);
+        }
         
-        UserDoctorOffice userDoctorOffice = new UserDoctorOffice();
-        User user = new User();
-        user.setId(doctorOfficeDisplayObject.getUserId());
-        userDoctorOffice.setUser(user);
-        userDoctorOffice.setDoctorOffice(newOffice);
-        
-        userDoctorOfficeDomain.save(userDoctorOffice);
         
         return newOffice;
     }

@@ -59,15 +59,20 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean update(User user){
         
-        String hql = "update User U"
-                + " set U.name=:name, U.email=:email,"
-                + " U.cellphone=:cellphone"
-                + " where (U.id=:userId)";
+        StringBuilder builder = new StringBuilder();
+        builder.append("update User U");
+        builder.append(" set U.name=:name, U.email=:email,");
+        builder.append(" U.cellphone=:cellphone,");
+        builder.append(" U.specialty.id=:specialtyId");
+        builder.append(" where (U.id=:userId)");
+        
+        String hql = builder.toString();
 
         Query query = this.getSession().createQuery(hql);
         query.setString("name", user.getName());
         query.setString("email", user.getEmail());
         query.setString("cellphone", user.getCellphone());
+        query.setLong("specialtyId", user.getSpecialty().getId());
         
         query.setLong("userId", user.getId());
         

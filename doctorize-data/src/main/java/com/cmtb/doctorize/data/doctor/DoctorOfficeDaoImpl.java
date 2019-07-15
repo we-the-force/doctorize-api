@@ -72,22 +72,48 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
     @Override
     public boolean update(DoctorOffice doctorOffice){
         
-        String hql = "update DoctorOffice DO"
-                + " set DO.name=:name, DO.email=:email,"
-                + " DO.phone=:phone, DO.hospital=:hospital,"
-                + " DO.number=:number, DO.address=:address,"
-                + " DO.lat=:lat, DO.lng=:lng,"
-                + " DO.startTime, DO.closeTime,"
-                + " DO.lunchStartTime=:lunchStartTime,"
-                + " DO.lunchCloseTime=:lunchCloseTime"
-                + " where (DO.id=:doctorOfficeId)";
-
-        Query query = this.getSession().createQuery(hql);
-        query.setString("name", user.getName());
-        query.setString("email", user.getEmail());
-        query.setString("cellphone", user.getCellphone());
+        StringBuilder builder = new StringBuilder();
+        builder.append("update DoctorOffice DO");
+        builder.append(" set DO.name=:name,");
+        builder.append(" DO.email=:email,");
+        builder.append(" DO.phone=:phone,");
+        builder.append(" DO.hospital=:hospital,");
+        builder.append(" DO.number=:number,");
+        builder.append(" DO.address=:address,");
+        if(doctorOffice.getLat() != null){
+            builder.append(" DO.lat=:lat,");
+        }
+        if(doctorOffice.getLng() != null){
+            builder.append(" DO.lng=:lng,");
+        }
+        builder.append(" DO.startTime=:startTime,");
+        builder.append(" DO.closeTime=:closeTime,");
+        builder.append(" DO.lunchStartTime=:lunchStartTime,");
+        builder.append(" DO.lunchCloseTime=:lunchCloseTime");
+        builder.append(" where (DO.id=:doctorOfficeId)");
         
-        query.setLong("userId", user.getId());
+        String hql = builder.toString();
+
+        
+        Query query = this.getSession().createQuery(hql);
+        query.setString("name", doctorOffice.getName());
+        query.setString("email", doctorOffice.getEmail());
+        query.setString("phone", doctorOffice.getPhone());
+        query.setString("hospital", doctorOffice.getHospital());
+        query.setString("number", doctorOffice.getNumber());
+        query.setString("address", doctorOffice.getAddress());
+        if(doctorOffice.getLat() != null){
+            query.setDouble("lat", doctorOffice.getLat());
+        }
+        if(doctorOffice.getLng() != null){
+            query.setDouble("lng", doctorOffice.getLng());
+        }
+        query.setString("startTime", doctorOffice.getStartTime());
+        query.setString("closeTime", doctorOffice.getCloseTime());
+        query.setString("lunchStartTime", doctorOffice.getLunchStartTime());
+        query.setString("lunchCloseTime", doctorOffice.getLunchCloseTime());
+        
+        query.setLong("doctorOfficeId", doctorOffice.getId());
         
         int records=query.executeUpdate();
         
