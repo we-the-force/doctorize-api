@@ -7,6 +7,7 @@ package com.cmtb.doctorize.core.patient;
 
 import com.cmtb.doctorize.data.patient.PatientDao;
 import com.cmtb.doctorize.domain.patient.Patient;
+import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,24 @@ public class PatientDomainImpl implements PatientDomain {
     
     @Resource(name = "PatientAttachmentImagesComponent")
     private PatientAttachmentImagesComponent patientAttachmentImagesComponent;
+    
+    private PatientDisplayObject assemblerPatientDisplayObject(Patient patient){
+        PatientDisplayObject patientDO = new PatientDisplayObject();
+        patientDO.setId(patient.getId());
+        patientDO.setBirthdate(patient.getBirthdate());
+        patientDO.setBloodPressure(patient.getBloodPressure());
+        patientDO.setBloodType(patient.getBloodType());
+        patientDO.setCellphone(patient.getCellphone());
+        patientDO.setEmail(patient.getEmail());
+        patientDO.setGender(patient.getGender());
+        patientDO.setHeight(patient.getHeight());
+        patientDO.setMaritalStatus(patient.getMaritalStatus());
+        patientDO.setName(patient.getName());
+        patientDO.setPhoto(patient.getPhoto());
+        patientDO.setWeight(patient.getWeight());
+        
+        return patientDO;
+    }
     
     @Override
     public Patient save(Patient patient){
@@ -46,6 +65,12 @@ public class PatientDomainImpl implements PatientDomain {
         
         patient.setImageData("");
         return patient;
+    }
+    
+    @Override
+    public PatientDisplayObject getById(Long patientId){
+        Patient patient = patientDao.getPatientById(patientId);
+        return this.assemblerPatientDisplayObject(patient);
     }
     
 }
