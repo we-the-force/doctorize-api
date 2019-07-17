@@ -8,7 +8,9 @@ C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doct
 C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\doctor\UserDoctorOfficeDaoImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\doctor\DoctorOfficeDao.java
 C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\user\UserDao.java
+C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\patient\PatientDao.java
 C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\medicalAppointment\MedicalAppointmentDao.java
 C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\doctor\DoctorOfficeDaoImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\medicalAppointment\MedicalAppointmentDaoImpl.java
 C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\doctor\AvailableDaysDao.java
+C:\Personal\Repositorio\doctorize-api\doctorize-data\src\main\java\com\cmtb\doctorize\data\patient\PatientDaoImpl.java

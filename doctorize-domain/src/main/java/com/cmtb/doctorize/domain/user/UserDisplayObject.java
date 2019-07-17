@@ -5,7 +5,10 @@
  */
 package com.cmtb.doctorize.domain.user;
 
+import com.cmtb.doctorize.domain.shared.Permissions;
 import com.cmtb.doctorize.domain.specialty.Specialty;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -20,6 +23,8 @@ public class UserDisplayObject {
     private Byte roleId;
     private String photo;
     private Byte status;
+    private Specialty specialty;
+    private Set<Permissions> permissions = new HashSet<>();
 
     /**
      * @return the id
@@ -117,5 +122,33 @@ public class UserDisplayObject {
      */
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    /**
+     * @return the specialty
+     */
+    public Specialty getSpecialty() {
+        return specialty;
+    }
+
+    /**
+     * @param specialty the specialty to set
+     */
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
+    }
+
+    /**
+     * @return the permissions
+     */
+    public Set<Permissions> getPermissions() {
+        return permissions;
+    }
+
+    /**
+     * @param permissions the permissions to set
+     */
+    public void setPermissions(Set<Permissions> permissions) {
+        this.permissions = permissions;
     }
 }

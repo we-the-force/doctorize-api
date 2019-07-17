@@ -48,4 +48,6 @@ public interface UserDomain {
     
     public List<UserDisplayObject> getListByDoctorId(Long doctorId);
     
+    public UserDisplayObject getById(Long userId);
+    
 }

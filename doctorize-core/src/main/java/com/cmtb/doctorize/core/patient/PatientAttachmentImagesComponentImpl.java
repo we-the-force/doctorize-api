@@ -5,12 +5,10 @@
  */
 package com.cmtb.doctorize.core.patient;
 
-import com.cmtb.doctorize.core.user.*;
 import com.cmtb.doctorize.core.shared.AttachmentComponent;
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.shared.ModuleEnum;
 import com.cmtb.doctorize.domain.shared.ProcessAttachmentEnum;
-import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserPhotoThumbnailEnum;
 import com.cmtb.doctorize.domain.utilities.AttachmentDisplayObject;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;

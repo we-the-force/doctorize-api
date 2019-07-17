@@ -94,6 +94,19 @@ public class UserDomainImpl implements UserDomain {
         userDisplayObject.setRoleId(userTemp.getRoleId());
         userDisplayObject.setStatus(userTemp.getStatus());
         
+        if(userTemp.getSpecialty() != null){
+            Specialty specialty = new Specialty();
+            specialty.setId(userTemp.getSpecialty().getId());
+            specialty.setName(userTemp.getSpecialty().getName());
+            userDisplayObject.setSpecialty(specialty);
+        }
+        
+        if(userTemp.getPermissions() != null){
+            for(Permissions permissionItem: userTemp.getPermissions()){
+                userDisplayObject.getPermissions().add(permissionItem);
+            }
+        }
+        
         return userDisplayObject;
     }
     
@@ -416,6 +429,12 @@ public class UserDomainImpl implements UserDomain {
         }
         
         return usersDO;
+    }
+    
+    @Override
+    public UserDisplayObject getById(Long userId){
+        User user = userDao.getUserById(userId);
+        return this.assembleUserDisplayObject(user);
     }
     
 }

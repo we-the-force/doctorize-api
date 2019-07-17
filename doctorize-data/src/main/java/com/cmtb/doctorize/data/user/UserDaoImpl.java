@@ -113,6 +113,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(Long userId) {
         String hql = "select U from User U"
+                + " left join fetch U.specialty US"
+                + " left join fetch U.permissions UP"
                 + " where U.id =:userId";
 
         Query query = this.getSession().createQuery(hql);
