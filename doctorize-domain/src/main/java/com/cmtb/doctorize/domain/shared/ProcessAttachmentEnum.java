@@ -16,7 +16,8 @@ import java.util.Map;
  * @author CMTB
  */
 public enum ProcessAttachmentEnum {
-    USER(1, "userdetails", "png-", (2L * 1024L * 1024L));
+    USER(1, "userdetails", "png-", (2L * 1024L * 1024L)),
+    PATIENT(2, "patient", "png-", (2L * 1024L * 1024L));
 
     private final String processName;
     private final Integer processId;
@@ -63,6 +64,9 @@ public enum ProcessAttachmentEnum {
         processAttachments.put(
                 String.valueOf(ProcessAttachmentEnum.USER.processId),
                 ProcessAttachmentEnum.USER);
+        processAttachments.put(
+                String.valueOf(ProcessAttachmentEnum.PATIENT.processId),
+                ProcessAttachmentEnum.PATIENT);
 
     }
 

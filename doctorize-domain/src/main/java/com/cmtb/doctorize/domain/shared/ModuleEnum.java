@@ -10,7 +10,8 @@ package com.cmtb.doctorize.domain.shared;
  * @author CMTB
  */
 public enum ModuleEnum {
-    USER("user");
+    USER("user"),
+    PATIENT("patient");
 
     private final String module;
 
