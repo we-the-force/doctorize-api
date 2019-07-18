@@ -7,6 +7,10 @@ package com.cmtb.doctorize.core.patient;
 
 import com.cmtb.doctorize.data.patient.PatientDao;
 import com.cmtb.doctorize.domain.patient.Patient;
+import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
+import com.cmtb.doctorize.domain.shared.BloodTypeEnum;
+import com.cmtb.doctorize.domain.shared.GenderEnum;
+import com.cmtb.doctorize.domain.shared.MaritalStatusEnum;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -46,6 +50,17 @@ public class PatientDomainImpl implements PatientDomain {
         
         patient.setImageData("");
         return patient;
+    }
+    
+    @Override
+    public PatientContainerDisplayObject loadCollectionPatient(Long patientId){
+        PatientContainerDisplayObject container = new PatientContainerDisplayObject();
+        
+        container.setGenders(GenderEnum.getListGenders());
+        container.setBloodTypes(BloodTypeEnum.getListBloodType());
+        container.setMaritalStatus(MaritalStatusEnum.getListMaritalStatus());
+        
+        return container;
     }
     
 }
