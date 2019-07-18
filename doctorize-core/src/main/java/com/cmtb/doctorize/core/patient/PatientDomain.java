@@ -7,6 +7,7 @@ package com.cmtb.doctorize.core.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
+import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
 
 /**
  *
@@ -17,5 +18,7 @@ public interface PatientDomain {
     public Patient save(Patient patient);
     
     public PatientDisplayObject getById(Long patientId);
+    
+    public PatientContainerDisplayObject loadCollectionPatient(Long patientId);
     
 }

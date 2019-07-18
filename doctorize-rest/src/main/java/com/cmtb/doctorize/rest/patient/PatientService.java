@@ -8,6 +8,7 @@ package com.cmtb.doctorize.rest.patient;
 import com.cmtb.doctorize.core.patient.PatientDomain;
 import com.cmtb.doctorize.core.patient.PatientOrchestrator;
 import com.cmtb.doctorize.domain.patient.Patient;
+import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,18 @@ public class PatientService {
         try {
 
             PatientDisplayObject result = patientDomain.getById(patientId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/patientContainer/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPatientContainerById(@PathVariable("id") Long patientId) {
+        try {
+
+            PatientContainerDisplayObject result = patientDomain.loadCollectionPatient(patientId);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {
