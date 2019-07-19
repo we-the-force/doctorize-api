@@ -437,4 +437,9 @@ public class UserDomainImpl implements UserDomain {
         return this.assembleUserDisplayObject(user);
     }
     
+    @Override
+    public Boolean deleteAssistant(Long assistantId){
+        return userDao.deleteAssistant(assistantId);
+    }
+    
 }

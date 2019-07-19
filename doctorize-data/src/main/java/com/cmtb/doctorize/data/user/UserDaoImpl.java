@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.data.user;
 
 import com.cmtb.doctorize.domain.shared.RequiredException;
+import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserStatusEnum;
 import java.util.List;
@@ -188,6 +189,20 @@ public class UserDaoImpl implements UserDao {
         query.setByte("unconfirmed", UserStatusEnum.UNCONFIRMED.getId());
 
         return (List<User>) query.list();
+    }
+    
+    @Override
+    public Boolean deleteAssistant(Long assistantId){
+        String hql = "delete from User U "
+                + " where (U.id=:assistantId) and U.roleId=:roleId";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("assistantId", assistantId);
+        query.setByte("roleId", RoleEnum.ASSISTANT.getId());
+
+        int affected = query.executeUpdate();
+        
+        return (affected > 0);
     }
     
 }

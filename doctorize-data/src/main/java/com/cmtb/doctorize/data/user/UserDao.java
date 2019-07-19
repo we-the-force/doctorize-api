@@ -34,4 +34,6 @@ public interface UserDao {
     
     public List<User> getListByDoctorId(Long doctorId);
     
+    public Boolean deleteAssistant(Long assistantId);
+    
 }

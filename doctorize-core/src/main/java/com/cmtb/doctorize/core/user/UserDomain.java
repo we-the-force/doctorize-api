@@ -50,4 +50,6 @@ public interface UserDomain {
     
     public UserDisplayObject getById(Long userId);
     
+    public Boolean deleteAssistant(Long assistantId);
+    
 }

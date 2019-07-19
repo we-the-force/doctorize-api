@@ -205,4 +205,19 @@ public class UserService {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @RequestMapping(value = "/assistant/{assistantId}/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAssistant(@PathVariable("assistantId") Long assistantId) {
+        try {
+
+            Boolean result = userOrchestrator.deleteAssistant(assistantId);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (UserNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

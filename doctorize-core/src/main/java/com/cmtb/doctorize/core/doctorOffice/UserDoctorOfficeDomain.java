@@ -15,4 +15,6 @@ public interface UserDoctorOfficeDomain {
 
     public UserDoctorOffice save(UserDoctorOffice userDoctorOffice);
     
+    public Boolean deleteByUserId(Long userId);
+    
 }

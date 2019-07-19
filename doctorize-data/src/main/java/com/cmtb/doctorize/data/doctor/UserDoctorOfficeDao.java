@@ -15,4 +15,6 @@ public interface UserDoctorOfficeDao {
 
     public UserDoctorOffice save(UserDoctorOffice userDoctorOffice);
     
+    public Boolean deleteByUserId(Long userId);
+    
 }

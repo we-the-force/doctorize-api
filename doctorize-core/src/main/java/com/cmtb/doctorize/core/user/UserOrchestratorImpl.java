@@ -104,4 +104,13 @@ public class UserOrchestratorImpl implements UserOrchestrator {
         return userDomain.delete(userId);
     }
     
+    @Transactional
+    @Override
+    public Boolean deleteAssistant(Long assistantId){
+        
+        userDoctorOfficeDomain.deleteByUserId(assistantId);
+        
+        return userDomain.deleteAssistant(assistantId);
+    }
+    
 }

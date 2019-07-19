@@ -24,4 +24,9 @@ public class UserDoctorOfficeDomainImpl implements UserDoctorOfficeDomain {
     public UserDoctorOffice save(UserDoctorOffice userDoctorOffice){
         return userDoctorOfficeDao.save(userDoctorOffice);
     }
+    
+    @Override
+    public Boolean deleteByUserId(Long userId){
+        return userDoctorOfficeDao.deleteByUserId(userId);
+    }
 }

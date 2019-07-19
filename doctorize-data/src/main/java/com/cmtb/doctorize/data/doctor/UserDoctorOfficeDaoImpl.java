@@ -7,6 +7,7 @@ package com.cmtb.doctorize.data.doctor;
 
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientPropertyValueException;
@@ -38,5 +39,18 @@ public class UserDoctorOfficeDaoImpl implements UserDoctorOfficeDao {
         } catch (TransientPropertyValueException e) {
             throw new RequiredException(e.getPropertyName());
         }
+    }
+    
+    @Override
+    public Boolean deleteByUserId(Long userId){
+        String hql = "delete from UserDoctorOffice UDO "
+                + " where (UDO.user.id=:userId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("userId", userId);
+
+        int affected = query.executeUpdate();
+        
+        return (affected > 0);
     }
 }
