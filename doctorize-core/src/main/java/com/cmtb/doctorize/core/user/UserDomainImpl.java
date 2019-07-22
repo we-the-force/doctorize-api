@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
+import org.hibernate.LazyInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -85,7 +86,8 @@ public class UserDomainImpl implements UserDomain {
     
     private UserDisplayObject assembleUserDisplayObject(User userTemp){
         
-        UserDisplayObject userDisplayObject = new UserDisplayObject();
+        UserDisplayObject userDisplayObject = new UserDisplayObject();        
+            
         userDisplayObject.setCellphone(userTemp.getCellphone());
         userDisplayObject.setEmail(userTemp.getEmail());
         userDisplayObject.setId(userTemp.getId());
@@ -93,7 +95,7 @@ public class UserDomainImpl implements UserDomain {
         userDisplayObject.setPhoto(userTemp.getPhoto());
         userDisplayObject.setRoleId(userTemp.getRoleId());
         userDisplayObject.setStatus(userTemp.getStatus());
-        
+
         if(userTemp.getSpecialty() != null){
             Specialty specialty = new Specialty();
             specialty.setId(userTemp.getSpecialty().getId());
@@ -101,11 +103,17 @@ public class UserDomainImpl implements UserDomain {
             userDisplayObject.setSpecialty(specialty);
         }
         
-        if(userTemp.getPermissions() != null){
-            for(Permissions permissionItem: userTemp.getPermissions()){
-                userDisplayObject.getPermissions().add(permissionItem);
+        try{
+            if(userTemp.getPermissions() != null && userTemp.getPermissions().size() > 0){
+                for(Permissions permissionItem: userTemp.getPermissions()){
+                    userDisplayObject.getPermissions().add(permissionItem);
+                }
             }
+        }catch(LazyInitializationException ex){
+            
         }
+        
+        
         
         return userDisplayObject;
     }
