@@ -17,7 +17,7 @@ import com.cmtb.doctorize.domain.user.UserConfirmedException;
 import com.cmtb.doctorize.domain.user.UserDisabledException;
 import com.cmtb.doctorize.domain.user.UserDisplayObject;
 import com.cmtb.doctorize.domain.user.UserDuplicateException;
-import com.cmtb.doctorize.domain.user.UserNotFoundException;
+import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.user.UserNotMatchPasswordException;
 import java.util.List;
 import javax.annotation.Resource;
@@ -53,7 +53,7 @@ public class UserService {
 
             return new ResponseEntity(result, HttpStatus.OK);
             
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (UserDisabledException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.UNAUTHORIZED);
@@ -70,7 +70,7 @@ public class UserService {
 
             return new ResponseEntity(result, HttpStatus.OK);
             
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -85,7 +85,7 @@ public class UserService {
             
             return new ResponseEntity(result, HttpStatus.OK);
             
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         } catch (UserNotMatchPasswordException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
@@ -101,7 +101,7 @@ public class UserService {
             Boolean result = userOrchestrator.resetPassword(changePasswordDisplayObject);
             
             return new ResponseEntity(result, HttpStatus.OK);
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -140,7 +140,7 @@ public class UserService {
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (UserConfirmedException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ConfirmationCodeExceptoin ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
@@ -158,7 +158,7 @@ public class UserService {
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (UserConfirmedException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ConfirmationCodeExceptoin ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
@@ -175,15 +175,15 @@ public class UserService {
             
             return new ResponseEntity(result, HttpStatus.OK);
 
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     
-    @RequestMapping(value = "/user/getListByDoctorId", params = {"doctorId"}, method = RequestMethod.GET)
-    public ResponseEntity<?> getListByDoctorId(@RequestParam Long doctorId) {
+    @RequestMapping(value = "/doctors/{doctorId}/assistants", method = RequestMethod.GET)
+    public ResponseEntity<?> getListByDoctorId(@PathVariable("doctorId") Long doctorId) {
         try {
 
             List<UserDisplayObject> result = userDomain.getListByDoctorId(doctorId);
@@ -214,7 +214,7 @@ public class UserService {
             
             return new ResponseEntity(result, HttpStatus.OK);
 
-        } catch (UserNotFoundException ex) {
+        } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);

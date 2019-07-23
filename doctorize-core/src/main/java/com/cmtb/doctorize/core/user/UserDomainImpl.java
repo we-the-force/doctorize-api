@@ -5,9 +5,11 @@
  */
 package com.cmtb.doctorize.core.user;
 
+import com.cmtb.doctorize.core.doctorOffice.UserDoctorOfficeDomain;
 import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
+import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import com.cmtb.doctorize.domain.shared.ConfirmationCodeExceptoin;
 import com.cmtb.doctorize.domain.shared.PermissionEnum;
 import com.cmtb.doctorize.domain.shared.Permissions;
@@ -21,8 +23,8 @@ import com.cmtb.doctorize.domain.user.UserCodeForgotPassword;
 import com.cmtb.doctorize.domain.user.UserConfirmedException;
 import com.cmtb.doctorize.domain.user.UserDisabledException;
 import com.cmtb.doctorize.domain.user.UserDisplayObject;
-import com.cmtb.doctorize.domain.user.UserNotFoundException;
-import com.cmtb.doctorize.domain.user.UserStatusEnum;
+import com.cmtb.doctorize.domain.shared.NotFoundException;
+import com.cmtb.doctorize.domain.shared.StatusEnum;
 import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
@@ -63,6 +65,9 @@ public class UserDomainImpl implements UserDomain {
     @Resource(name = "UserAttachmentImagesComponent")
     private UserAttachmentImagesComponent userAttachmentImagesComponent;
     
+    @Resource(name = "UserDoctorOfficeDomain")
+    private UserDoctorOfficeDomain userDoctorOfficeDomain;
+    
     @Autowired
     private SecurityComponent securityComponent;
     
@@ -82,6 +87,13 @@ public class UserDomainImpl implements UserDomain {
         Permissions schedule = new Permissions();
         schedule.setId(PermissionEnum.SCHEDULE.getPermissionId());
         user.getPermissions().add(schedule);
+    }
+    
+    private UserDisplayObject assemblerUserDoctorOfficeTOUserDisplayObect(UserDoctorOffice userDoctorOffice){
+        UserDisplayObject userDO = this.assembleUserDisplayObject(userDoctorOffice.getUser());
+        userDO.setDoctorOfficeName(userDoctorOffice.getDoctorOffice().getName());
+        
+        return userDO;
     }
     
     private UserDisplayObject assembleUserDisplayObject(User userTemp){
@@ -200,17 +212,17 @@ public class UserDomainImpl implements UserDomain {
         user = this.getUserByEmail(loginDisplayObject.getEmail());
         
         if (user == null) {
-            throw new UserNotFoundException();
-        }else if(user.getStatus().equals(UserStatusEnum.DISABLE.getId())){
+            throw new NotFoundException();
+        }else if(user.getStatus().equals(StatusEnum.DISABLE.getId())){
             throw new UserDisabledException();
-        }else if(user.getStatus().equals(UserStatusEnum.UNCONFIRMED.getId())){
+        }else if(user.getStatus().equals(StatusEnum.UNCONFIRMED.getId())){
             throw new UserUnconfirmedException();
         }
 
         Boolean match = passwordEncrypt.checkPassword(loginDisplayObject.getPassword(), user.getPassword());
 
         if (!match) {
-            throw new UserNotFoundException();
+            throw new NotFoundException();
         }
         
 //        String token = securityComponent.createToken(user);
@@ -239,7 +251,7 @@ public class UserDomainImpl implements UserDomain {
             this.createCodeChangePassword(displayObject);
             userNotifyCodeChangePasswordComponent.notify(displayObject);
         }else{
-            throw new UserNotFoundException();
+            throw new NotFoundException();
         }
         return exist;
     }
@@ -252,7 +264,7 @@ public class UserDomainImpl implements UserDomain {
         if(user.getId() == null){
             String hash = passwordEncrypt.hashPassword(user.getPassword());
             user.setPassword(hash);
-            user.setStatus(UserStatusEnum.UNCONFIRMED.getId());
+            user.setStatus(StatusEnum.UNCONFIRMED.getId());
             
             char[] code = RandomStringGenerator.generate();
             user.setConfirmationCode(new String(code));
@@ -357,7 +369,7 @@ public class UserDomainImpl implements UserDomain {
         user.setDoctor(doctor);
         user.setRoleId(RoleEnum.ASSISTANT.getId());
         user.setPassword("temp");
-        user.setStatus(UserStatusEnum.UNCONFIRMED.getId());
+        user.setStatus(StatusEnum.UNCONFIRMED.getId());
         
         if(!assistantDisplayObject.getPermissions().isEmpty()){
             for(Permissions permissionItem: assistantDisplayObject.getPermissions()){
@@ -383,8 +395,8 @@ public class UserDomainImpl implements UserDomain {
         User user = this.getUserByEmail(displayObject.getEmail());
         
         if(user == null){
-            throw new UserNotFoundException();
-        }else if(user.getStatus().equals(UserStatusEnum.ACTIVE.getId())){
+            throw new NotFoundException();
+        }else if(user.getStatus().equals(StatusEnum.ACTIVE.getId())){
             throw new UserConfirmedException();
         }else if(!user.getConfirmationCode().equals(displayObject.getCode())){
             throw new ConfirmationCodeExceptoin();
@@ -399,8 +411,8 @@ public class UserDomainImpl implements UserDomain {
         User user = this.getUserByEmail(assistantDisplayObject.getEmail());
         
         if(user == null){
-            throw new UserNotFoundException();
-        }else if(user.getStatus().equals(UserStatusEnum.ACTIVE.getId())){
+            throw new NotFoundException();
+        }else if(user.getStatus().equals(StatusEnum.ACTIVE.getId())){
             throw new UserConfirmedException();
         }else if(!user.getConfirmationCode().equals(assistantDisplayObject.getCode())){
             throw new ConfirmationCodeExceptoin();
@@ -422,19 +434,27 @@ public class UserDomainImpl implements UserDomain {
         if(userDao.delete(userId)){
             return true;
         }else{
-            throw new UserNotFoundException();
+            throw new NotFoundException();
         }
     }
     
     @Override
     public List<UserDisplayObject> getListByDoctorId(Long doctorId){
-        List<User> users = userDao.getListByDoctorId(doctorId);
+        List<UserDoctorOffice> usersDoctorOffice = userDoctorOfficeDomain.getListAssistantsByDoctorId(doctorId);
         
         List<UserDisplayObject> usersDO = new ArrayList<>();
         
-        for(User userItem: users){
-            usersDO.add(this.assembleUserDisplayObject(userItem));
+        for(UserDoctorOffice userDoctorOfficeItem: usersDoctorOffice){
+            usersDO.add(this.assemblerUserDoctorOfficeTOUserDisplayObect(userDoctorOfficeItem));
         }
+        
+//        List<User> users = userDao.getListByDoctorId(doctorId);
+//        
+//        List<UserDisplayObject> usersDO = new ArrayList<>();
+//        
+//        for(User userItem: users){
+//            usersDO.add(this.assembleUserDisplayObject(userItem));
+//        }
         
         return usersDO;
     }

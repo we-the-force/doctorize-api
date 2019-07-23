@@ -12,6 +12,8 @@ import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
+import com.cmtb.doctorize.domain.shared.NotFoundException;
+import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -65,6 +67,7 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
         Boolean isNew = (doctorOffice.getId() == null || doctorOffice.getId() <= 0);
         
         if(isNew){
+            doctorOffice.setStatus(StatusEnum.ACTIVE.getId());
             doctorOfficeDao.save(doctorOffice);
         }else{
             doctorOfficeDao.update(doctorOffice);
@@ -102,6 +105,16 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
         DoctorOffice doctorOffice = doctorOfficeDao.getById(doctorOfficeId);
         
         return this.doctorOfficeDisplayObjectAssembler(doctorOffice, null);
+    }
+    
+    @Override
+    public Boolean delete(Long doctorOfficeId){
+        
+        if(doctorOfficeDao.delete(doctorOfficeId)){
+            return true;
+        }else{
+            throw new NotFoundException();
+        }
     }
     
 }

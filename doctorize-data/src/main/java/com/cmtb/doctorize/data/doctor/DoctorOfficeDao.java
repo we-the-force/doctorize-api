@@ -22,4 +22,6 @@ public interface DoctorOfficeDao {
     
     public boolean update(DoctorOffice doctorOffice);
     
+    public Boolean delete(Long doctorOfficeId);
+    
 }

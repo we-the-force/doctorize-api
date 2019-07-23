@@ -9,11 +9,13 @@ import com.cmtb.doctorize.core.doctorOffice.DoctorOfficeDomain;
 import com.cmtb.doctorize.core.doctorOffice.DoctorOfficeOrchestrator;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
+import com.cmtb.doctorize.domain.shared.NotFoundException;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,6 +65,21 @@ public class DoctorOfficeService {
             DoctorOfficeDisplayObject result = doctorOfficeDomain.getById(doctorOfficeId);
             return new ResponseEntity(result, HttpStatus.OK);
 
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/doctorOffices/{doctorOfficeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAssistant(@PathVariable("doctorOfficeId") Long doctorOfficeId) {
+        try {
+
+            Boolean result = doctorOfficeOrchestrator.delete(doctorOfficeId);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (NotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

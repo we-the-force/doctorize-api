@@ -16,4 +16,6 @@ public interface DoctorOfficeOrchestrator {
 
     public DoctorOffice save(DoctorOfficeDisplayObject doctorOfficeDisplayObject);
     
+    public Boolean delete(Long doctorOfficeIf);
+    
 }

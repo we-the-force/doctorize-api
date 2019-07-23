@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cmtb.doctorize.domain.user;
+package com.cmtb.doctorize.domain.shared;
 
 /**
  *
  * @author pc
  */
-public enum UserStatusEnum {
+public enum StatusEnum {
     
     DISABLE((byte) 0, "Inactivo"),
     ACTIVE((byte) 1, "Activo"),
@@ -18,7 +18,7 @@ public enum UserStatusEnum {
     private final Byte statusId;
     private final String statusName;
 
-    UserStatusEnum(Byte statusId, String statusName) {
+    StatusEnum(Byte statusId, String statusName) {
         this.statusId = statusId;
         this.statusName = statusName;
     }

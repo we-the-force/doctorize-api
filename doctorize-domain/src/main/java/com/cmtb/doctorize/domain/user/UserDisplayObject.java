@@ -25,6 +25,7 @@ public class UserDisplayObject {
     private Byte status;
     private Specialty specialty;
     private Set<Permissions> permissions = new HashSet<>();
+    private String doctorOfficeName;
 
     /**
      * @return the id
@@ -150,5 +151,19 @@ public class UserDisplayObject {
      */
     public void setPermissions(Set<Permissions> permissions) {
         this.permissions = permissions;
+    }
+
+    /**
+     * @return the doctorOfficeName
+     */
+    public String getDoctorOfficeName() {
+        return doctorOfficeName;
+    }
+
+    /**
+     * @param doctorOfficeName the doctorOfficeName to set
+     */
+    public void setDoctorOfficeName(String doctorOfficeName) {
+        this.doctorOfficeName = doctorOfficeName;
     }
 }

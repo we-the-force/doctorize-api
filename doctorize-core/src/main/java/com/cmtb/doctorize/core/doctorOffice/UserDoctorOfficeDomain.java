@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.doctorOffice;
 
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
+import java.util.List;
 
 /**
  *
@@ -16,5 +17,7 @@ public interface UserDoctorOfficeDomain {
     public UserDoctorOffice save(UserDoctorOffice userDoctorOffice);
     
     public Boolean deleteByUserId(Long userId);
+    
+    public List<UserDoctorOffice> getListAssistantsByDoctorId(Long doctorId);
     
 }

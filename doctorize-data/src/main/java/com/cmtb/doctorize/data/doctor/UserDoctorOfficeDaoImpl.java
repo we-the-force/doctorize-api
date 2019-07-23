@@ -7,6 +7,9 @@ package com.cmtb.doctorize.data.doctor;
 
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
+import com.cmtb.doctorize.domain.shared.StatusEnum;
+import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -52,5 +55,24 @@ public class UserDoctorOfficeDaoImpl implements UserDoctorOfficeDao {
         int affected = query.executeUpdate();
         
         return (affected > 0);
+    }
+    
+    @Override
+    public List<UserDoctorOffice> getListAssistantsByDoctorId(Long doctorId) {
+        String hql = "select UDO from UserDoctorOffice UDO"
+                + " join fetch UDO.user U"
+                + " join fetch UDO.doctorOffice DO"
+                + " left join fetch U.permissions P"
+                + " where U.doctor.id =:doctorId"
+                + " and (U.doctor.status=:active or U.doctor.status=:unconfirmed)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("doctorId", doctorId);
+        query.setByte("active", StatusEnum.ACTIVE.getId());
+        query.setByte("unconfirmed", StatusEnum.UNCONFIRMED.getId());
+        
+        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+        return (List<UserDoctorOffice>) query.list();
     }
 }

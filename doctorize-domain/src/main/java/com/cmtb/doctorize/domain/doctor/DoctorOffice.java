@@ -82,6 +82,8 @@ public class DoctorOffice implements Serializable{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctorOffice")
     private Set<UserDoctorOffice> userDoctorOffices = new HashSet<>();
     
+    @Column(name = "`status`")
+    private Byte status;
 
     /**
      * @return the id
@@ -291,5 +293,19 @@ public class DoctorOffice implements Serializable{
      */
     public void setUserDoctorOffices(Set<UserDoctorOffice> userDoctorOffices) {
         this.userDoctorOffices = userDoctorOffices;
+    }
+
+    /**
+     * @return the status
+     */
+    public Byte getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

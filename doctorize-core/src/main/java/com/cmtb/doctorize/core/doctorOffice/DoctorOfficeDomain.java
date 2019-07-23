@@ -21,4 +21,6 @@ public interface DoctorOfficeDomain {
     
     public DoctorOfficeDisplayObject getById(Long doctorOfficeId);
     
+    public Boolean delete(Long doctorOfficeId);
+    
 }

@@ -8,7 +8,7 @@ package com.cmtb.doctorize.data.user;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
-import com.cmtb.doctorize.domain.user.UserStatusEnum;
+import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -135,7 +135,7 @@ public class UserDaoImpl implements UserDao {
         Query query = this.getSession().createQuery(hql);
         query.setString("email", email);
         query.setString("confirmationCode", "");        
-        query.setByte("status", UserStatusEnum.ACTIVE.getId());
+        query.setByte("status", StatusEnum.ACTIVE.getId());
         
         int records=query.executeUpdate();
         
@@ -155,7 +155,7 @@ public class UserDaoImpl implements UserDao {
         Query query = this.getSession().createQuery(hql);
         query.setString("email", user.getEmail());
         query.setString("confirmationCode", "");        
-        query.setByte("status", UserStatusEnum.ACTIVE.getId());
+        query.setByte("status", StatusEnum.ACTIVE.getId());
         query.setString("password", user.getPassword());
         
         int records=query.executeUpdate();
@@ -171,7 +171,7 @@ public class UserDaoImpl implements UserDao {
 
         Query query = this.getSession().createQuery(hql);
         query.setLong("userId", userId);     
-        query.setByte("status", UserStatusEnum.DISABLE.getId());
+        query.setByte("status", StatusEnum.DISABLE.getId());
         
         int records=query.executeUpdate();
         
@@ -187,8 +187,8 @@ public class UserDaoImpl implements UserDao {
 
         Query query = this.getSession().createQuery(hql);
         query.setLong("doctorId", doctorId);
-        query.setByte("active", UserStatusEnum.ACTIVE.getId());
-        query.setByte("unconfirmed", UserStatusEnum.UNCONFIRMED.getId());
+        query.setByte("active", StatusEnum.ACTIVE.getId());
+        query.setByte("unconfirmed", StatusEnum.UNCONFIRMED.getId());
         
         query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 

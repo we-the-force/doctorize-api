@@ -7,7 +7,7 @@ package com.cmtb.doctorize.core.user;
 
 import com.cmtb.doctorize.core.shared.Validation;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
-import com.cmtb.doctorize.domain.user.UserNotFoundException;
+import com.cmtb.doctorize.domain.shared.NotFoundException;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -25,11 +25,11 @@ public class UserExistCodeBusinessRule implements Validation< ChangePasswordDisp
     public ChangePasswordDisplayObject validate(ChangePasswordDisplayObject model) {
 
         if (model.getUser() == null) {
-            throw new UserNotFoundException();
+            throw new NotFoundException();
         }
         Boolean exists = userDomain.existAssociatedCodeByPatient(model);
         if (!exists) {
-            throw new UserNotFoundException();
+            throw new NotFoundException();
         }
         return model;
     }

@@ -99,4 +99,10 @@ public class DoctorOfficeOrchestratorImpl implements DoctorOfficeOrchestrator {
         
         return newOffice;
     }
+    
+    @Transactional
+    @Override
+    public Boolean delete(Long doctorOfficeId){
+        return doctorOfficeDomain.delete(doctorOfficeId);
+    }
 }

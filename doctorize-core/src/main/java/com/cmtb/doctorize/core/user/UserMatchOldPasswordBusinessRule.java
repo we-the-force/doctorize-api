@@ -7,7 +7,7 @@ package com.cmtb.doctorize.core.user;
 
 import com.cmtb.doctorize.core.shared.Validation;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
-import com.cmtb.doctorize.domain.user.UserNotFoundException;
+import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.user.UserNotMatchPasswordException;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class UserMatchOldPasswordBusinessRule implements Validation< ChangePassw
     public ChangePasswordDisplayObject validate(ChangePasswordDisplayObject model) {
 
         if (model.getUser()== null) {
-            throw new UserNotFoundException();
+            throw new NotFoundException();
         }
 
         if (model.getOldPassword() == null) {

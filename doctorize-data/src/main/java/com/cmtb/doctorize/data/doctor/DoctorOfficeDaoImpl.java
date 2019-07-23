@@ -8,6 +8,7 @@ package com.cmtb.doctorize.data.doctor;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.shared.RequiredException;
+import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -114,6 +115,21 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
         query.setString("lunchCloseTime", doctorOffice.getLunchCloseTime());
         
         query.setLong("doctorOfficeId", doctorOffice.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
+    
+    @Override
+    public Boolean delete(Long doctorOfficeId){
+        String hql = "update DoctorOffice DO"
+                + " set DO.status=:status"
+                + " where (DO.id=:doctorOfficeId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("doctorOfficeId", doctorOfficeId);     
+        query.setByte("status", StatusEnum.DISABLE.getId());
         
         int records=query.executeUpdate();
         

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cmtb.doctorize.domain.user;
+package com.cmtb.doctorize.domain.shared;
 
 /**
  *
  * @author pc
  */
-public class UserNotFoundException extends RuntimeException {
+public class NotFoundException extends RuntimeException {
 
     private final String message = "Información inválida, favor de verificar";
 
