@@ -50,10 +50,12 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
         String hql = "select DO from DoctorOffice DO"
                 + " left join fetch DO.availableDays"
                 + " join fetch DO.userDoctorOffices UDO"
-                + " where UDO.user.id=:userId";
+                + " where UDO.user.id=:userId and DO.status=:status";
 
         Query query = getSession().createQuery(hql);
+        query.setByte("status", StatusEnum.ACTIVE.getId());
         query.setLong("userId", userId).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        
         
         return (List<DoctorOffice>) query.list();
     }
@@ -62,9 +64,10 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
     public DoctorOffice getById(Long doctorOfficeId){
         String hql = "select DO from DoctorOffice DO"
                 + " left join fetch DO.availableDays"
-                + " where DO.id=:doctorOfficeId";
+                + " where DO.id=:doctorOfficeId and DO.status=:status";
 
         Query query = getSession().createQuery(hql);
+        query.setByte("status", StatusEnum.ACTIVE.getId());
         query.setLong("doctorOfficeId", doctorOfficeId);
         
         return (DoctorOffice) query.uniqueResult();

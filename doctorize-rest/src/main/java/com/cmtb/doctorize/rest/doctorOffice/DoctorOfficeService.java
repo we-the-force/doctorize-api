@@ -36,7 +36,7 @@ public class DoctorOfficeService {
     @Resource(name = "DoctorOfficeOrchestrator")
     DoctorOfficeOrchestrator doctorOfficeOrchestrator;
     
-    @RequestMapping(value = "/doctorOffice/getListByUserId", params = {"userId"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/doctorOffices/getListByUserId", params = {"userId"}, method = RequestMethod.GET)
     public ResponseEntity<?> getListByUserId(@RequestParam Long userId) {
         try {
 
