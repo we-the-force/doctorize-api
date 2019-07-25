@@ -46,6 +46,7 @@ public class DoctorOfficeOrchestratorImpl implements DoctorOfficeOrchestrator {
         newOffice.setLat(doctorOfficeDisplayObject.getLat());
         newOffice.setLng(doctorOfficeDisplayObject.getLng());
         newOffice.setHospital(doctorOfficeDisplayObject.getHospital());
+        newOffice.setDuration(doctorOfficeDisplayObject.getDuration());
 
         if (!doctorOfficeDisplayObject.getStartTime().contains(":") || doctorOfficeDisplayObject.getStartTime() == null) {
             throw new IllegalArgumentException("Hora de apertura es requerida");

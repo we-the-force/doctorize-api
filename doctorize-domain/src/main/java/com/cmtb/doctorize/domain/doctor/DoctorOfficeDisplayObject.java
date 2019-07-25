@@ -29,6 +29,7 @@ public class DoctorOfficeDisplayObject {
     private List<Byte> days = new ArrayList<>();
     private String lunchStartTime;
     private String lunchCloseTime; 
+    private Short duration;
 
     /**
      * @return the name
@@ -238,6 +239,20 @@ public class DoctorOfficeDisplayObject {
      */
     public void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
+    }
+
+    /**
+     * @return the duration
+     */
+    public Short getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration the duration to set
+     */
+    public void setDuration(Short duration) {
+        this.duration = duration;
     }
     
 }

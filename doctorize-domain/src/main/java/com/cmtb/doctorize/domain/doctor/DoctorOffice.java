@@ -84,6 +84,9 @@ public class DoctorOffice implements Serializable{
     
     @Column(name = "`status`")
     private Byte status;
+    
+    @JoinColumn(name = "`duration`")
+    private Short duration;
 
     /**
      * @return the id
@@ -307,5 +310,19 @@ public class DoctorOffice implements Serializable{
      */
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    /**
+     * @return the duration
+     */
+    public Short getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration the duration to set
+     */
+    public void setDuration(Short duration) {
+        this.duration = duration;
     }
 }

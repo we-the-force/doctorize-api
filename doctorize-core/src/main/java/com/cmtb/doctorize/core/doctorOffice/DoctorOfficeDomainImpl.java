@@ -57,6 +57,7 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
             doctorOfficeDisplayObject.setPhone(doctorOfficeItem.getPhone());
             doctorOfficeDisplayObject.setStartTime(doctorOfficeItem.getStartTime());
             doctorOfficeDisplayObject.setUserId(userId);
+            doctorOfficeDisplayObject.setDuration(doctorOfficeItem.getDuration());
         
         return doctorOfficeDisplayObject;
     }
@@ -65,6 +66,10 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
     public DoctorOffice save(DoctorOffice doctorOffice){
         
         Boolean isNew = (doctorOffice.getId() == null || doctorOffice.getId() <= 0);
+        
+        if(doctorOffice.getDuration() == null){
+            doctorOffice.setDuration((short)30);
+        }
         
         if(isNew){
             doctorOffice.setStatus(StatusEnum.ACTIVE.getId());
