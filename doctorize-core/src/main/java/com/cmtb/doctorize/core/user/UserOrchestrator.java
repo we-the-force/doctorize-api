@@ -32,4 +32,6 @@ public interface UserOrchestrator {
     
     public Boolean deleteAssistant(Long assistantId);
     
+    public User update(User user);
+    
 }

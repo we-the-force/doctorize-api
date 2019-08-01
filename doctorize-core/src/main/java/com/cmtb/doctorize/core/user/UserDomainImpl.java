@@ -11,6 +11,7 @@ import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import com.cmtb.doctorize.domain.shared.ConfirmationCodeExceptoin;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.shared.PermissionEnum;
 import com.cmtb.doctorize.domain.shared.Permissions;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
@@ -91,7 +92,7 @@ public class UserDomainImpl implements UserDomain {
     
     private UserDisplayObject assemblerUserDoctorOfficeTOUserDisplayObect(UserDoctorOffice userDoctorOffice){
         UserDisplayObject userDO = this.assembleUserDisplayObject(userDoctorOffice.getUser());
-        userDO.setDoctorOfficeName(userDoctorOffice.getDoctorOffice().getName());
+//        userDO.setDoctorOfficeName(userDoctorOffice.getDoctorOffice().getName());
         
         return userDO;
     }
@@ -105,7 +106,7 @@ public class UserDomainImpl implements UserDomain {
         userDisplayObject.setId(userTemp.getId());
         userDisplayObject.setName(userTemp.getName());
         userDisplayObject.setPhoto(userTemp.getPhoto());
-        userDisplayObject.setRoleId(userTemp.getRoleId());
+//        userDisplayObject.setRoleId(userTemp.getRoleId());
         userDisplayObject.setStatus(userTemp.getStatus());
 
         if(userTemp.getSpecialty() != null){
@@ -462,6 +463,11 @@ public class UserDomainImpl implements UserDomain {
     @Override
     public UserDisplayObject getById(Long userId){
         User user = userDao.getUserById(userId);
+        if(user.getStatus().equals(StatusEnum.UNCONFIRMED.getId())){
+            throw new UserUnconfirmedException();
+        }else if(user.getStatus().equals(StatusEnum.DISABLE.getId())){
+            throw new ItemNotFoundException();
+        }
         return this.assembleUserDisplayObject(user);
     }
     

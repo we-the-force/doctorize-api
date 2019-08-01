@@ -34,7 +34,7 @@ public class DoctorOfficeOrchestratorImpl implements DoctorOfficeOrchestrator {
     
     @Transactional
     @Override
-    public DoctorOffice save(DoctorOfficeDisplayObject doctorOfficeDisplayObject){
+    public DoctorOfficeDisplayObject save(DoctorOfficeDisplayObject doctorOfficeDisplayObject){
         
         DoctorOffice newOffice = new DoctorOffice();
 
@@ -98,7 +98,10 @@ public class DoctorOfficeOrchestratorImpl implements DoctorOfficeOrchestrator {
         }
         
         
-        return newOffice;
+        doctorOfficeDisplayObject.setId(newOffice.getId());
+        
+        
+        return doctorOfficeDisplayObject;
     }
     
     @Transactional

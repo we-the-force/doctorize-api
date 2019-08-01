@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.medicalAppointment;
 
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointmentDisplayObject;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +26,20 @@ public class MedicalAppointmentOrchestratorImpl implements MedicalAppointmentOrc
     public MedicalAppointmentDisplayObject save(MedicalAppointmentDisplayObject medicalAppointment){
         
         return medicalAppointmentDomain.save(medicalAppointment);
+    }
+    
+    @Transactional
+    @Override
+    public Boolean delete(Long appointmentId){
+        return medicalAppointmentDomain.delete(appointmentId);
+    }
+    
+    @Transactional
+    @Override
+    public MedicalAppointmentDisplayObject update(MedicalAppointmentDisplayObject medicalAppointmentDO){
+        if(!medicalAppointmentDomain.update(medicalAppointmentDO)){
+            throw new ItemNotFoundException();
+        }
+        return medicalAppointmentDO;
     }
 }

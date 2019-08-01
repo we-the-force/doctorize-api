@@ -14,7 +14,7 @@ import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
  */
 public interface DoctorOfficeOrchestrator {
 
-    public DoctorOffice save(DoctorOfficeDisplayObject doctorOfficeDisplayObject);
+    public DoctorOfficeDisplayObject save(DoctorOfficeDisplayObject doctorOfficeDisplayObject);
     
     public Boolean delete(Long doctorOfficeIf);
     

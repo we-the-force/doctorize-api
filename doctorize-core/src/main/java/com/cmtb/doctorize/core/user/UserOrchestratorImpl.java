@@ -9,6 +9,7 @@ import com.cmtb.doctorize.core.doctorOffice.UserDoctorOfficeDomain;
 import com.cmtb.doctorize.core.shared.ClusterValidationAbstract;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
@@ -111,6 +112,15 @@ public class UserOrchestratorImpl implements UserOrchestrator {
         userDoctorOfficeDomain.deleteByUserId(assistantId);
         
         return userDomain.deleteAssistant(assistantId);
+    }
+    
+    @Transactional
+    @Override
+    public User update(User user){
+        if(user.getId() == null){
+            throw new ItemNotFoundException();
+        }
+        return this.save(user);
     }
     
 }

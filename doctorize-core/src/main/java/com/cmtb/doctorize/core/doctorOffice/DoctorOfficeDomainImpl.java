@@ -12,6 +12,7 @@ import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.ArrayList;
@@ -75,7 +76,9 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
             doctorOffice.setStatus(StatusEnum.ACTIVE.getId());
             doctorOfficeDao.save(doctorOffice);
         }else{
-            doctorOfficeDao.update(doctorOffice);
+            if(!doctorOfficeDao.update(doctorOffice)){
+                throw new ItemNotFoundException();
+            }
             availableDaysDao.deleteAvailableDaysByDoctorOffice(doctorOffice.getId());
         }
         
@@ -108,6 +111,10 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
     public DoctorOfficeDisplayObject getById(Long doctorOfficeId){
         
         DoctorOffice doctorOffice = doctorOfficeDao.getById(doctorOfficeId);
+        
+        if(doctorOffice == null){
+            throw new ItemNotFoundException();
+        }
         
         return this.doctorOfficeDisplayObjectAssembler(doctorOffice, null);
     }

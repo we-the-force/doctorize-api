@@ -9,6 +9,7 @@ import com.cmtb.doctorize.core.doctorOffice.DoctorOfficeDomain;
 import com.cmtb.doctorize.core.doctorOffice.DoctorOfficeOrchestrator;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
 import java.util.List;
 import javax.annotation.Resource;
@@ -36,11 +37,11 @@ public class DoctorOfficeService {
     @Resource(name = "DoctorOfficeOrchestrator")
     DoctorOfficeOrchestrator doctorOfficeOrchestrator;
     
-    @RequestMapping(value = "/doctorOffices/getListByUserId", params = {"userId"}, method = RequestMethod.GET)
-    public ResponseEntity<?> getListByUserId(@RequestParam Long userId) {
+    @RequestMapping(value = "/doctors/{id}/offices", method = RequestMethod.GET)
+    public ResponseEntity<?> getListByUserId(@PathVariable("id") Long doctorId) {
         try {
 
-            List<DoctorOfficeDisplayObject> result = doctorOfficeDomain.getListByUserId(userId);
+            List<DoctorOfficeDisplayObject> result = doctorOfficeDomain.getListByUserId(doctorId);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {
@@ -48,30 +49,33 @@ public class DoctorOfficeService {
         }
     }
     
-    @RequestMapping(value = "/doctorOffice/save", method = RequestMethod.POST)
-    public ResponseEntity<?> save(@RequestBody DoctorOfficeDisplayObject doctorOfficeDisplayObject) {
+    @RequestMapping(value = "/doctors/{id}/offices", method = RequestMethod.POST)
+    public ResponseEntity<?> save(@PathVariable("id") Long doctorId, @RequestBody DoctorOfficeDisplayObject doctorOfficeDisplayObject) {
         try {
-            DoctorOffice result = doctorOfficeOrchestrator.save(doctorOfficeDisplayObject);
+            doctorOfficeDisplayObject.setUserId(doctorId);
+            DoctorOfficeDisplayObject result = doctorOfficeOrchestrator.save(doctorOfficeDisplayObject);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     
-    @RequestMapping(value = "/doctorOffice", params = {"doctorOfficeId"}, method = RequestMethod.GET)
-    public ResponseEntity<?> getById(@RequestParam Long doctorOfficeId) {
+    @RequestMapping(value = "/doctors/{id}/offices/{officeId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getById(@PathVariable("id") Long doctorId, @PathVariable("officeId") Long officeId) {
         try {
 
-            DoctorOfficeDisplayObject result = doctorOfficeDomain.getById(doctorOfficeId);
+            DoctorOfficeDisplayObject result = doctorOfficeDomain.getById(officeId);
             return new ResponseEntity(result, HttpStatus.OK);
 
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     
-    @RequestMapping(value = "/doctorOffices/{doctorOfficeId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAssistant(@PathVariable("doctorOfficeId") Long doctorOfficeId) {
+    @RequestMapping(value = "/doctors/{id}/offices/{officeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAssistant(@PathVariable("id") Long doctorId, @PathVariable("officeId") Long doctorOfficeId) {
         try {
 
             Boolean result = doctorOfficeOrchestrator.delete(doctorOfficeId);
@@ -80,6 +84,18 @@ public class DoctorOfficeService {
 
         } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/doctors/{id}/offices/{officeId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> update(@PathVariable("id") Long doctorId, @PathVariable("officeId") Long doctorOfficeId, @RequestBody DoctorOfficeDisplayObject doctorOfficeDisplayObject) {
+        try {
+            doctorOfficeDisplayObject.setId(doctorOfficeId);
+            doctorOfficeDisplayObject.setUserId(doctorId);
+            DoctorOfficeDisplayObject result = doctorOfficeOrchestrator.save(doctorOfficeDisplayObject);
+            return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

@@ -8,6 +8,7 @@ package com.cmtb.doctorize.rest.user;
 import com.cmtb.doctorize.core.user.UserDomain;
 import com.cmtb.doctorize.core.user.UserOrchestrator;
 import com.cmtb.doctorize.domain.shared.ConfirmationCodeExceptoin;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
@@ -19,6 +20,7 @@ import com.cmtb.doctorize.domain.user.UserDisplayObject;
 import com.cmtb.doctorize.domain.user.UserDuplicateException;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.user.UserNotMatchPasswordException;
+import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
@@ -108,7 +110,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/user/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/doctors", method = RequestMethod.POST)
     public ResponseEntity<?> save(@RequestBody User user) {
         try {
             user.setRoleId(RoleEnum.DOCTOR.getId());
@@ -116,6 +118,50 @@ public class UserService {
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (UserDuplicateException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/doctors/{doctorId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> update(@PathVariable("doctorId") Long doctorId, @RequestBody User user) {
+        try {
+            user.setId(doctorId);
+            User result = userOrchestrator.update(user);
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/doctors/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getById(@PathVariable("id") Long userId) {
+        try {
+
+            UserDisplayObject result = userDomain.getById(userId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (UserUnconfirmedException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/doctors/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable("id") Long userId) {
+        try {
+
+            Boolean result = userOrchestrator.delete(userId);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (NotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -167,38 +213,11 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/user/delete", params = {"userId"}, method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@RequestParam Long userId) {
-        try {
-
-            Boolean result = userOrchestrator.delete(userId);
-            
-            return new ResponseEntity(result, HttpStatus.OK);
-
-        } catch (NotFoundException ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (Exception ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    
     @RequestMapping(value = "/doctors/{doctorId}/assistants", method = RequestMethod.GET)
     public ResponseEntity<?> getListByDoctorId(@PathVariable("doctorId") Long doctorId) {
         try {
 
             List<UserDisplayObject> result = userDomain.getListByDoctorId(doctorId);
-            return new ResponseEntity(result, HttpStatus.OK);
-
-        } catch (Exception ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getById(@PathVariable("id") Long userId) {
-        try {
-
-            UserDisplayObject result = userDomain.getById(userId);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {
@@ -216,6 +235,18 @@ public class UserService {
 
         } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/assistant/{assistantId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAssistantById(@PathVariable("assistantId") Long assistantId) {
+        try {
+
+            UserDisplayObject result = userDomain.getById(assistantId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

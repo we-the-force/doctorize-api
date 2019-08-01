@@ -9,7 +9,10 @@ import com.cmtb.doctorize.data.medicalAppointment.MedicalAppointmentDao;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointmentDisplayObject;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.user.User;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +34,7 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
         
         medicalAppointmentDO.setDate(medicalAppointment.getDate());
         medicalAppointmentDO.setDoctorId(medicalAppointment.getDoctor().getId());
-        medicalAppointmentDO.setDoctorOfficeId(medicalAppointment.getDoctorOffice().getId());
+        medicalAppointmentDO.setOfficeId(medicalAppointment.getDoctorOffice().getId());
         medicalAppointmentDO.setEmail(medicalAppointment.getEmail());
         medicalAppointmentDO.setName(medicalAppointment.getName());
         medicalAppointmentDO.setPhone(medicalAppointment.getPhone());
@@ -43,12 +46,13 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
     private MedicalAppointment assemblerMedicalAppointment(MedicalAppointmentDisplayObject medicalAppointmentDO){
         MedicalAppointment medicalAppointment = new MedicalAppointment();
         
+        medicalAppointment.setId(medicalAppointmentDO.getId());
         medicalAppointment.setDate(medicalAppointmentDO.getDate());
         User doctor = new User();
         doctor.setId(medicalAppointmentDO.getDoctorId());
         medicalAppointment.setDoctor(doctor);
         DoctorOffice doctorOffice = new DoctorOffice();
-        doctorOffice.setId(medicalAppointmentDO.getDoctorOfficeId());
+        doctorOffice.setId(medicalAppointmentDO.getOfficeId());
         medicalAppointment.setDoctorOffice(doctorOffice);
         medicalAppointment.setEmail(medicalAppointmentDO.getEmail());
         medicalAppointment.setName(medicalAppointmentDO.getName());
@@ -67,5 +71,42 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
         patientNotifyNewAppointmentComponent.notify(medicalAppointmentDO);
         
         return assemblerMedicalAppointmentDisplayObject(medicalAppointment);
+    }
+    
+    @Override
+    public List<MedicalAppointmentDisplayObject> getListByDoctorId(Long doctorId){
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentDao.getListByDoctorId(doctorId);
+        
+        List<MedicalAppointmentDisplayObject> medicalAppointmentsDO = new ArrayList<>();
+        
+        for(MedicalAppointment item: medicalAppointments){
+            medicalAppointmentsDO.add(this.assemblerMedicalAppointmentDisplayObject(item));
+        }
+        
+        return medicalAppointmentsDO;
+    }
+    
+    @Override
+    public MedicalAppointmentDisplayObject getById(Long appointmentId){
+        MedicalAppointment medicalAppointment = medicalAppointmentDao.getById(appointmentId);
+        if(medicalAppointment == null){
+            throw new ItemNotFoundException();
+        }
+        return assemblerMedicalAppointmentDisplayObject(medicalAppointment);
+    }
+    
+    @Override
+    public Boolean delete(Long appointmentId){
+        Boolean result = medicalAppointmentDao.delete(appointmentId);
+        if(!result){
+            throw new ItemNotFoundException();
+        }
+        return result;
+    }
+    
+    @Override
+    public Boolean update(MedicalAppointmentDisplayObject medicalAppointmentDO){
+        MedicalAppointment medicalAppointment = assemblerMedicalAppointment(medicalAppointmentDO);
+        return medicalAppointmentDao.update(medicalAppointment);
     }
 }

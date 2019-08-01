@@ -20,12 +20,12 @@ public class UserDisplayObject {
     private String name;
     private String email;
     private String cellphone;
-    private Byte roleId;
+//    private Byte roleId;
     private String photo;
     private Byte status;
     private Specialty specialty;
     private Set<Permissions> permissions = new HashSet<>();
-    private String doctorOfficeName;
+//    private String doctorOfficeName;
 
     /**
      * @return the id
@@ -83,19 +83,19 @@ public class UserDisplayObject {
         this.cellphone = cellphone;
     }
 
-    /**
-     * @return the roleId
-     */
-    public Byte getRoleId() {
-        return roleId;
-    }
-
-    /**
-     * @param roleId the roleId to set
-     */
-    public void setRoleId(Byte roleId) {
-        this.roleId = roleId;
-    }
+//    /**
+//     * @return the roleId
+//     */
+//    public Byte getRoleId() {
+//        return roleId;
+//    }
+//
+//    /**
+//     * @param roleId the roleId to set
+//     */
+//    public void setRoleId(Byte roleId) {
+//        this.roleId = roleId;
+//    }
 
     /**
      * @return the photo
@@ -153,17 +153,17 @@ public class UserDisplayObject {
         this.permissions = permissions;
     }
 
-    /**
-     * @return the doctorOfficeName
-     */
-    public String getDoctorOfficeName() {
-        return doctorOfficeName;
-    }
-
-    /**
-     * @param doctorOfficeName the doctorOfficeName to set
-     */
-    public void setDoctorOfficeName(String doctorOfficeName) {
-        this.doctorOfficeName = doctorOfficeName;
-    }
+//    /**
+//     * @return the doctorOfficeName
+//     */
+//    public String getDoctorOfficeName() {
+//        return doctorOfficeName;
+//    }
+//
+//    /**
+//     * @param doctorOfficeName the doctorOfficeName to set
+//     */
+//    public void setDoctorOfficeName(String doctorOfficeName) {
+//        this.doctorOfficeName = doctorOfficeName;
+//    }
 }
