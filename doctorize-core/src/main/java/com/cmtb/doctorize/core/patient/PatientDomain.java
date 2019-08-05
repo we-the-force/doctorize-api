@@ -15,7 +15,7 @@ import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
  */
 public interface PatientDomain {
 
-    public Patient save(Patient patient);
+    public PatientDisplayObject save(PatientDisplayObject patientDO);
     
     public PatientDisplayObject getById(Long patientId);
     

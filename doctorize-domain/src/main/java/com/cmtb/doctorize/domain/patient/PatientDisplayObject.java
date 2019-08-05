@@ -25,6 +25,8 @@ public class PatientDisplayObject {
     private Byte bloodType;
     private String bloodPressure;
     private String photo;
+    private String imageData;
+    private Long appointmentId;
 
     /**
      * @return the id
@@ -192,5 +194,33 @@ public class PatientDisplayObject {
      */
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    /**
+     * @return the imageData
+     */
+    public String getImageData() {
+        return imageData;
+    }
+
+    /**
+     * @param imageData the imageData to set
+     */
+    public void setImageData(String imageData) {
+        this.imageData = imageData;
+    }
+
+    /**
+     * @return the appointmentId
+     */
+    public Long getAppointmentId() {
+        return appointmentId;
+    }
+
+    /**
+     * @param appointmentId the appointmentId to set
+     */
+    public void setAppointmentId(Long appointmentId) {
+        this.appointmentId = appointmentId;
     }
 }

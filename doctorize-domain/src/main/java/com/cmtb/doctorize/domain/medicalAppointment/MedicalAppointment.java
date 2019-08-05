@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.domain.medicalAppointment;
 
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.user.User;
 import java.io.Serializable;
 import java.util.Date;
@@ -54,6 +55,10 @@ public class MedicalAppointment implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`doctorOfficeId`")
     private DoctorOffice doctorOffice;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`patientId`")
+    private Patient patient;
 
     /**
      * @return the id
@@ -151,6 +156,20 @@ public class MedicalAppointment implements Serializable {
      */
     public void setDoctorOffice(DoctorOffice doctorOffice) {
         this.doctorOffice = doctorOffice;
+    }
+
+    /**
+     * @return the patient
+     */
+    public Patient getPatient() {
+        return patient;
+    }
+
+    /**
+     * @param patient the patient to set
+     */
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
     
 }

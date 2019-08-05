@@ -71,17 +71,17 @@ public class Patient implements Serializable{
     @Column(name = "`photo`")
     private String photo;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`userId`")
-    private User doctor;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`doctorOfficeId`")
-    private DoctorOffice doctorOffice;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicalAppointmentId")
-    private MedicalAppointment medicalAppointment;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "`userId`")
+//    private User doctor;
+//    
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "`doctorOfficeId`")
+//    private DoctorOffice doctorOffice;
+//    
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "medicalAppointmentId")
+//    private MedicalAppointment medicalAppointment;
     
     @Transient
     private String imageData;
@@ -254,47 +254,47 @@ public class Patient implements Serializable{
         this.photo = photo;
     }
 
-    /**
-     * @return the doctor
-     */
-    public User getDoctor() {
-        return doctor;
-    }
-
-    /**
-     * @param doctor the doctor to set
-     */
-    public void setDoctor(User doctor) {
-        this.doctor = doctor;
-    }
-
-    /**
-     * @return the doctorOffice
-     */
-    public DoctorOffice getDoctorOffice() {
-        return doctorOffice;
-    }
-
-    /**
-     * @param doctorOffice the doctorOffice to set
-     */
-    public void setDoctorOffice(DoctorOffice doctorOffice) {
-        this.doctorOffice = doctorOffice;
-    }
-
-    /**
-     * @return the medicalAppointment
-     */
-    public MedicalAppointment getMedicalAppointment() {
-        return medicalAppointment;
-    }
-
-    /**
-     * @param medicalAppointment the medicalAppointment to set
-     */
-    public void setMedicalAppointment(MedicalAppointment medicalAppointment) {
-        this.medicalAppointment = medicalAppointment;
-    }
+//    /**
+//     * @return the doctor
+//     */
+//    public User getDoctor() {
+//        return doctor;
+//    }
+//
+//    /**
+//     * @param doctor the doctor to set
+//     */
+//    public void setDoctor(User doctor) {
+//        this.doctor = doctor;
+//    }
+//
+//    /**
+//     * @return the doctorOffice
+//     */
+//    public DoctorOffice getDoctorOffice() {
+//        return doctorOffice;
+//    }
+//
+//    /**
+//     * @param doctorOffice the doctorOffice to set
+//     */
+//    public void setDoctorOffice(DoctorOffice doctorOffice) {
+//        this.doctorOffice = doctorOffice;
+//    }
+//
+//    /**
+//     * @return the medicalAppointment
+//     */
+//    public MedicalAppointment getMedicalAppointment() {
+//        return medicalAppointment;
+//    }
+//
+//    /**
+//     * @param medicalAppointment the medicalAppointment to set
+//     */
+//    public void setMedicalAppointment(MedicalAppointment medicalAppointment) {
+//        this.medicalAppointment = medicalAppointment;
+//    }
 
     /**
      * @return the imageData

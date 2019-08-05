@@ -109,4 +109,9 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
         MedicalAppointment medicalAppointment = assemblerMedicalAppointment(medicalAppointmentDO);
         return medicalAppointmentDao.update(medicalAppointment);
     }
+    
+    @Override
+    public Boolean setPatient(Long patientId, Long appoinmentId){
+        return medicalAppointmentDao.setPatient(patientId, appoinmentId);
+    }
 }

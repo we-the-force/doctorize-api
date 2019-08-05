@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
+import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface PatientOrchestrator {
 
-    @Transactional
-    Patient save(Patient patient);
+    PatientDisplayObject save(PatientDisplayObject patientDO);
     
 }

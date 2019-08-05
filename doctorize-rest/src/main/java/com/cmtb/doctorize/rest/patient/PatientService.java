@@ -10,6 +10,7 @@ import com.cmtb.doctorize.core.patient.PatientOrchestrator;
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
+import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,13 @@ public class PatientService {
     @Resource(name = "PatientDomain")
     PatientDomain patientDomain;
     
-    @RequestMapping(value = "/patient/save", method = RequestMethod.POST)
-    public ResponseEntity<?> save(@RequestBody Patient patient) {
+    @RequestMapping(value = "/patients", method = RequestMethod.POST)
+    public ResponseEntity<?> save(@RequestBody PatientDisplayObject patientDO) {
         try {
-            Patient result = patientOrchestrator.save(patient);
+            PatientDisplayObject result = patientOrchestrator.save(patientDO);
             return new ResponseEntity(result, HttpStatus.OK);
-//        } catch (UserDuplicateException ex) {
-//            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

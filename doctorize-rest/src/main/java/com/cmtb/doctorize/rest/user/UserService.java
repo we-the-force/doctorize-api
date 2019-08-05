@@ -110,6 +110,42 @@ public class UserService {
         }
     }
     
+    @RequestMapping(value = "/account/confirmation", method = RequestMethod.POST)
+    public ResponseEntity<?> confirmationAccount(@RequestBody ChangePasswordDisplayObject changePasswordDisplayObject) {
+        try {
+
+            Boolean result = userOrchestrator.confirmationAccount(changePasswordDisplayObject);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (UserConfirmedException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
+        } catch (NotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ConfirmationCodeExceptoin ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/account/confirmation/assistant", method = RequestMethod.POST)
+    public ResponseEntity<?> confirmationAssistantAccount(@RequestBody AssistantDisplayObject assistantDisplayObject) {
+        try {
+
+            Boolean result = userOrchestrator.confirmationAssistantAccount(assistantDisplayObject);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (UserConfirmedException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
+        } catch (NotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ConfirmationCodeExceptoin ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
     @RequestMapping(value = "/doctors", method = RequestMethod.POST)
     public ResponseEntity<?> save(@RequestBody User user) {
         try {
@@ -173,42 +209,6 @@ public class UserService {
             Boolean result = userOrchestrator.inviteAssistant(assitantDO);
             return new ResponseEntity(result, HttpStatus.OK);
         }catch (Exception ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    @RequestMapping(value = "/account/confirmation", method = RequestMethod.POST)
-    public ResponseEntity<?> confirmationAccount(@RequestBody ChangePasswordDisplayObject changePasswordDisplayObject) {
-        try {
-
-            Boolean result = userOrchestrator.confirmationAccount(changePasswordDisplayObject);
-            
-            return new ResponseEntity(result, HttpStatus.OK);
-        } catch (UserConfirmedException ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
-        } catch (NotFoundException ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (ConfirmationCodeExceptoin ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-        } catch (Exception ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    @RequestMapping(value = "/account/confirmationAssistant", method = RequestMethod.POST)
-    public ResponseEntity<?> confirmationAssistantAccount(@RequestBody AssistantDisplayObject assistantDisplayObject) {
-        try {
-
-            Boolean result = userOrchestrator.confirmationAssistantAccount(assistantDisplayObject);
-            
-            return new ResponseEntity(result, HttpStatus.OK);
-        } catch (UserConfirmedException ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
-        } catch (NotFoundException ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (ConfirmationCodeExceptoin ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-        } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

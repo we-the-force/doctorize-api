@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
+import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class PatientOrchestratorImpl implements PatientOrchestrator {
     
     @Transactional
     @Override
-    public Patient save(Patient patient){
-        return patientDomain.save(patient);
+    public PatientDisplayObject save(PatientDisplayObject patientDO){
+        return patientDomain.save(patientDO);
     }
 }
