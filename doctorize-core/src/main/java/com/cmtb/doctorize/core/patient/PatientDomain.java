@@ -5,9 +5,9 @@
  */
 package com.cmtb.doctorize.core.patient;
 
-import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
+import java.util.List;
 
 /**
  *
@@ -20,5 +20,9 @@ public interface PatientDomain {
     public PatientDisplayObject getById(Long patientId);
     
     public PatientContainerDisplayObject loadCollectionPatient(Long patientId);
+    
+    public List<PatientDisplayObject> getListByDoctorId(Long doctorId);
+    
+    public Boolean delete(Long patientId);
     
 }

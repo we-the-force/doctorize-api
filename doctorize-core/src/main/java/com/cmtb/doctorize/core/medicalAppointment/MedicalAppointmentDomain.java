@@ -22,6 +22,8 @@ public interface MedicalAppointmentDomain {
     
     public Boolean delete(Long appointmentId);
     
+    public Boolean deleteByPatientId(Long patientId);
+    
     public Boolean update(MedicalAppointmentDisplayObject medicalAppointmentDO);
     
     public Boolean setPatient(Long patientId, Long appoinmentId);

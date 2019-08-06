@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface PatientOrchestrator {
 
-    PatientDisplayObject save(PatientDisplayObject patientDO);
+    public PatientDisplayObject save(PatientDisplayObject patientDO);
+    
+    public Boolean delete(Long patientId);
     
 }

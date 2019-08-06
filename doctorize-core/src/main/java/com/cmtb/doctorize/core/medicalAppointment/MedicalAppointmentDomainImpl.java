@@ -9,6 +9,7 @@ import com.cmtb.doctorize.data.medicalAppointment.MedicalAppointmentDao;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointmentDisplayObject;
+import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.user.User;
 import java.util.ArrayList;
@@ -58,6 +59,13 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
         medicalAppointment.setName(medicalAppointmentDO.getName());
         medicalAppointment.setPhone(medicalAppointmentDO.getPhone());
         
+        if(medicalAppointmentDO.getPatientId() != null){
+            Patient patient = new Patient();
+            patient.setId(medicalAppointmentDO.getPatientId());
+            medicalAppointment.setPatient(patient);
+        }
+        
+        
         return medicalAppointment;
     }
     
@@ -102,6 +110,11 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
             throw new ItemNotFoundException();
         }
         return result;
+    }
+    
+    @Override
+    public Boolean deleteByPatientId(Long patientId){
+        return medicalAppointmentDao.deleteByPatientId(patientId);
     }
     
     @Override

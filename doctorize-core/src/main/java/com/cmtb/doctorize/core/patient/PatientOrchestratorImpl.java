@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.core.patient;
 
+import com.cmtb.doctorize.core.medicalAppointment.MedicalAppointmentDomain;
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import javax.annotation.Resource;
@@ -21,9 +22,19 @@ public class PatientOrchestratorImpl implements PatientOrchestrator {
     @Resource(name = "PatientDomain")
     private PatientDomain patientDomain;
     
+    @Resource(name = "MedicalAppointmentDomain")
+    private MedicalAppointmentDomain medicalAppointmentDomain;
+    
     @Transactional
     @Override
     public PatientDisplayObject save(PatientDisplayObject patientDO){
         return patientDomain.save(patientDO);
+    }
+    
+    @Transactional
+    @Override
+    public Boolean delete(Long patientId){
+        medicalAppointmentDomain.deleteByPatientId(patientId);
+        return patientDomain.delete(patientId);
     }
 }

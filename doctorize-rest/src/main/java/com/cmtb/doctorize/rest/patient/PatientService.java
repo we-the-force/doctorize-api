@@ -7,10 +7,10 @@ package com.cmtb.doctorize.rest.patient;
 
 import com.cmtb.doctorize.core.patient.PatientDomain;
 import com.cmtb.doctorize.core.patient.PatientOrchestrator;
-import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,11 +47,47 @@ public class PatientService {
         }
     }
     
-    @RequestMapping(value = "/patient/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getById(@PathVariable("id") Long patientId) {
         try {
 
             PatientDisplayObject result = patientDomain.getById(patientId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "doctors/{doctorId}/patients", method = RequestMethod.GET)
+    public ResponseEntity<?> getByDOctorId(@PathVariable("doctorId") Long doctorId) {
+        try {
+
+            List<PatientDisplayObject> result = patientDomain.getListByDoctorId(doctorId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/patients/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable("id") Long patientId) {
+        try {
+
+            Boolean result = patientOrchestrator.delete(patientId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/patients", method = RequestMethod.PATCH)
+    public ResponseEntity<?> update(@RequestBody PatientDisplayObject patientDO) {
+        try {
+
+            PatientDisplayObject result = patientOrchestrator.update(patientDO);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {

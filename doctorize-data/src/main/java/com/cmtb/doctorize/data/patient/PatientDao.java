@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.data.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
+import java.util.List;
 
 /**
  *
@@ -17,4 +18,7 @@ public interface PatientDao {
 
     Patient save(Patient patient);
     
+    public List<Patient> getListByDoctorId(Long doctorId);
+    
+    public Boolean delete(Long patientId);
 }

@@ -87,6 +87,19 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
     }
     
     @Override
+    public Boolean deleteByPatientId(Long patientId){
+        String hql = "delete from MedicalAppointment MA "
+                + " where (MA.patient.id=:patientId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("patientId", patientId);
+
+        int affected = query.executeUpdate();
+        
+        return (affected > 0);
+    }
+    
+    @Override
     public Boolean update(MedicalAppointment medicalAppointment){
         
         StringBuilder builder = new StringBuilder();
@@ -94,6 +107,9 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
         builder.append(" set MA.name=:name, MA.email=:email,");
         builder.append(" MA.phone=:phone,");
         builder.append(" MA.date=:date,");
+        if(medicalAppointment.getPatient() != null){
+            builder.append(" MA.patient.id=:patientId,");
+        }
         builder.append(" MA.doctorOffice.id=:doctorOfficeId");
         builder.append(" where (MA.id=:appointmentId)");
         
@@ -107,6 +123,9 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
         query.setLong("doctorOfficeId", medicalAppointment.getDoctorOffice().getId());
         
         query.setLong("appointmentId", medicalAppointment.getId());
+        if(medicalAppointment.getPatient() != null){
+            query.setLong("patientId", medicalAppointment.getPatient().getId());
+        }
         
         int records=query.executeUpdate();
         

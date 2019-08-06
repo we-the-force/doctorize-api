@@ -7,6 +7,8 @@ package com.cmtb.doctorize.data.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.shared.RequiredException;
+import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -50,5 +52,32 @@ public class PatientDaoImpl implements PatientDao {
         query.setLong("patientId", patientId);
 
         return (Patient) query.uniqueResult();
+    }
+    
+    @Override
+    public List<Patient> getListByDoctorId(Long doctorId){
+        String hql = "select P from Patient P"
+                + " join fetch P.medicalAppointments PMA"
+                + " where PMA.doctor.id =:doctorId";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("doctorId", doctorId);
+        
+        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+        return (List<Patient>) query.list();
+    }
+    
+    @Override
+    public Boolean delete(Long patientId){
+        String hql = "delete from Patient P "
+                + " where (P.id=:patientId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("patientId", patientId);
+
+        int affected = query.executeUpdate();
+        
+        return (affected > 0);
     }
 }

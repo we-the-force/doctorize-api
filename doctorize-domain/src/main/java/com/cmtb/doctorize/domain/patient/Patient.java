@@ -10,6 +10,8 @@ import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import com.cmtb.doctorize.domain.user.User;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -70,6 +73,9 @@ public class Patient implements Serializable{
     
     @Column(name = "`photo`")
     private String photo;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
+    private Set<MedicalAppointment> medicalAppointments = new HashSet<>();
     
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "`userId`")
@@ -308,5 +314,19 @@ public class Patient implements Serializable{
      */
     public void setImageData(String imageData) {
         this.imageData = imageData;
+    }
+
+    /**
+     * @return the medicalAppointments
+     */
+    public Set<MedicalAppointment> getMedicalAppointments() {
+        return medicalAppointments;
+    }
+
+    /**
+     * @param medicalAppointments the medicalAppointments to set
+     */
+    public void setMedicalAppointments(Set<MedicalAppointment> medicalAppointments) {
+        this.medicalAppointments = medicalAppointments;
     }
 }

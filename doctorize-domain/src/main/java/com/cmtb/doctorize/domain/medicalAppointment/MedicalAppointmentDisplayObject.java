@@ -20,6 +20,7 @@ public class MedicalAppointmentDisplayObject {
     private Date date;
     private Long doctorId;
     private Long officeId;
+    private Long patientId;
 
     /**
      * @return the id
@@ -117,6 +118,20 @@ public class MedicalAppointmentDisplayObject {
      */
     public void setOfficeId(Long officeId) {
         this.officeId = officeId;
+    }
+
+    /**
+     * @return the patientId
+     */
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    /**
+     * @param patientId the patientId to set
+     */
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
     }
     
 }

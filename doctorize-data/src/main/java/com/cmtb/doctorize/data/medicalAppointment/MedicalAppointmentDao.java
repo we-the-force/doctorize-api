@@ -22,6 +22,8 @@ public interface MedicalAppointmentDao {
     
     public Boolean delete(Long appointmentId);
     
+    public Boolean deleteByPatientId(Long patientId);    
+    
     public Boolean update(MedicalAppointment medicalAppointment);    
     
     public Boolean setPatient(Long patientId, Long appoinmentId);

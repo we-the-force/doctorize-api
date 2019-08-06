@@ -15,6 +15,8 @@ import com.cmtb.doctorize.domain.shared.MaritalStatusEnum;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -36,18 +38,21 @@ public class PatientDomainImpl implements PatientDomain {
     
     private PatientDisplayObject assemblerPatientDisplayObject(Patient patient){
         PatientDisplayObject patientDO = new PatientDisplayObject();
-        patientDO.setId(patient.getId());
-        patientDO.setBirthdate(patient.getBirthdate());
-        patientDO.setBloodPressure(patient.getBloodPressure());
-        patientDO.setBloodType(patient.getBloodType());
-        patientDO.setCellphone(patient.getCellphone());
-        patientDO.setEmail(patient.getEmail());
-        patientDO.setGender(patient.getGender());
-        patientDO.setHeight(patient.getHeight());
-        patientDO.setMaritalStatus(patient.getMaritalStatus());
-        patientDO.setName(patient.getName());
-        patientDO.setPhoto(patient.getPhoto());
-        patientDO.setWeight(patient.getWeight());
+        
+        if(patient != null){
+            patientDO.setId(patient.getId());
+            patientDO.setBirthdate(patient.getBirthdate());
+            patientDO.setBloodPressure(patient.getBloodPressure());
+            patientDO.setBloodType(patient.getBloodType());
+            patientDO.setCellphone(patient.getCellphone());
+            patientDO.setEmail(patient.getEmail());
+            patientDO.setGender(patient.getGender());
+            patientDO.setHeight(patient.getHeight());
+            patientDO.setMaritalStatus(patient.getMaritalStatus());
+            patientDO.setName(patient.getName());
+            patientDO.setPhoto(patient.getPhoto());
+            patientDO.setWeight(patient.getWeight());
+        }
         
         return patientDO;
     }
@@ -85,9 +90,9 @@ public class PatientDomainImpl implements PatientDomain {
             
             patientDao.save(patient);
             
-            if(medicalAppointmentDomain.setPatient(patient.getId(), patientDO.getAppointmentId())){
-              throw new ItemNotFoundException();
-            }
+//            if(medicalAppointmentDomain.setPatient(patient.getId(), patientDO.getAppointmentId())){
+//              throw new ItemNotFoundException();
+//            }
             
             AttachmentResultDisplayObject results = patientAttachmentImagesComponent.attachementPhoto(patient);
                     
@@ -122,7 +127,32 @@ public class PatientDomainImpl implements PatientDomain {
     @Override
     public PatientDisplayObject getById(Long patientId){
         Patient patient = patientDao.getPatientById(patientId);
+        if(patient == null){
+            throw new ItemNotFoundException();
+        }
         return this.assemblerPatientDisplayObject(patient);
+    }
+    
+    @Override
+    public List<PatientDisplayObject> getListByDoctorId(Long doctorId){
+        List<PatientDisplayObject> patientsDO = new ArrayList<>();
+        
+        List<Patient> patients = patientDao.getListByDoctorId(doctorId);
+        
+        for(Patient patientItem: patients){
+            patientsDO.add(this.assemblerPatientDisplayObject(patientItem));
+        }
+        
+        return patientsDO;
+    }
+    
+    @Override
+    public Boolean delete(Long patientId){
+        Boolean result = patientDao.delete(patientId);
+        if(!result){
+            throw new ItemNotFoundException();
+        }
+        return result; 
     }
     
 }
