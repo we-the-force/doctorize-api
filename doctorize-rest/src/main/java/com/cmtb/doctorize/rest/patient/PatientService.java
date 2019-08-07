@@ -35,7 +35,7 @@ public class PatientService {
     @Resource(name = "PatientDomain")
     PatientDomain patientDomain;
     
-    @RequestMapping(value = "/patients", method = RequestMethod.POST)
+    @RequestMapping(value = "doctors/{doctorId}/patients", method = RequestMethod.POST)
     public ResponseEntity<?> save(@RequestBody PatientDisplayObject patientDO) {
         try {
             PatientDisplayObject result = patientOrchestrator.save(patientDO);
@@ -54,6 +54,8 @@ public class PatientService {
             PatientDisplayObject result = patientDomain.getById(patientId);
             return new ResponseEntity(result, HttpStatus.OK);
 
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -66,6 +68,8 @@ public class PatientService {
             List<PatientDisplayObject> result = patientDomain.getListByDoctorId(doctorId);
             return new ResponseEntity(result, HttpStatus.OK);
 
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -78,18 +82,22 @@ public class PatientService {
             Boolean result = patientOrchestrator.delete(patientId);
             return new ResponseEntity(result, HttpStatus.OK);
 
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     
-    @RequestMapping(value = "/patients", method = RequestMethod.PATCH)
-    public ResponseEntity<?> update(@RequestBody PatientDisplayObject patientDO) {
+    @RequestMapping(value = "/patients/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> update(@PathVariable("id") Long patientId, @RequestBody PatientDisplayObject patientDO) {
         try {
-
+            patientDO.setId(patientId);
             PatientDisplayObject result = patientOrchestrator.update(patientDO);
             return new ResponseEntity(result, HttpStatus.OK);
 
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

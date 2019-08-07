@@ -37,4 +37,10 @@ public class PatientOrchestratorImpl implements PatientOrchestrator {
         medicalAppointmentDomain.deleteByPatientId(patientId);
         return patientDomain.delete(patientId);
     }
+    
+    @Transactional
+    @Override
+    public PatientDisplayObject update(PatientDisplayObject patientDO){
+        return patientDomain.update(patientDO);
+    }
 }

@@ -21,4 +21,8 @@ public interface PatientDao {
     public List<Patient> getListByDoctorId(Long doctorId);
     
     public Boolean delete(Long patientId);
+    
+    public Boolean update(Patient patient);
+    
+    public Boolean updatePhoto(Patient patient);
 }

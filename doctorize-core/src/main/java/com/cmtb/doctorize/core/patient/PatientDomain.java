@@ -25,4 +25,6 @@ public interface PatientDomain {
     
     public Boolean delete(Long patientId);
     
+    public PatientDisplayObject update(PatientDisplayObject patientDO);
+    
 }

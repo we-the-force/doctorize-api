@@ -80,4 +80,63 @@ public class PatientDaoImpl implements PatientDao {
         
         return (affected > 0);
     }
+    
+    @Override
+    public Boolean update(Patient patient){
+        StringBuilder builder = new StringBuilder();
+        builder.append("update Patient P");
+        builder.append(" set P.name=:name, P.email=:email,");
+        builder.append(" P.cellphone=:cellphone,");
+        builder.append(" P.birthdate=:birthdate,");
+        builder.append(" P.gender=:gender,");
+        builder.append(" P.maritalStatus=:maritalStatus,");
+        builder.append(" P.weight=:weight,");
+        builder.append(" P.height=:height,");
+        builder.append(" P.bloodType=:bloodType,");
+        builder.append(" P.bloodPressure=:bloodPressure,");
+        builder.append(" P.photo=:photo");
+        builder.append(" where (P.id=:patientId)");
+        
+        String hql = builder.toString();
+
+        Query query = this.getSession().createQuery(hql);
+        query.setString("name", patient.getName());
+        query.setString("email", patient.getEmail());
+        query.setString("cellphone", patient.getCellphone());
+        query.setDate("birthdate", patient.getBirthdate());
+        
+        query.setByte("gender", patient.getGender());
+        query.setByte("maritalStatus", patient.getMaritalStatus());
+        query.setInteger("weight", patient.getWeight());
+        query.setInteger("height", patient.getHeight());
+        query.setByte("bloodType", patient.getBloodType());
+        query.setString("bloodPressure", patient.getBloodPressure());
+        query.setString("photo", patient.getPhoto());
+        
+        
+        query.setLong("patientId", patient.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
+    
+    @Override
+    public Boolean updatePhoto(Patient patient){
+        StringBuilder builder = new StringBuilder();
+        builder.append("update Patient P");
+        builder.append(" set P.photo=:photo");
+        builder.append(" where (P.id=:patientId)");
+        
+        String hql = builder.toString();
+
+        Query query = this.getSession().createQuery(hql);
+        query.setString("photo", patient.getPhoto());
+        
+        query.setLong("patientId", patient.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
 }

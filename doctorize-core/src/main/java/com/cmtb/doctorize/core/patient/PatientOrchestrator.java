@@ -19,4 +19,6 @@ public interface PatientOrchestrator {
     
     public Boolean delete(Long patientId);
     
+    public PatientDisplayObject update(PatientDisplayObject patientDO);
+    
 }

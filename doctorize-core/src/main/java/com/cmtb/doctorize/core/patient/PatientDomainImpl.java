@@ -90,18 +90,12 @@ public class PatientDomainImpl implements PatientDomain {
             
             patientDao.save(patient);
             
-//            if(medicalAppointmentDomain.setPatient(patient.getId(), patientDO.getAppointmentId())){
-//              throw new ItemNotFoundException();
-//            }
-            
             AttachmentResultDisplayObject results = patientAttachmentImagesComponent.attachementPhoto(patient);
                     
             if (results.getUpdated()) {
-                patient.setPhoto(results.getPath());
+                patientDO.setPhoto(results.getPath());
             }
             
-        }else{
-//            this.update(patient);
         }
         
         patientDO.setImageData("");
@@ -154,5 +148,31 @@ public class PatientDomainImpl implements PatientDomain {
         }
         return result; 
     }
+    
+    @Override
+    public PatientDisplayObject update(PatientDisplayObject patientDO){
+        Patient patient = this.assemblerPatientDOtoPatient(patientDO);
+        
+        AttachmentResultDisplayObject results = patientAttachmentImagesComponent.attachementPhoto(patient);
+        
+        if (results.getUpdated()) {
+            patientDO.setPhoto(results.getPath());
+            patient.setPhoto(results.getPath());
+            updatePhoto(patient);
+        }
+        
+        Boolean result = patientDao.update(patient);
+        if(!result){
+            throw new ItemNotFoundException();
+        }
+        
+        return patientDO;
+    }
+    
+    private boolean updatePhoto(Patient patient){
+        return patientDao.updatePhoto(patient);
+    }
+    
+    
     
 }
