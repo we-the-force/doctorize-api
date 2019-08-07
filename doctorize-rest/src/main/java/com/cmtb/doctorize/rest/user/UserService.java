@@ -9,7 +9,8 @@ import com.cmtb.doctorize.core.user.UserDomain;
 import com.cmtb.doctorize.core.user.UserOrchestrator;
 import com.cmtb.doctorize.domain.shared.ConfirmationCodeExceptoin;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
-import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.RoleEnum;
@@ -203,9 +204,10 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/user/inviteAssistant", method = RequestMethod.POST)
-    public ResponseEntity<?> inviteAssistant(@RequestBody AssistantDisplayObject assitantDO) {
+    @RequestMapping(value = "/doctors/{doctorId}/assistants", method = RequestMethod.POST)
+    public ResponseEntity<?> inviteAssistant(@PathVariable("doctorId") Long doctorId, @RequestBody AssistantDisplayObject assitantDO) {
         try {
+            assitantDO.setDoctorId(doctorId);
             Boolean result = userOrchestrator.inviteAssistant(assitantDO);
             return new ResponseEntity(result, HttpStatus.OK);
         }catch (Exception ex) {
@@ -217,7 +219,7 @@ public class UserService {
     public ResponseEntity<?> getListByDoctorId(@PathVariable("doctorId") Long doctorId) {
         try {
 
-            List<UserDisplayObject> result = userDomain.getListByDoctorId(doctorId);
+            List<AssistantDisplayObjectNEW> result = userDomain.getListByDoctorId(doctorId);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {

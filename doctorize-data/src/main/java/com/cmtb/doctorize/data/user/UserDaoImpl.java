@@ -64,8 +64,11 @@ public class UserDaoImpl implements UserDao {
         StringBuilder builder = new StringBuilder();
         builder.append("update User U");
         builder.append(" set U.name=:name, U.email=:email,");
-        builder.append(" U.cellphone=:cellphone,");
-        builder.append(" U.specialty.id=:specialtyId");
+        if(user.getSpecialty() != null){
+            builder.append(" U.specialty.id=:specialtyId,");
+        }
+        
+        builder.append(" U.cellphone=:cellphone");
         builder.append(" where (U.id=:userId)");
         
         String hql = builder.toString();
@@ -74,7 +77,10 @@ public class UserDaoImpl implements UserDao {
         query.setString("name", user.getName());
         query.setString("email", user.getEmail());
         query.setString("cellphone", user.getCellphone());
-        query.setLong("specialtyId", user.getSpecialty().getId());
+        
+        if(user.getSpecialty() != null){
+            query.setLong("specialtyId", user.getSpecialty().getId());
+        }
         
         query.setLong("userId", user.getId());
         

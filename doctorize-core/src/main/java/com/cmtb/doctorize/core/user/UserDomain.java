@@ -5,7 +5,8 @@
  */
 package com.cmtb.doctorize.core.user;
 
-import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
@@ -46,7 +47,7 @@ public interface UserDomain {
     
     public Boolean delete(Long userId);
     
-    public List<UserDisplayObject> getListByDoctorId(Long doctorId);
+    public List<AssistantDisplayObjectNEW> getListByDoctorId(Long doctorId);
     
     public UserDisplayObject getById(Long userId);
     

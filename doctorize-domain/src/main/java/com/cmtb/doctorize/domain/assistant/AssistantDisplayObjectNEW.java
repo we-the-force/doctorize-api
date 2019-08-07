@@ -3,26 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cmtb.doctorize.domain.user;
+package com.cmtb.doctorize.domain.assistant;
 
-import com.cmtb.doctorize.domain.shared.Permissions;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  *
- * @author pc
+ * @author gealtec
  */
-    public class AssistantDisplayObject {
+public class AssistantDisplayObjectNEW {
     
+    private Long id;
     private String email;
     private Long doctorId;
-    private Long doctorOfficeId;
     private String code;
     private String name;
     private String password;
     private String imageData;
-    private Set<Permissions> permissions = new HashSet<>();
+    private String cellphone;
+    private String photo;
+    private Set<AssistantDoctorOfficeDisplayObject> offices = new HashSet<>();
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * @return the email
@@ -50,20 +65,6 @@ import java.util.Set;
      */
     public void setDoctorId(Long doctorId) {
         this.doctorId = doctorId;
-    }
-
-    /**
-     * @return the doctorOfficeId
-     */
-    public Long getDoctorOfficeId() {
-        return doctorOfficeId;
-    }
-
-    /**
-     * @param doctorOfficeId the doctorOfficeId to set
-     */
-    public void setDoctorOfficeId(Long doctorOfficeId) {
-        this.doctorOfficeId = doctorOfficeId;
     }
 
     /**
@@ -123,16 +124,44 @@ import java.util.Set;
     }
 
     /**
-     * @return the permissions
+     * @return the cellphone
      */
-    public Set<Permissions> getPermissions() {
-        return permissions;
+    public String getCellphone() {
+        return cellphone;
     }
 
     /**
-     * @param permissions the permissions to set
+     * @param cellphone the cellphone to set
      */
-    public void setPermissions(Set<Permissions> permissions) {
-        this.permissions = permissions;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+
+    /**
+     * @return the photo
+     */
+    public String getPhoto() {
+        return photo;
+    }
+
+    /**
+     * @param photo the photo to set
+     */
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    /**
+     * @return the offices
+     */
+    public Set<AssistantDoctorOfficeDisplayObject> getOffices() {
+        return offices;
+    }
+
+    /**
+     * @param offices the offices to set
+     */
+    public void setOffices(Set<AssistantDoctorOfficeDisplayObject> offices) {
+        this.offices = offices;
     }
 }

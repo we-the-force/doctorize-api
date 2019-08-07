@@ -5,7 +5,7 @@
  */
 package com.cmtb.doctorize.core.user;
 
-import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.utilities.Email;
 import com.cmtb.doctorize.domain.utilities.EmailProcessEnum;
 import com.cmtb.doctorize.utilities.email.EmailUtilsComponent;

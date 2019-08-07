@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.core.user;
 
+import com.cmtb.doctorize.core.assistent.AssistantDoctorOfficeDomain;
 import com.cmtb.doctorize.core.doctorOffice.UserDoctorOfficeDomain;
 import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
@@ -14,7 +15,9 @@ import com.cmtb.doctorize.domain.shared.ConfirmationCodeExceptoin;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.shared.PermissionEnum;
 import com.cmtb.doctorize.domain.shared.Permissions;
-import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
+import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
 import com.cmtb.doctorize.domain.specialty.Specialty;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
@@ -66,8 +69,8 @@ public class UserDomainImpl implements UserDomain {
     @Resource(name = "UserAttachmentImagesComponent")
     private UserAttachmentImagesComponent userAttachmentImagesComponent;
     
-    @Resource(name = "UserDoctorOfficeDomain")
-    private UserDoctorOfficeDomain userDoctorOfficeDomain;
+    @Resource(name = "AssistantDoctorOfficeDomain")
+    private AssistantDoctorOfficeDomain assistantDoctorOfficeDomain;
     
     @Autowired
     private SecurityComponent securityComponent;
@@ -372,11 +375,11 @@ public class UserDomainImpl implements UserDomain {
         user.setPassword("temp");
         user.setStatus(StatusEnum.UNCONFIRMED.getId());
         
-        if(!assistantDisplayObject.getPermissions().isEmpty()){
-            for(Permissions permissionItem: assistantDisplayObject.getPermissions()){
-                user.getPermissions().add(permissionItem);
-            }
-        }
+//        if(!assistantDisplayObject.getPermissions().isEmpty()){
+//            for(Permissions permissionItem: assistantDisplayObject.getPermissions()){
+//                user.getPermissions().add(permissionItem);
+//            }
+//        }
         
         char[] code = RandomStringGenerator.generate();
         user.setConfirmationCode(new String(code));
@@ -440,13 +443,13 @@ public class UserDomainImpl implements UserDomain {
     }
     
     @Override
-    public List<UserDisplayObject> getListByDoctorId(Long doctorId){
-        List<UserDoctorOffice> usersDoctorOffice = userDoctorOfficeDomain.getListAssistantsByDoctorId(doctorId);
+    public List<AssistantDisplayObjectNEW> getListByDoctorId(Long doctorId){
+        List<AssistantDoctorOffice> assistantsDoctorOffice = assistantDoctorOfficeDomain.getListAssistantsByDoctorId(doctorId);
         
-        List<UserDisplayObject> usersDO = new ArrayList<>();
+        List<AssistantDisplayObjectNEW> usersDO = new ArrayList<>();
         
-        for(UserDoctorOffice userDoctorOfficeItem: usersDoctorOffice){
-            usersDO.add(this.assemblerUserDoctorOfficeTOUserDisplayObect(userDoctorOfficeItem));
+        for(AssistantDoctorOffice assistantDoctorOfficeItem: assistantsDoctorOffice){
+//            usersDO.add(this.assemblerUserDoctorOfficeTOUserDisplayObect(userDoctorOfficeItem));
         }
         
 //        List<User> users = userDao.getListByDoctorId(doctorId);

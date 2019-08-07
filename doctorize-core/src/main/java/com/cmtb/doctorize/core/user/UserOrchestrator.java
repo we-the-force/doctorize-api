@@ -5,7 +5,7 @@
  */
 package com.cmtb.doctorize.core.user;
 
-import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import org.springframework.transaction.annotation.Transactional;

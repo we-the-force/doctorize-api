@@ -5,12 +5,14 @@
  */
 package com.cmtb.doctorize.core.user;
 
+import com.cmtb.doctorize.core.assistent.AssistantDoctorOfficeDomain;
 import com.cmtb.doctorize.core.doctorOffice.UserDoctorOfficeDomain;
 import com.cmtb.doctorize.core.shared.ClusterValidationAbstract;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
-import com.cmtb.doctorize.domain.user.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import javax.annotation.Resource;
@@ -29,6 +31,9 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     
     @Resource(name = "UserDoctorOfficeDomain")
     private UserDoctorOfficeDomain userDoctorOfficeDomain;
+    
+    @Resource(name = "AssistantDoctorOfficeDomain")
+    private AssistantDoctorOfficeDomain assistantDoctorOfficeDomain;
     
     @Resource(name = "UserResetPasswordClusterValidator")
     private ClusterValidationAbstract userResetPasswordValidatorCluster;
@@ -71,17 +76,16 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     @Override
     public Boolean inviteAssistant(AssistantDisplayObject assistantDisplayObject){
         
-        
-        
         User user = userDomain.inviteAssistant(assistantDisplayObject);
         
-        UserDoctorOffice userDoctorOffice = new UserDoctorOffice();
-        userDoctorOffice.setUser(user);
+        AssistantDoctorOffice assistantDoctorOffice = new AssistantDoctorOffice();
+        assistantDoctorOffice.setAssistant(user);
         DoctorOffice doctorOffice = new DoctorOffice();
-        doctorOffice.setId(assistantDisplayObject.getDoctorOfficeId());
-        userDoctorOffice.setDoctorOffice(doctorOffice);
+        doctorOffice.setId(assistantDisplayObject.getOfficeId());
+        assistantDoctorOffice.setDoctorOffice(doctorOffice);
+        assistantDoctorOffice.setPermissions(assistantDisplayObject.getPermissions());
         
-        userDoctorOfficeDomain.save(userDoctorOffice);
+        assistantDoctorOfficeDomain.save(assistantDoctorOffice);
         
         return true;
     }
