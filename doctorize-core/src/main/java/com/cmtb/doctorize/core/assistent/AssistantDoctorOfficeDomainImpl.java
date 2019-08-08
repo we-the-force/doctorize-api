@@ -31,4 +31,9 @@ public class AssistantDoctorOfficeDomainImpl implements AssistantDoctorOfficeDom
     public List<AssistantDoctorOffice> getListAssistantsByDoctorId(Long doctorId){
         return assistantDoctorOfficeDao.getListAssistantsByDoctorId(doctorId);
     }
+    
+    @Override
+    public Boolean delete(Long assistantId){
+        return assistantDoctorOfficeDao.delete(assistantId);
+    }
 }

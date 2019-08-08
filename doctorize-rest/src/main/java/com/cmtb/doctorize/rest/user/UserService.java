@@ -227,7 +227,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/assistant/{assistantId}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/assistants/{assistantId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAssistant(@PathVariable("assistantId") Long assistantId) {
         try {
 
