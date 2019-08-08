@@ -5,7 +5,7 @@
  */
 package com.cmtb.doctorize.domain.assistant;
 
-import java.security.Permission;
+import com.cmtb.doctorize.domain.shared.Permissions;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public class AssistantDoctorOfficeDisplayObject {
     
     private Long officeId;
     private String officeName;
-    private Set<Permission> permissions = new HashSet<>();
+    private Set<Permissions> permissions = new HashSet<>();
 
     /**
      * @return the officeId
@@ -50,14 +50,14 @@ public class AssistantDoctorOfficeDisplayObject {
     /**
      * @return the permissions
      */
-    public Set<Permission> getPermissions() {
+    public Set<Permissions> getPermissions() {
         return permissions;
     }
 
     /**
      * @param permissions the permissions to set
      */
-    public void setPermissions(Set<Permission> permissions) {
+    public void setPermissions(Set<Permissions> permissions) {
         this.permissions = permissions;
     }
     

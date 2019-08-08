@@ -7,7 +7,6 @@ package com.cmtb.doctorize.rest.doctorOffice;
 
 import com.cmtb.doctorize.core.doctorOffice.DoctorOfficeDomain;
 import com.cmtb.doctorize.core.doctorOffice.DoctorOfficeOrchestrator;
-import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
@@ -60,8 +59,8 @@ public class DoctorOfficeService {
         }
     }
     
-    @RequestMapping(value = "/doctors/{id}/offices/{officeId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getById(@PathVariable("id") Long doctorId, @PathVariable("officeId") Long officeId) {
+    @RequestMapping(value = "/offices/{officeId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getById(@PathVariable("officeId") Long officeId) {
         try {
 
             DoctorOfficeDisplayObject result = doctorOfficeDomain.getById(officeId);
@@ -74,8 +73,8 @@ public class DoctorOfficeService {
         }
     }
     
-    @RequestMapping(value = "/doctors/{id}/offices/{officeId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAssistant(@PathVariable("id") Long doctorId, @PathVariable("officeId") Long doctorOfficeId) {
+    @RequestMapping(value = "/offices/{officeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAssistant(@PathVariable("officeId") Long doctorOfficeId) {
         try {
 
             Boolean result = doctorOfficeOrchestrator.delete(doctorOfficeId);
@@ -89,11 +88,10 @@ public class DoctorOfficeService {
         }
     }
     
-    @RequestMapping(value = "/doctors/{id}/offices/{officeId}", method = RequestMethod.PATCH)
-    public ResponseEntity<?> update(@PathVariable("id") Long doctorId, @PathVariable("officeId") Long doctorOfficeId, @RequestBody DoctorOfficeDisplayObject doctorOfficeDisplayObject) {
+    @RequestMapping(value = "/offices/{officeId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> update(@PathVariable("officeId") Long doctorOfficeId, @RequestBody DoctorOfficeDisplayObject doctorOfficeDisplayObject) {
         try {
             doctorOfficeDisplayObject.setId(doctorOfficeId);
-            doctorOfficeDisplayObject.setUserId(doctorId);
             DoctorOfficeDisplayObject result = doctorOfficeOrchestrator.save(doctorOfficeDisplayObject);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception ex) {

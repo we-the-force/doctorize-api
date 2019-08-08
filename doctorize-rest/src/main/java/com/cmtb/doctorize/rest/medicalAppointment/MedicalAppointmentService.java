@@ -55,8 +55,8 @@ public class MedicalAppointmentService {
         }
     }
     
-    @RequestMapping(value = "/doctors/{id}/appointments/{appointmentId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getListByDoctorId(@PathVariable("id") Long doctorId, @PathVariable("appointmentId") Long appointmentId) {
+    @RequestMapping(value = "/appointments/{appointmentId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getById(@PathVariable("appointmentId") Long appointmentId) {
         try {
             MedicalAppointmentDisplayObject result = medicalAppointmentDomain.getById(appointmentId);
             return new ResponseEntity(result, HttpStatus.OK);
@@ -67,8 +67,8 @@ public class MedicalAppointmentService {
         }
     }
     
-    @RequestMapping(value = "/doctors/{id}/appointments/{appointmentId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@PathVariable("id") Long doctorId, @PathVariable("appointmentId") Long appointmentId) {
+    @RequestMapping(value = "/appointments/{appointmentId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable("appointmentId") Long appointmentId) {
         try {
             Boolean result = medicalAppointmentDomain.delete(appointmentId);
             return new ResponseEntity(result, HttpStatus.OK);
@@ -79,8 +79,8 @@ public class MedicalAppointmentService {
         }
     }
     
-    @RequestMapping(value = "/doctors/{id}/appointments/{appointmentId}", method = RequestMethod.PATCH)
-    public ResponseEntity<?> update(@PathVariable("id") Long doctorId, @PathVariable("appointmentId") Long appointmentId, 
+    @RequestMapping(value = "/appointments/{appointmentId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> update(@PathVariable("appointmentId") Long appointmentId, 
             @RequestBody MedicalAppointmentDisplayObject medicalAppointment) {
         try {
             medicalAppointment.setId(appointmentId);

@@ -84,6 +84,9 @@ public class UserOrchestratorImpl implements UserOrchestrator {
         doctorOffice.setId(assistantDisplayObject.getOfficeId());
         assistantDoctorOffice.setDoctorOffice(doctorOffice);
         assistantDoctorOffice.setPermissions(assistantDisplayObject.getPermissions());
+        User doctor = new User();
+        doctor.setId(assistantDisplayObject.getDoctorId());
+        assistantDoctorOffice.setDoctor(doctor);
         
         assistantDoctorOfficeDomain.save(assistantDoctorOffice);
         

@@ -39,6 +39,10 @@ public class AssistantDoctorOffice implements Serializable{
     private User assistant;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`doctorId`")
+    private User doctor;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`doctorOfficeId`")
     private DoctorOffice doctorOffice;
     
@@ -104,6 +108,20 @@ public class AssistantDoctorOffice implements Serializable{
      */
     public void setPermissions(Set<Permissions> permissions) {
         this.permissions = permissions;
+    }
+
+    /**
+     * @return the doctor
+     */
+    public User getDoctor() {
+        return doctor;
+    }
+
+    /**
+     * @param doctor the doctor to set
+     */
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
     }
     
 }

@@ -242,11 +242,11 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/assistant/{assistantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/assistants/{assistantId}", method = RequestMethod.GET)
     public ResponseEntity<?> getAssistantById(@PathVariable("assistantId") Long assistantId) {
         try {
 
-            UserDisplayObject result = userDomain.getById(assistantId);
+            AssistantDisplayObjectNEW result = userDomain.getAssistantById(assistantId);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {

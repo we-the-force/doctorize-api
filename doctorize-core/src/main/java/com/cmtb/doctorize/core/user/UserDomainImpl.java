@@ -6,7 +6,6 @@
 package com.cmtb.doctorize.core.user;
 
 import com.cmtb.doctorize.core.assistent.AssistantDoctorOfficeDomain;
-import com.cmtb.doctorize.core.doctorOffice.UserDoctorOfficeDomain;
 import com.cmtb.doctorize.core.shared.SecurityComponent;
 import com.cmtb.doctorize.data.user.UserCodeForgotPasswordDao;
 import com.cmtb.doctorize.data.user.UserDao;
@@ -18,6 +17,7 @@ import com.cmtb.doctorize.domain.shared.Permissions;
 import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
+import com.cmtb.doctorize.domain.assistant.AssistantDoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.specialty.Specialty;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
@@ -68,9 +68,6 @@ public class UserDomainImpl implements UserDomain {
     
     @Resource(name = "UserAttachmentImagesComponent")
     private UserAttachmentImagesComponent userAttachmentImagesComponent;
-    
-    @Resource(name = "AssistantDoctorOfficeDomain")
-    private AssistantDoctorOfficeDomain assistantDoctorOfficeDomain;
     
     @Autowired
     private SecurityComponent securityComponent;
@@ -129,9 +126,32 @@ public class UserDomainImpl implements UserDomain {
             
         }
         
-        
-        
         return userDisplayObject;
+    }
+    
+    private AssistantDisplayObjectNEW assemblerUserToAssistantDO(User user){
+        AssistantDisplayObjectNEW assistantDO = new AssistantDisplayObjectNEW();
+        
+        assistantDO.setCellphone(user.getCellphone());
+        assistantDO.setEmail(user.getEmail());
+        assistantDO.setId(user.getId());
+        assistantDO.setName(user.getName());
+        
+        for(AssistantDoctorOffice assistanDoctorOfficeItem : user.getAssistantDoctorOffices()){
+            
+            AssistantDoctorOfficeDisplayObject assistantDoctorOfficeDO = new AssistantDoctorOfficeDisplayObject();
+            assistantDoctorOfficeDO.setOfficeId(assistanDoctorOfficeItem.getDoctorOffice().getId());
+            assistantDoctorOfficeDO.setOfficeName(assistanDoctorOfficeItem.getDoctorOffice().getName());
+            assistantDoctorOfficeDO.setPermissions(assistanDoctorOfficeItem.getPermissions());
+            
+            assistantDO.getOffices().add(assistantDoctorOfficeDO);
+            
+            assistantDO.setDoctorId(assistanDoctorOfficeItem.getDoctor().getId());
+        }
+        
+        assistantDO.setPhoto(user.getPhoto());
+        
+        return assistantDO;
     }
     
     private User assembleUser(User userTemp){
@@ -367,10 +387,6 @@ public class UserDomainImpl implements UserDomain {
         User user = new User();
         user.setEmail(email);
         
-        User doctor = new User();
-        doctor.setId(assistantDisplayObject.getDoctorId());
-        
-        user.setDoctor(doctor);
         user.setRoleId(RoleEnum.ASSISTANT.getId());
         user.setPassword("temp");
         user.setStatus(StatusEnum.UNCONFIRMED.getId());
@@ -444,21 +460,14 @@ public class UserDomainImpl implements UserDomain {
     
     @Override
     public List<AssistantDisplayObjectNEW> getListByDoctorId(Long doctorId){
-        List<AssistantDoctorOffice> assistantsDoctorOffice = assistantDoctorOfficeDomain.getListAssistantsByDoctorId(doctorId);
         
         List<AssistantDisplayObjectNEW> usersDO = new ArrayList<>();
         
-        for(AssistantDoctorOffice assistantDoctorOfficeItem: assistantsDoctorOffice){
-//            usersDO.add(this.assemblerUserDoctorOfficeTOUserDisplayObect(userDoctorOfficeItem));
-        }
+        List<User> users = userDao.getListByDoctorId(doctorId);
         
-//        List<User> users = userDao.getListByDoctorId(doctorId);
-//        
-//        List<UserDisplayObject> usersDO = new ArrayList<>();
-//        
-//        for(User userItem: users){
-//            usersDO.add(this.assembleUserDisplayObject(userItem));
-//        }
+        for(User userItem: users){
+            usersDO.add(this.assemblerUserToAssistantDO(userItem));
+        }
         
         return usersDO;
     }
@@ -472,6 +481,17 @@ public class UserDomainImpl implements UserDomain {
             throw new ItemNotFoundException();
         }
         return this.assembleUserDisplayObject(user);
+    }
+    
+    @Override
+    public AssistantDisplayObjectNEW getAssistantById(Long assistantId){
+        User user = userDao.getAssistantById(assistantId);
+        if(user.getStatus().equals(StatusEnum.UNCONFIRMED.getId())){
+            throw new UserUnconfirmedException();
+        }else if(user.getStatus().equals(StatusEnum.DISABLE.getId())){
+            throw new ItemNotFoundException();
+        }
+        return this.assemblerUserToAssistantDO(user);
     }
     
     @Override

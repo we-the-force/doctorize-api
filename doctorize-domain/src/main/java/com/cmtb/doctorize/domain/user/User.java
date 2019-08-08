@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.domain.user;
 
+import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
 import com.cmtb.doctorize.domain.shared.Permissions;
 import com.cmtb.doctorize.domain.specialty.Specialty;
 import java.io.Serializable;
@@ -65,12 +66,12 @@ public class User implements Serializable{
     @Column(name = "`confirmationCode`")
     private String confirmationCode;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`userId`")
-    private User doctor;
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor")
-    private Set<User> assistants;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "`userId`")
+//    private User doctor;
+//    
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor")
+//    private Set<User> assistants;
     
     @Column(name = "`createDate`", columnDefinition = "timestamp with time zone")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -87,6 +88,9 @@ public class User implements Serializable{
                 @JoinColumn(name = "`permissionId`",
                         nullable = false, updatable = false)})
     private Set<Permissions> permissions = new HashSet<>();
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assistant")
+    private Set<AssistantDoctorOffice> assistantDoctorOffices = new HashSet<>();
     
     @Transient
     private String imageData;
@@ -262,33 +266,33 @@ public class User implements Serializable{
         this.createDate = createDate;
     }
 
-    /**
-     * @return the doctor
-     */
-    public User getDoctor() {
-        return doctor;
-    }
-
-    /**
-     * @param doctor the doctor to set
-     */
-    public void setDoctor(User doctor) {
-        this.doctor = doctor;
-    }
-
-    /**
-     * @return the assistants
-     */
-    public Set<User> getAssistants() {
-        return assistants;
-    }
-
-    /**
-     * @param assistants the assistants to set
-     */
-    public void setAssistants(Set<User> assistants) {
-        this.assistants = assistants;
-    }
+//    /**
+//     * @return the doctor
+//     */
+//    public User getDoctor() {
+//        return doctor;
+//    }
+//
+//    /**
+//     * @param doctor the doctor to set
+//     */
+//    public void setDoctor(User doctor) {
+//        this.doctor = doctor;
+//    }
+//
+//    /**
+//     * @return the assistants
+//     */
+//    public Set<User> getAssistants() {
+//        return assistants;
+//    }
+//
+//    /**
+//     * @param assistants the assistants to set
+//     */
+//    public void setAssistants(Set<User> assistants) {
+//        this.assistants = assistants;
+//    }
 
     /**
      * @return the specialty
@@ -316,6 +320,20 @@ public class User implements Serializable{
      */
     public void setPermissions(Set<Permissions> permissions) {
         this.permissions = permissions;
+    }
+
+    /**
+     * @return the assistantDoctorOffices
+     */
+    public Set<AssistantDoctorOffice> getAssistantDoctorOffices() {
+        return assistantDoctorOffices;
+    }
+
+    /**
+     * @param assistantDoctorOffices the assistantDoctorOffices to set
+     */
+    public void setAssistantDoctorOffices(Set<AssistantDoctorOffice> assistantDoctorOffices) {
+        this.assistantDoctorOffices = assistantDoctorOffices;
     }
     
 }

@@ -48,10 +48,11 @@ public class AssistantDoctorOfficeDaoImpl implements AssistantDoctorOfficeDao {
     public List<AssistantDoctorOffice> getListAssistantsByDoctorId(Long doctorId) {
         String hql = "select ADO from AssistantDoctorOffice ADO"
                 + " join fetch ADO.assistant A"
+                + " join fetch ADO.doctor D"
                 + " join fetch ADO.doctorOffice DO"
                 + " left join fetch ADO.permissions P"
-                + " where DO.userDoctorOffices.user.id =:doctorId"
-                + " and (DO.userDoctorOffices.user.status=:active or DO.userDoctorOffices.user.status=:unconfirmed)";
+                + " where D.id =:doctorId"
+                + " and (D.status=:active or D.status=:unconfirmed)";
 
         Query query = this.getSession().createQuery(hql);
         query.setLong("doctorId", doctorId);

@@ -26,6 +26,8 @@ public interface UserDao {
     
     public User getUserById(Long userId);
     
+    public User getAssistantById(Long userId);
+    
     public boolean confirmationAccount(String email);
     
     public boolean confirmationAssistantAccount(User user);

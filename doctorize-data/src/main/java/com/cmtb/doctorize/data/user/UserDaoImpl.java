@@ -132,6 +132,21 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
+    public User getAssistantById(Long assistantId){
+        String hql = "select U from User U"
+                + " join fetch U.assistantDoctorOffices ADO"
+                + " join fetch ADO.permissions P"
+                + " join fetch ADO.doctor D"
+                + " join fetch ADO.doctorOffice DO"
+                + " where U.id =:assistantId";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("assistantId", assistantId);
+
+        return (User) query.uniqueResult();
+    }
+    
+    @Override
     public boolean confirmationAccount(String email){
         String hql = "update User U"
                 + " set U.status=:status,"
@@ -187,9 +202,12 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> getListByDoctorId(Long doctorId) {
         String hql = "select U from User U"
-                + " left join fetch U.permissions P"
-                + " where U.doctor.id =:doctorId"
-                + " and (U.status=:active or U.status=:unconfirmed)";
+                + " join fetch U.assistantDoctorOffices ADO"
+                + " join fetch ADO.permissions P"
+                + " join fetch ADO.doctor D"
+                + " join fetch ADO.doctorOffice DO"
+                + " where D.id =:doctorId"
+                + " and (D.status=:active or D.status=:unconfirmed)";
 
         Query query = this.getSession().createQuery(hql);
         query.setLong("doctorId", doctorId);

@@ -35,7 +35,7 @@ public class PatientService {
     @Resource(name = "PatientDomain")
     PatientDomain patientDomain;
     
-    @RequestMapping(value = "doctors/{doctorId}/patients", method = RequestMethod.POST)
+    @RequestMapping(value = "/doctors/{doctorId}/patients", method = RequestMethod.POST)
     public ResponseEntity<?> save(@RequestBody PatientDisplayObject patientDO) {
         try {
             PatientDisplayObject result = patientOrchestrator.save(patientDO);
@@ -61,7 +61,7 @@ public class PatientService {
         }
     }
     
-    @RequestMapping(value = "doctors/{doctorId}/patients", method = RequestMethod.GET)
+    @RequestMapping(value = "/doctors/{doctorId}/patients", method = RequestMethod.GET)
     public ResponseEntity<?> getByDOctorId(@PathVariable("doctorId") Long doctorId) {
         try {
 
