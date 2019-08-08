@@ -113,7 +113,7 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     @Override
     public Boolean deleteAssistant(Long assistantId){
         
-        userDoctorOfficeDomain.deleteByUserId(assistantId);
+        assistantDoctorOfficeDomain.delete(assistantId);
         
         return userDomain.deleteAssistant(assistantId);
     }

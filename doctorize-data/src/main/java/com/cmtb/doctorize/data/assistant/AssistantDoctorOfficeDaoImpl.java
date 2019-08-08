@@ -62,4 +62,17 @@ public class AssistantDoctorOfficeDaoImpl implements AssistantDoctorOfficeDao {
 
         return (List<AssistantDoctorOffice>) query.list();
     }
+    
+    @Override
+    public Boolean delete(Long assistantId){
+        String hql = "delete from AssistantDoctorOffice ADO "
+                + " where (ADO.assistant.id=:assistantId)";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("assistantId", assistantId);
+
+        int affected = query.executeUpdate();
+        
+        return (affected > 0);
+    }
 }

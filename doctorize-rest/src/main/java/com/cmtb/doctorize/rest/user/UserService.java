@@ -227,7 +227,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/assistant/{assistantId}/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/assistants/{assistantId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteAssistant(@PathVariable("assistantId") Long assistantId) {
         try {
 
@@ -242,7 +242,7 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/assistant/{assistantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/assistants/{assistantId}", method = RequestMethod.GET)
     public ResponseEntity<?> getAssistantById(@PathVariable("assistantId") Long assistantId) {
         try {
 
