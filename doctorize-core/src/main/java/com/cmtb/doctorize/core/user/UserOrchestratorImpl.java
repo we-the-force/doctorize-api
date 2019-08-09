@@ -114,11 +114,11 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     
     @Transactional
     @Override
-    public Boolean deleteAssistant(Long assistantId){
+    public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId){
         
-        assistantDoctorOfficeDomain.delete(assistantId);
+        return assistantDoctorOfficeDomain.deleteAssistantByIdAndDoctor(assistantId, doctorId);
         
-        return userDomain.deleteAssistant(assistantId);
+//        return userDomain.deleteAssistant(assistantId);
     }
     
     @Transactional

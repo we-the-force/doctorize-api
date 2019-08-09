@@ -227,11 +227,11 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/assistants/{assistantId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteAssistant(@PathVariable("assistantId") Long assistantId) {
+    @RequestMapping(value = "/doctors/{doctorId}/assistants/{assistantId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAssistant(@PathVariable("doctorId") Long doctorId, @PathVariable("assistantId") Long assistantId) {
         try {
 
-            Boolean result = userOrchestrator.deleteAssistant(assistantId);
+            Boolean result = userOrchestrator.deleteAssistantByIdAndDoctor(assistantId, doctorId);
             
             return new ResponseEntity(result, HttpStatus.OK);
 
@@ -249,6 +249,8 @@ public class UserService {
             AssistantDisplayObjectNEW result = userDomain.getAssistantByIdAndDoctor(assistantId, doctorId);
             return new ResponseEntity(result, HttpStatus.OK);
 
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

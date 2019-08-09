@@ -65,12 +65,13 @@ public class AssistantDoctorOfficeDaoImpl implements AssistantDoctorOfficeDao {
     }
     
     @Override
-    public Boolean delete(Long assistantId){
+    public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId){
         String hql = "delete from AssistantDoctorOffice ADO "
-                + " where (ADO.assistant.id=:assistantId)";
+                + " where ADO.assistant.id=:assistantId and ADO.doctor.id =:doctorId";
 
         Query query = this.getSession().createQuery(hql);
         query.setLong("assistantId", assistantId);
+        query.setLong("doctorId", doctorId);
 
         int affected = query.executeUpdate();
         

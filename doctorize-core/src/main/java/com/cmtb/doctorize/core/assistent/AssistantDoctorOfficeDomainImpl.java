@@ -33,7 +33,7 @@ public class AssistantDoctorOfficeDomainImpl implements AssistantDoctorOfficeDom
     }
     
     @Override
-    public Boolean delete(Long assistantId){
-        return assistantDoctorOfficeDao.delete(assistantId);
+    public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId){
+        return assistantDoctorOfficeDao.deleteAssistantByIdAndDoctor(assistantId, doctorId);
     }
 }

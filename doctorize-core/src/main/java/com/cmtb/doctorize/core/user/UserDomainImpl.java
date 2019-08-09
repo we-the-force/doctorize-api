@@ -484,11 +484,13 @@ public class UserDomainImpl implements UserDomain {
     @Override
     public AssistantDisplayObjectNEW getAssistantByIdAndDoctor(Long assistantId, Long doctorId){
         User user = userDao.getAssistantByIdAndDoctor(assistantId, doctorId);
-        if(user.getStatus().equals(StatusEnum.UNCONFIRMED.getId())){
-            throw new UserUnconfirmedException();
-        }else if(user.getStatus().equals(StatusEnum.DISABLE.getId())){
+        
+        if(user == null || user.getStatus().equals(StatusEnum.DISABLE.getId())){
             throw new ItemNotFoundException();
+        } else if(user.getStatus().equals(StatusEnum.UNCONFIRMED.getId())){
+            throw new UserUnconfirmedException();
         }
+        
         return this.assemblerUserToAssistantDO(user);
     }
     

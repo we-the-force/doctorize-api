@@ -18,5 +18,5 @@ public interface AssistantDoctorOfficeDomain {
     
     public List<AssistantDoctorOffice> getListAssistantsByDoctorId(Long doctorId);
     
-    public Boolean delete(Long assistantId);
+    public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId);
 }

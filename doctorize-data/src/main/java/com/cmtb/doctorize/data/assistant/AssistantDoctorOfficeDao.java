@@ -18,6 +18,6 @@ public interface AssistantDoctorOfficeDao {
     
     public List<AssistantDoctorOffice> getListAssistantsByDoctorId(Long doctorId);
     
-    public Boolean delete(Long assistantId);
+    public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId);
     
 }
