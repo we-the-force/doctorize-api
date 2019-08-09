@@ -143,10 +143,8 @@ public class UserDomainImpl implements UserDomain {
             assistantDoctorOfficeDO.setOfficeId(assistanDoctorOfficeItem.getDoctorOffice().getId());
             assistantDoctorOfficeDO.setOfficeName(assistanDoctorOfficeItem.getDoctorOffice().getName());
             assistantDoctorOfficeDO.setPermissions(assistanDoctorOfficeItem.getPermissions());
-            
+            assistantDoctorOfficeDO.setDoctorId(assistanDoctorOfficeItem.getDoctor().getId());
             assistantDO.getOffices().add(assistantDoctorOfficeDO);
-            
-            assistantDO.setDoctorId(assistanDoctorOfficeItem.getDoctor().getId());
         }
         
         assistantDO.setPhoto(user.getPhoto());
@@ -484,8 +482,8 @@ public class UserDomainImpl implements UserDomain {
     }
     
     @Override
-    public AssistantDisplayObjectNEW getAssistantById(Long assistantId){
-        User user = userDao.getAssistantById(assistantId);
+    public AssistantDisplayObjectNEW getAssistantByIdAndDoctor(Long assistantId, Long doctorId){
+        User user = userDao.getAssistantByIdAndDoctor(assistantId, doctorId);
         if(user.getStatus().equals(StatusEnum.UNCONFIRMED.getId())){
             throw new UserUnconfirmedException();
         }else if(user.getStatus().equals(StatusEnum.DISABLE.getId())){

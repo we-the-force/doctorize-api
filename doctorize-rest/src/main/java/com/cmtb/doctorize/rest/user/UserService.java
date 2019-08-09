@@ -242,11 +242,11 @@ public class UserService {
         }
     }
     
-    @RequestMapping(value = "/assistants/{assistantId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAssistantById(@PathVariable("assistantId") Long assistantId) {
+    @RequestMapping(value = "doctors/{doctorId}/assistants/{assistantId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAssistantById(@PathVariable("doctorId") Long doctorId, @PathVariable("assistantId") Long assistantId) {
         try {
 
-            AssistantDisplayObjectNEW result = userDomain.getAssistantById(assistantId);
+            AssistantDisplayObjectNEW result = userDomain.getAssistantByIdAndDoctor(assistantId, doctorId);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {

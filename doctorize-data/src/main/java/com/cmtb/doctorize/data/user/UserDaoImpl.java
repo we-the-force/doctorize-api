@@ -132,16 +132,17 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
-    public User getAssistantById(Long assistantId){
+    public User getAssistantByIdAndDoctor(Long assistantId, Long doctorId){
         String hql = "select U from User U"
                 + " join fetch U.assistantDoctorOffices ADO"
                 + " join fetch ADO.permissions P"
                 + " join fetch ADO.doctor D"
                 + " join fetch ADO.doctorOffice DO"
-                + " where U.id =:assistantId";
+                + " where U.id =:assistantId and D.id =:doctorId";
 
         Query query = this.getSession().createQuery(hql);
         query.setLong("assistantId", assistantId);
+        query.setLong("doctorId", doctorId);
 
         return (User) query.uniqueResult();
     }

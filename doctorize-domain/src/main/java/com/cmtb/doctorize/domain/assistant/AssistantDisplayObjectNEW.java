@@ -16,7 +16,6 @@ public class AssistantDisplayObjectNEW {
     
     private Long id;
     private String email;
-    private Long doctorId;
     private String code;
     private String name;
     private String password;
@@ -51,20 +50,6 @@ public class AssistantDisplayObjectNEW {
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * @return the doctorId
-     */
-    public Long getDoctorId() {
-        return doctorId;
-    }
-
-    /**
-     * @param doctorId the doctorId to set
-     */
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
     }
 
     /**

@@ -16,6 +16,7 @@ import java.util.Set;
 public class AssistantDoctorOfficeDisplayObject {
     
     private Long officeId;
+    private Long doctorId;
     private String officeName;
     private Set<Permissions> permissions = new HashSet<>();
 
@@ -59,6 +60,20 @@ public class AssistantDoctorOfficeDisplayObject {
      */
     public void setPermissions(Set<Permissions> permissions) {
         this.permissions = permissions;
+    }
+
+    /**
+     * @return the doctorId
+     */
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+    /**
+     * @param doctorId the doctorId to set
+     */
+    public void setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
     }
     
 }

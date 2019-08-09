@@ -26,7 +26,7 @@ public interface UserDao {
     
     public User getUserById(Long userId);
     
-    public User getAssistantById(Long userId);
+    public User getAssistantByIdAndDoctor(Long assistantId, Long doctorId);
     
     public boolean confirmationAccount(String email);
     
