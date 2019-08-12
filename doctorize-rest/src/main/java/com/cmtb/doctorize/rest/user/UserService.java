@@ -255,4 +255,20 @@ public class UserService {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @RequestMapping(value = "/doctors/{doctorId}/assistants/{assistantId}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> updateAsistant(@PathVariable("doctorId") Long doctorId, @PathVariable("assistantId") Long assistantId,
+            @RequestBody AssistantDisplayObjectNEW assitantDO) {
+        try {
+
+            Boolean result = userOrchestrator.addUpdateAsistant(assitantDO);
+            
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (NotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

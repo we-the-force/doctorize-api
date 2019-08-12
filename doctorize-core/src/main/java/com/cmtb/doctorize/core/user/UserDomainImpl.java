@@ -439,6 +439,7 @@ public class UserDomainImpl implements UserDomain {
             user.setPassword(hash);
             
             user.setName(assistantDisplayObject.getName());
+            user.setImageData(assistantDisplayObject.getImageData());
             
             this.update(user);
             

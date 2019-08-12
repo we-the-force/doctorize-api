@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.user;
 
 import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,5 +34,7 @@ public interface UserOrchestrator {
     public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId);
     
     public User update(User user);
+    
+    public AssistantDisplayObjectNEW updateAsistant(AssistantDisplayObjectNEW assistantDisplayObject);
     
 }

@@ -77,4 +77,20 @@ public class AssistantDoctorOfficeDaoImpl implements AssistantDoctorOfficeDao {
         
         return (affected > 0);
     }
+    
+    @Override
+    public Boolean exists(AssistantDoctorOffice assistantDoctorOffice){
+        String hql = "select count(*) from AssistantDoctorOffice ADO"
+                + " where ADO.doctor.id =:doctorId and ADO.assistant.id=:assistantId"
+                + " and ADO.doctorOffice.id=:doctorOfficeId";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("doctorId", assistantDoctorOffice.getDoctor().getId());
+        query.setLong("assistantId", assistantDoctorOffice.getAssistant().getId());
+        query.setLong("doctorOfficeId", assistantDoctorOffice.getDoctorOffice().getId());
+        
+        
+        Long matches = (Long) query.uniqueResult();
+        return matches > 0;
+    }
 }

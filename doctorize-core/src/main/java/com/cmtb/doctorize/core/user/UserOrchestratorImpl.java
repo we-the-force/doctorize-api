@@ -12,6 +12,7 @@ import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
+import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
@@ -128,6 +129,13 @@ public class UserOrchestratorImpl implements UserOrchestrator {
             throw new ItemNotFoundException();
         }
         return this.save(user);
+    }
+    
+    @Transactional
+    @Override
+    public AssistantDisplayObjectNEW updateAsistant(AssistantDisplayObjectNEW assistantDisplayObject){
+        
+        return assistantDisplayObject;
     }
     
 }

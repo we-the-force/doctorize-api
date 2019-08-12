@@ -36,4 +36,13 @@ public class AssistantDoctorOfficeDomainImpl implements AssistantDoctorOfficeDom
     public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId){
         return assistantDoctorOfficeDao.deleteAssistantByIdAndDoctor(assistantId, doctorId);
     }
+    
+    @Override
+    public Boolean addUpdateAssistantOffice(AssistantDoctorOffice assistantDoctorOffice){
+        if(assistantDoctorOfficeDao.exists(assistantDoctorOffice)){
+            
+        }
+        
+        return true;
+    }
 }
