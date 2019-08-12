@@ -54,6 +54,9 @@ public class UserDomainImpl implements UserDomain {
     @Resource(name = "UserCodeForgotPasswordDao")
     private UserCodeForgotPasswordDao userCodeForgotPasswordDao;
     
+    @Resource(name = "AssistantDoctorOfficeDomain")
+    private AssistantDoctorOfficeDomain assistantDoctorOfficeDomain;
+    
     @Resource(name="UserNotifyCodeChangePasswordComponent")
     private UserNotifyCodeChangePasswordComponent userNotifyCodeChangePasswordComponent;
     
@@ -498,6 +501,16 @@ public class UserDomainImpl implements UserDomain {
     @Override
     public Boolean deleteAssistant(Long assistantId){
         return userDao.deleteAssistant(assistantId);
+    }
+    
+    @Override
+    public AssistantDisplayObjectNEW addUpdateAssistantDoctorOffice(AssistantDisplayObjectNEW assistantDisplayObject){
+        
+        for(AssistantDoctorOfficeDisplayObject assistantDoctorOfficeItem: assistantDisplayObject.getOffices()){
+            assistantDoctorOfficeDomain.addUpdateAssistantOffice(assistantDoctorOfficeItem, assistantDisplayObject.getId());
+        }
+        
+        return assistantDisplayObject;
     }
     
 }

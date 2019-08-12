@@ -7,6 +7,9 @@ package com.cmtb.doctorize.core.assistent;
 
 import com.cmtb.doctorize.data.assistant.AssistantDoctorOfficeDao;
 import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
+import com.cmtb.doctorize.domain.assistant.AssistantDoctorOfficeDisplayObject;
+import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.user.User;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,26 @@ public class AssistantDoctorOfficeDomainImpl implements AssistantDoctorOfficeDom
     
     @Resource(name = "AssistantDoctorOfficeDao")
     private AssistantDoctorOfficeDao assistantDoctorOfficeDao;
+    
+    private AssistantDoctorOffice assemblerAssistantDOtoAssistantDoctorOffice(AssistantDoctorOfficeDisplayObject assistantDoctorOffcieDO, Long assistantId){
+        AssistantDoctorOffice assistantDoctorOffice = new AssistantDoctorOffice();
+        
+        User assistant = new User();
+        assistant.setId(assistantId);
+        assistantDoctorOffice.setAssistant(assistant);
+        
+        User doctor = new User();
+        doctor.setId(assistantDoctorOffcieDO.getDoctorId());
+        assistantDoctorOffice.setDoctor(doctor);
+        
+        DoctorOffice doctorOffice = new DoctorOffice();
+        doctorOffice.setId(assistantDoctorOffcieDO.getOfficeId());
+        assistantDoctorOffice.setDoctorOffice(doctorOffice);
+        
+        assistantDoctorOffice.setPermissions(assistantDoctorOffcieDO.getPermissions());
+        
+        return assistantDoctorOffice;
+    }
     
     @Override
     public AssistantDoctorOffice save(AssistantDoctorOffice assistantDoctorOffice){
@@ -38,10 +61,14 @@ public class AssistantDoctorOfficeDomainImpl implements AssistantDoctorOfficeDom
     }
     
     @Override
-    public Boolean addUpdateAssistantOffice(AssistantDoctorOffice assistantDoctorOffice){
+    public Boolean addUpdateAssistantOffice(AssistantDoctorOfficeDisplayObject assistantDoctorOfficeDO, Long assistantId){
+        
+        AssistantDoctorOffice assistantDoctorOffice = this.assemblerAssistantDOtoAssistantDoctorOffice(assistantDoctorOfficeDO, assistantId);
+        
         if(assistantDoctorOfficeDao.exists(assistantDoctorOffice)){
-            
+            assistantDoctorOfficeDao.delete(assistantDoctorOffice);
         }
+        assistantDoctorOfficeDao.save(assistantDoctorOffice);
         
         return true;
     }

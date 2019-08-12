@@ -55,4 +55,6 @@ public interface UserDomain {
     
     public Boolean deleteAssistant(Long assistantId);
     
+    public AssistantDisplayObjectNEW addUpdateAssistantDoctorOffice(AssistantDisplayObjectNEW assistantDisplayObject);
+    
 }

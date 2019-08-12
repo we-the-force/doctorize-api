@@ -260,8 +260,8 @@ public class UserService {
     public ResponseEntity<?> updateAsistant(@PathVariable("doctorId") Long doctorId, @PathVariable("assistantId") Long assistantId,
             @RequestBody AssistantDisplayObjectNEW assitantDO) {
         try {
-
-            Boolean result = userOrchestrator.addUpdateAsistant(assitantDO);
+            assitantDO.setId(assistantId);
+            AssistantDisplayObjectNEW result = userOrchestrator.addUpdateAssistantDoctorOffice(assitantDO);
             
             return new ResponseEntity(result, HttpStatus.OK);
 

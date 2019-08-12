@@ -21,4 +21,6 @@ public interface AssistantDoctorOfficeDao {
     public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId);
     
     public Boolean exists(AssistantDoctorOffice assistantDoctorOffice);
+    
+    public Boolean delete(AssistantDoctorOffice assistantDoctorOffice);
 }
