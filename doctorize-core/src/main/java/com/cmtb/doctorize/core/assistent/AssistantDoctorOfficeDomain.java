@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.assistent;
 
 import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
+import com.cmtb.doctorize.domain.assistant.AssistantDoctorOfficeDisplayObject;
 import java.util.List;
 
 /**
@@ -20,5 +21,5 @@ public interface AssistantDoctorOfficeDomain {
     
     public Boolean deleteAssistantByIdAndDoctor(Long assistantId, Long doctorId);
     
-    public Boolean addUpdateAssistantOffice(AssistantDoctorOffice assistantDoctorOffice);
+    public Boolean addUpdateAssistantOffice(AssistantDoctorOfficeDisplayObject assistantDoctorOfficeDO, Long assistantId);
 }

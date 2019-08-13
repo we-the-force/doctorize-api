@@ -133,9 +133,9 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     
     @Transactional
     @Override
-    public AssistantDisplayObjectNEW updateAsistant(AssistantDisplayObjectNEW assistantDisplayObject){
+    public AssistantDisplayObjectNEW addUpdateAssistantDoctorOffice(AssistantDisplayObjectNEW assistantDisplayObject){
         
-        return assistantDisplayObject;
+        return userDomain.addUpdateAssistantDoctorOffice(assistantDisplayObject);
     }
     
 }

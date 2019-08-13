@@ -35,6 +35,6 @@ public interface UserOrchestrator {
     
     public User update(User user);
     
-    public AssistantDisplayObjectNEW updateAsistant(AssistantDisplayObjectNEW assistantDisplayObject);
+    public AssistantDisplayObjectNEW addUpdateAssistantDoctorOffice(AssistantDisplayObjectNEW assistantDisplayObject);
     
 }
