@@ -7,6 +7,7 @@ package com.cmtb.doctorize.data.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.shared.RequiredException;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -138,5 +139,70 @@ public class PatientDaoImpl implements PatientDao {
         int records=query.executeUpdate();
         
         return (records > 0);
+    }
+    
+    @Override
+    public List<Patient> getByFilter(String filter, String value){
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append("select P from Patient P");
+        
+        switch (filter) {
+            case "name":
+                builder.append(" where P.name=:name");
+                break;
+            case "email":
+                builder.append(" where P.email=:email");
+                break;
+            case "cellphone":
+                builder.append(" where P.cellphone=:cellphone");
+                break;
+            case "bloodPressure":
+                builder.append(" where P.bloodPressure=:bloodPressure");
+                break;
+            case "photo":
+                builder.append(" where P.photo=:photo");
+                break;
+            default:
+                return new ArrayList<>();
+        }
+        
+        String hql = builder.toString();
+        
+        Query query = this.getSession().createQuery(hql);
+        
+        switch (filter) {
+            case "name":
+                query.setString("name", value);
+                break;
+            case "email":
+                query.setString("email", value);
+                break;
+            case "cellphone":
+                query.setString("cellphone", value);
+                break;
+            case "bloodPressure":
+                query.setString("bloodPressure", value);
+                break;
+            case "photo":
+                query.setString("photo", value);
+                break;
+            default:
+                return new ArrayList<>();
+        }
+
+        return (List<Patient>) query.list();
+    }
+    
+    @Override
+    public List<Patient> getListByLimit(Integer offset, Integer limit){
+        String hql = "select P from Patient P"
+                + " ORDER BY P.id ";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+
+        return (List<Patient>) query.list();
     }
 }

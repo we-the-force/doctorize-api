@@ -173,6 +173,24 @@ public class PatientDomainImpl implements PatientDomain {
         return patientDao.updatePhoto(patient);
     }
     
+    @Override
+    public List<PatientDisplayObject> getByFilter(String filter, String value){
+        List<Patient> patients = patientDao.getByFilter(filter, value);
+        List<PatientDisplayObject> patientsDO = new ArrayList<>();
+        for(Patient patientItem: patients){
+            patientsDO.add(this.assemblerPatientDisplayObject(patientItem));
+        }
+        return patientsDO;
+    }
     
+    @Override
+    public List<PatientDisplayObject> getListByLimit(Integer offset, Integer limit){
+        List<Patient> patients = patientDao.getListByLimit(offset, limit);
+        List<PatientDisplayObject> patientsDO = new ArrayList<>();
+        for(Patient patientItem: patients){
+            patientsDO.add(this.assemblerPatientDisplayObject(patientItem));
+        }
+        return patientsDO;
+    }
     
 }

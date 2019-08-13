@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.core.patient;
 
+import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
 import java.util.List;
@@ -26,5 +27,9 @@ public interface PatientDomain {
     public Boolean delete(Long patientId);
     
     public PatientDisplayObject update(PatientDisplayObject patientDO);
+    
+    public List<PatientDisplayObject> getByFilter(String filter, String value);
+    
+    public List<PatientDisplayObject> getListByLimit(Integer offset, Integer limit);
     
 }

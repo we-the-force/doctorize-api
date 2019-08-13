@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -108,6 +109,30 @@ public class PatientService {
         try {
 
             PatientContainerDisplayObject result = patientDomain.loadCollectionPatient(patientId);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/patients", params = {"filter", "search"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getListByRole(@RequestParam String filter, @RequestParam String search) {
+        try {
+
+            List<PatientDisplayObject> result = patientDomain.getByFilter(filter, search);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/patients", params = {"offset", "limit"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getListByRole(@RequestParam Integer offset, @RequestParam Integer limit) {
+        try {
+
+            List<PatientDisplayObject> result = patientDomain.getListByLimit(offset, limit);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (Exception ex) {

@@ -25,4 +25,8 @@ public interface PatientDao {
     public Boolean update(Patient patient);
     
     public Boolean updatePhoto(Patient patient);
+    
+    public List<Patient> getByFilter(String filter, String value);
+    
+    public List<Patient> getListByLimit(Integer offset, Integer limit);
 }
