@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -50,6 +51,20 @@ public class MedicalAppointmentService {
         try {
             List<MedicalAppointmentDisplayObject> result = medicalAppointmentDomain.getListByDoctorId(doctorId);
             return new ResponseEntity(result, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/doctors/{doctorId}/appointments", params = {"filter", "search"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getListByFilters(@PathVariable("doctorId") Long doctorId, @RequestParam List<String> filter, @RequestParam List<String> search) {
+        try {
+
+            List<MedicalAppointmentDisplayObject> result = medicalAppointmentDomain.getListByFilters(doctorId, filter, search);
+            return new ResponseEntity(result, HttpStatus.OK);
+
+        } catch (ItemNotFoundException ex) {
+            return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

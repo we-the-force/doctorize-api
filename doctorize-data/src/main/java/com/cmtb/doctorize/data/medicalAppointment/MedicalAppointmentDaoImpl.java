@@ -60,6 +60,25 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
     }
     
     @Override
+    public List<MedicalAppointment> getListByFilter(Long doctorId, List<String> filter, List<String> search){
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append("select MA from MedicalAppointment MA");
+        builder.append(" left join fetch MA.doctor");
+        builder.append(" left join fetch MA.doctorOffice");
+        builder.append(" where MA.doctor.id =:doctorId");
+        
+        String hql = builder.toString();
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("doctorId", doctorId);
+        
+        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+        return (List<MedicalAppointment>) query.list(); 
+    }
+    
+    @Override
     public MedicalAppointment getById(Long appointmentId){
         
         String hql = "select MA from MedicalAppointment MA"

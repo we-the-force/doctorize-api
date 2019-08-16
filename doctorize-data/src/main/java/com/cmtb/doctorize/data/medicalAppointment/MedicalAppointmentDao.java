@@ -18,6 +18,8 @@ public interface MedicalAppointmentDao {
     
     public List<MedicalAppointment> getListByDoctorId(Long doctorId);
     
+    public List<MedicalAppointment> getListByFilter(Long doctorId, List<String> filter, List<String> search);
+    
     public MedicalAppointment getById(Long appointmentId);
     
     public Boolean delete(Long appointmentId);
