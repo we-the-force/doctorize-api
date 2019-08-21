@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.data.medicalAppointment;
 
+import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppoinmentFilterDisplayObject;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface MedicalAppointmentDao {
     
     public List<MedicalAppointment> getListByDoctorId(Long doctorId);
     
-    public List<MedicalAppointment> getListByFilter(Long doctorId, List<String> filter, List<String> search);
+    public List<MedicalAppointment> getListByFilter(MedicalAppoinmentFilterDisplayObject filterDO);
     
     public MedicalAppointment getById(Long appointmentId);
     

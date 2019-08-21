@@ -28,4 +28,6 @@ public interface MedicalAppointmentDomain {
     
     public Boolean setPatient(Long patientId, Long appoinmentId);
     
+    public List<MedicalAppointmentDisplayObject> getListByFilters(Long doctorId, List<String> filter, List<String> search);
+    
 }

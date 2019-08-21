@@ -5,6 +5,7 @@
  */
 package com.cmtb.doctorize.data.medicalAppointment;
 
+import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppoinmentFilterDisplayObject;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import java.util.List;
@@ -60,18 +61,42 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
     }
     
     @Override
-    public List<MedicalAppointment> getListByFilter(Long doctorId, List<String> filter, List<String> search){
+    public List<MedicalAppointment> getListByFilter(MedicalAppoinmentFilterDisplayObject filterDO){
         
         StringBuilder builder = new StringBuilder();
         builder.append("select MA from MedicalAppointment MA");
         builder.append(" left join fetch MA.doctor");
         builder.append(" left join fetch MA.doctorOffice");
         builder.append(" where MA.doctor.id =:doctorId");
+        if(filterDO.getEmail() != null && !filterDO.getEmail().equals("")){
+            builder.append(" and MA.email =:email");
+        }
+        if(filterDO.getOffice() != null){
+            builder.append(" and MA.doctorOffice.id =:officeId");
+        }
+        if(filterDO.getStartDate() != null){
+            builder.append(" and MA.date >=:startDate");
+            builder.append(" and MA.date <=:endDate");
+        }
+        
         
         String hql = builder.toString();
 
         Query query = this.getSession().createQuery(hql);
-        query.setLong("doctorId", doctorId);
+        query.setLong("doctorId", filterDO.getDoctorId());
+        if(filterDO.getEmail() != null && !filterDO.getEmail().equals("")){
+            query.setString("email", filterDO.getEmail());
+        }
+        if(filterDO.getOffice() != null){
+            query.setLong("officeId", filterDO.getOffice());
+        }
+        if(filterDO.getStartDate() != null){
+            builder.append(" and MA.date >=:startDate");
+            builder.append(" and MA.date <=:endDate");
+            query.setTimestamp("startDate", filterDO.getStartDate());
+            query.setTimestamp("endDate", filterDO.getEndDate());
+        }
+        
         
         query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 

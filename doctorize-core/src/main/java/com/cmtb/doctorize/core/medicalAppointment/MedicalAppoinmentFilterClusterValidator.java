@@ -8,7 +8,6 @@ package com.cmtb.doctorize.core.medicalAppointment;
 import com.cmtb.doctorize.core.shared.ClusterValidationAbstract;
 import com.cmtb.doctorize.core.shared.Validation;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppoinmentFilterDisplayObject;
-import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;

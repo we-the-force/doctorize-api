@@ -7,6 +7,7 @@ package com.cmtb.doctorize.core.medicalAppointment;
 
 import com.cmtb.doctorize.data.medicalAppointment.MedicalAppointmentDao;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
+import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppoinmentFilterDisplayObject;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointmentDisplayObject;
 import com.cmtb.doctorize.domain.patient.Patient;
@@ -29,6 +30,9 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
     
     @Resource(name="PatientNotifyNewAppointmentComponent")
     private PatientNotifyNewAppointmentComponent patientNotifyNewAppointmentComponent;
+    
+    @Resource(name = "MedicalAppoinmentFilterClusterValidator")
+    private MedicalAppoinmentFilterClusterValidator medicalAppoinmentFilterClusterValidator;
     
     private MedicalAppointmentDisplayObject assemblerMedicalAppointmentDisplayObject(MedicalAppointment medicalAppointment){
         MedicalAppointmentDisplayObject medicalAppointmentDO = new MedicalAppointmentDisplayObject();
@@ -126,5 +130,25 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
     @Override
     public Boolean setPatient(Long patientId, Long appoinmentId){
         return medicalAppointmentDao.setPatient(patientId, appoinmentId);
+    }
+    
+    @Override
+    public List<MedicalAppointmentDisplayObject> getListByFilters(Long doctorId, List<String> filter, List<String> search){
+        
+        MedicalAppoinmentFilterDisplayObject model = new MedicalAppoinmentFilterDisplayObject();
+        model.setDoctorId(doctorId);
+        model.setFilter(filter);
+        model.setSearch(search);
+        
+        medicalAppoinmentFilterClusterValidator.run(model);
+        
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentDao.getListByFilter(model);
+        List<MedicalAppointmentDisplayObject> medicalAppointmentsDO = new ArrayList<>();
+        
+        for(MedicalAppointment medicalAppointmentItem: medicalAppointments){
+            medicalAppointmentsDO.add(assemblerMedicalAppointmentDisplayObject(medicalAppointmentItem));
+        }
+                
+        return medicalAppointmentsDO;
     }
 }
