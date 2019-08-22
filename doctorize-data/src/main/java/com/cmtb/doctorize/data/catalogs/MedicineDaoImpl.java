@@ -5,7 +5,7 @@
  */
 package com.cmtb.doctorize.data.catalogs;
 
-import com.cmtb.doctorize.domain.catalogs.Disease;
+import com.cmtb.doctorize.domain.catalogs.Medicine;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import java.util.List;
 import org.hibernate.Query;
@@ -21,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author pc
  */
 @Transactional
-@Repository("DiseaseDao")
-public class DiseaseDaoImpl implements DiseaseDao {
+@Repository("MedicineDao")
+public class MedicineDaoImpl implements MedicineDao {
     
     @Autowired
     private SessionFactory _sessionFactory;
@@ -32,49 +32,49 @@ public class DiseaseDaoImpl implements DiseaseDao {
     }
     
     @Override
-    public Disease save(Disease disease){
+    public Medicine save(Medicine medicine){
         try {
-            Long newId = (long) this.getSession().save(disease);
-            disease.setId(newId);
-            return disease;
+            Long newId = (long) this.getSession().save(medicine);
+            medicine.setId(newId);
+            return medicine;
         } catch (TransientPropertyValueException e) {
             throw new RequiredException(e.getPropertyName());
         }
     }
     
     @Override
-    public Disease get(Long diseaseId) {
-        String hql = "select D from Disease D"
-                + " where D.id =:diseaseId";
+    public Medicine get(Long medicineId) {
+        String hql = "select M from Medicine M"
+                + " where M.id =:medicineId";
 
         Query query = this.getSession().createQuery(hql);
-        query.setLong("diseaseId", diseaseId);
+        query.setLong("medicineId", medicineId);
 
-        return (Disease) query.uniqueResult();
+        return (Medicine) query.uniqueResult();
     }
     
     @Override
-    public List<Disease> getList() {
-        String hql = "select D from Disease D";
+    public List<Medicine> getList() {
+        String hql = "select M from Medicine M";
 
         Query query = this.getSession().createQuery(hql);
 
-        return (List<Disease>) query.list();
+        return (List<Medicine>) query.list();
     }
     
     @Override
-    public Boolean update(Disease disease){
+    public Boolean update(Medicine medicine){
         StringBuilder builder = new StringBuilder();
-        builder.append("update Disease D");
-        builder.append(" set D.name=:name");
-        builder.append(" where (D.id=:diseaseId)");
+        builder.append("update Medicine M");
+        builder.append(" set M.name=:name");
+        builder.append(" where (M.id=:medicineId)");
         
         String hql = builder.toString();
 
         Query query = this.getSession().createQuery(hql);
-        query.setString("name", disease.getName());
+        query.setString("name", medicine.getName());
         
-        query.setLong("diseaseId", disease.getId());
+        query.setLong("medicineId", medicine.getId());
         
         int records=query.executeUpdate();
         
@@ -82,15 +82,16 @@ public class DiseaseDaoImpl implements DiseaseDao {
     }
     
     @Override
-    public Boolean delete(Long diseaseId){
-        String hql = "delete from Disease D "
-                + " where (D.id=:diseaseId)";
+    public Boolean delete(Long medicineId){
+        String hql = "delete from Medicine M "
+                + " where (M.id=:medicineId)";
 
         Query query = this.getSession().createQuery(hql);
-        query.setLong("diseaseId", diseaseId);
+        query.setLong("medicineId", medicineId);
 
         int affected = query.executeUpdate();
         
         return (affected > 0);
     }
+    
 }

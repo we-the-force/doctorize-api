@@ -6,7 +6,7 @@
 package com.cmtb.doctorize.domain.user;
 
 import com.cmtb.doctorize.domain.shared.Permissions;
-import com.cmtb.doctorize.domain.specialty.Specialty;
+import com.cmtb.doctorize.domain.catalogs.Specialty;
 import java.util.HashSet;
 import java.util.Set;
 

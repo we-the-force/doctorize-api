@@ -5,7 +5,7 @@
  */
 package com.cmtb.doctorize.core.catalogs;
 
-import com.cmtb.doctorize.domain.catalogs.Disease;
+import com.cmtb.doctorize.domain.catalogs.Medicine;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,27 +14,27 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author pc
  */
-@Component(value = "DiseaseOrchestrator")
-public class DiseaseOrchestratorImpl implements DiseaseOrchestrator {
+@Component(value = "MedicineOrchestrator")
+public class MedicineOrchestratorImpl implements MedicineOrchestrator  {
     
-    @Resource(name = "DiseaseDomain")
-    private DiseaseDomain diseaseDomain;
+    @Resource(name = "MedicineDomain")
+    private MedicineDomain medicineDomain;
     
     @Transactional
     @Override
-    public Disease save(Disease disease){
-        return diseaseDomain.save(disease);
+    public Medicine save(Medicine medicine){
+        return medicineDomain.save(medicine);
     }
     
     @Transactional
     @Override
-    public Boolean delete(Long diseaseId){
-        return diseaseDomain.delete(diseaseId);
+    public Boolean delete(Long medicineId){
+        return medicineDomain.delete(medicineId);
     }
     
     @Transactional
     @Override
-    public Boolean update(Disease disease){
-        return diseaseDomain.update(disease);
+    public Boolean update(Medicine medicine){
+        return medicineDomain.update(medicine);
     }
 }

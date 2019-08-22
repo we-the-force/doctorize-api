@@ -18,7 +18,7 @@ import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
 import com.cmtb.doctorize.domain.assistant.AssistantDoctorOfficeDisplayObject;
-import com.cmtb.doctorize.domain.specialty.Specialty;
+import com.cmtb.doctorize.domain.catalogs.Specialty;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.RoleEnum;

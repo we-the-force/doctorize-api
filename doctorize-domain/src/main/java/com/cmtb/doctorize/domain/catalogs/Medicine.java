@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cmtb.doctorize.domain.specialty;
+package com.cmtb.doctorize.domain.catalogs;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -19,12 +19,12 @@ import javax.persistence.Table;
  * @author gealtec
  */
 @Entity
-@Table(name = "`Specialty`")
-public class Specialty implements Serializable{
+@Table(name = "`Medicine`")
+public class Medicine implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "specialty_seq_gen")
-    @SequenceGenerator(name = "specialty_seq_gen", sequenceName = "specialty_seq_gen", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicine_seq_gen")
+    @SequenceGenerator(name = "medicine_seq_gen", sequenceName = "medicine_seq_gen", initialValue = 1, allocationSize = 1)
     private Long id;
     
     @Column(name = "`name`")
