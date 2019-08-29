@@ -10,6 +10,7 @@ import com.cmtb.doctorize.domain.user.RoleEnum;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -83,6 +84,82 @@ public class UserDaoImpl implements UserDao {
         }
         
         query.setLong("userId", user.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
+    
+    @Override
+    public boolean patch(Map<String, Object> userMap){
+        Boolean needComa = false;
+        Long specialtyId = 0L;
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append("update User U");
+        builder.append(" set");
+        
+        if(userMap.containsKey("name")){
+            builder.append(" U.name=:name");
+            needComa = true;
+        }
+        
+        if(userMap.containsKey("email")){
+            if(needComa){
+                builder.append(",");
+            }else{
+                needComa = true;
+            }
+            builder.append(" U.email=:email");
+        }
+        
+        if(userMap.containsKey("cellphone")){
+            if(needComa){
+                builder.append(",");
+            }else{
+                needComa = true;
+            }
+            builder.append(" U.cellphone=:cellphone");
+        }
+        
+        if(userMap.containsKey("specialty")){
+            Map<String, Object> specialty = (Map<String, Object>) userMap.get("specialty");
+            if(specialty.containsKey("id")){
+                specialtyId = ((Integer) specialty.get("id")).longValue();
+                if(needComa){
+                    builder.append(",");
+                }else{
+                    needComa = true;
+                }
+
+                builder.append(" U.specialty.id=:specialtyId");
+            }
+        }
+        
+        
+        builder.append(" where (U.id=:userId)");
+        
+        String hql = builder.toString();
+
+        Query query = this.getSession().createQuery(hql);
+        
+        if(userMap.containsKey("name")){
+            query.setString("name", userMap.get("name").toString());
+        }
+        
+        if(userMap.containsKey("email")){
+            query.setString("email", userMap.get("email").toString());
+        }
+        
+        if(userMap.containsKey("cellphone")){
+            query.setString("cellphone", userMap.get("cellphone").toString());
+        }
+        
+        if(userMap.containsKey("specialty")){
+            query.setLong("specialtyId", specialtyId);
+        }
+        
+        query.setLong("userId", (Long) userMap.get("id"));
         
         int records=query.executeUpdate();
         

@@ -12,6 +12,7 @@ import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserDisplayObject;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,6 +27,8 @@ public interface UserDomain {
     public User save(User user);
     
     public boolean update(User user);
+    
+    public boolean patch(Map<String, Object> userMap);
     
     public boolean updatePhoto(User user);
     

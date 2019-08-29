@@ -7,6 +7,7 @@ package com.cmtb.doctorize.core.doctorOffice;
 
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
+import java.util.Map;
 
 /**
  *
@@ -17,5 +18,7 @@ public interface DoctorOfficeOrchestrator {
     public DoctorOfficeDisplayObject save(DoctorOfficeDisplayObject doctorOfficeDisplayObject);
     
     public Boolean delete(Long doctorOfficeIf);
+    
+    public Boolean patch(Map<String, Object> doctorOfficeMap);
     
 }

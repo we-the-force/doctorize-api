@@ -10,6 +10,7 @@ import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -32,6 +33,15 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
     
     private Session getSession() {
         return _sessionFactory.getCurrentSession();
+    }
+    
+    private String needComa(Boolean needComa){
+        if(needComa){
+            return ",";
+        }else{
+            needComa = true;
+            return "";
+        }
     }
     
     @Override
@@ -118,6 +128,121 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
         query.setString("lunchCloseTime", doctorOffice.getLunchCloseTime());
         
         query.setLong("doctorOfficeId", doctorOffice.getId());
+        
+        int records=query.executeUpdate();
+        
+        return (records > 0);
+    }
+    
+    @Override
+    public boolean patch(Map<String, Object> doctorOfficeMap){
+        Boolean needComa = false;
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append("update DoctorOffice DO");
+        builder.append(" set");
+        if(doctorOfficeMap.containsKey("name")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.name=:name");
+        }
+        if(doctorOfficeMap.containsKey("email")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.email=:email");
+        }
+        if(doctorOfficeMap.containsKey("phone")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.phone=:phone");
+        }
+        if(doctorOfficeMap.containsKey("hospital")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.hospital=:hospital");
+        }
+        if(doctorOfficeMap.containsKey("number")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.number=:number");
+        }
+        if(doctorOfficeMap.containsKey("address")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.address=:address");
+        }
+        if(doctorOfficeMap.containsKey("lat") && doctorOfficeMap.get("lat") != null){
+            builder.append(needComa(needComa));
+            builder.append(" DO.lat=:lat");
+        }
+        if(doctorOfficeMap.containsKey("lng") && doctorOfficeMap.get("lng") != null){
+            builder.append(needComa(needComa));
+            builder.append(" DO.lng=:lng");
+        }
+        if(doctorOfficeMap.containsKey("startTime")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.startTime=:startTime");
+        }
+        if(doctorOfficeMap.containsKey("closeTime")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.closeTime=:closeTime");
+        }
+        if(doctorOfficeMap.containsKey("lunchStartTime")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.lunchStartTime=:lunchStartTime");
+        }
+        if(doctorOfficeMap.containsKey("lunchCloseTime")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.lunchCloseTime=:lunchCloseTime");
+        }
+        if(doctorOfficeMap.containsKey("duration")){
+            builder.append(needComa(needComa));
+            builder.append(" DO.duration=:duration");
+        }
+        
+        
+        
+        builder.append(" where (DO.id=:doctorOfficeId)");
+        
+        String hql = builder.toString();
+
+        
+        Query query = this.getSession().createQuery(hql);
+        if(doctorOfficeMap.containsKey("name")){
+            query.setString("name", doctorOfficeMap.get("name").toString());
+        }
+        if(doctorOfficeMap.containsKey("email")){
+            query.setString("email", doctorOfficeMap.get("email").toString());
+        }
+        if(doctorOfficeMap.containsKey("phone")){
+            query.setString("phone", doctorOfficeMap.get("phone").toString());
+        }
+        if(doctorOfficeMap.containsKey("hospital")){
+            query.setString("hospital", doctorOfficeMap.get("hospital").toString());
+        }
+        if(doctorOfficeMap.containsKey("number")){
+            query.setString("number", doctorOfficeMap.get("number").toString());
+        }
+        if(doctorOfficeMap.containsKey("address")){
+            query.setString("address", doctorOfficeMap.get("address").toString());
+        }
+        if(doctorOfficeMap.containsKey("lat") && doctorOfficeMap.get("lat") != null){
+            query.setDouble("lat", (Double)doctorOfficeMap.get("lat"));
+        }
+        if(doctorOfficeMap.containsKey("lng") && doctorOfficeMap.get("lng") != null){
+            query.setDouble("lng", (Double)doctorOfficeMap.get("lng"));
+        }
+        if(doctorOfficeMap.containsKey("startTime")){
+            query.setString("startTime", doctorOfficeMap.get("startTime").toString());
+        }
+        if(doctorOfficeMap.containsKey("closeTime")){
+            query.setString("closeTime", doctorOfficeMap.get("closeTime").toString());
+        }
+        if(doctorOfficeMap.containsKey("lunchStartTime")){
+            query.setString("lunchStartTime", doctorOfficeMap.get("lunchStartTime").toString());
+        }
+        if(doctorOfficeMap.containsKey("lunchCloseTime")){
+            query.setString("lunchCloseTime", doctorOfficeMap.get("lunchCloseTime").toString());
+        }
+        if(doctorOfficeMap.containsKey("duration")){
+            query.setShort("duration", ((Integer)doctorOfficeMap.get("duration")).shortValue());
+        }
+        
+        query.setLong("doctorOfficeId", ((Integer)doctorOfficeMap.get("id")).longValue());
         
         int records=query.executeUpdate();
         

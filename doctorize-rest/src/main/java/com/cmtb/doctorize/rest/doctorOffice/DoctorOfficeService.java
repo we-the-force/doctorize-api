@@ -11,6 +11,7 @@ import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -89,10 +89,10 @@ public class DoctorOfficeService {
     }
     
     @RequestMapping(value = "/offices/{officeId}", method = RequestMethod.PATCH)
-    public ResponseEntity<?> update(@PathVariable("officeId") Long doctorOfficeId, @RequestBody DoctorOfficeDisplayObject doctorOfficeDisplayObject) {
+    public ResponseEntity<?> update(@PathVariable("officeId") Long doctorOfficeId, @RequestBody Map<String, Object> doctorOfficeDisplayObjectMap) {
         try {
-            doctorOfficeDisplayObject.setId(doctorOfficeId);
-            DoctorOfficeDisplayObject result = doctorOfficeOrchestrator.save(doctorOfficeDisplayObject);
+            doctorOfficeDisplayObjectMap.put("id", doctorOfficeId);
+            Boolean result = doctorOfficeOrchestrator.patch(doctorOfficeDisplayObjectMap);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);

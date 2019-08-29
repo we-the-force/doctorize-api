@@ -36,6 +36,7 @@ import com.cmtb.doctorize.utilities.RandomStringGenerator;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.hibernate.LazyInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -311,8 +312,6 @@ public class UserDomainImpl implements UserDomain {
                 user.setPhoto(results.getPath());
             }
             
-        }else{
-            this.update(user);
         }
         
         user.setImageData("");
@@ -330,6 +329,36 @@ public class UserDomainImpl implements UserDomain {
         }
         
         return userDao.update(user);
+    }
+    
+    @Override
+    public boolean patch(Map<String, Object> userMap){
+        
+        System.err.println(userMap.containsKey("name"));
+        System.err.println(userMap.containsKey("nam"));
+        
+        if(!userMap.containsKey("id")){
+            throw new ItemNotFoundException();
+        }
+        
+        if(userMap.size() < 2){
+            return false;
+        }
+        
+        if(userMap.containsKey("imageData")){
+            User user = new User();
+            user.setId((Long)userMap.get("id"));
+            user.setImageData(userMap.get("imageData").toString());
+            
+            AttachmentResultDisplayObject results = userAttachmentImagesComponent.attachementPhoto(user);
+
+            if (results.getUpdated()) {
+                user.setPhoto(results.getPath());
+                this.updatePhoto(user);
+            }
+        }
+        
+        return userDao.patch(userMap);
     }
     
     @Override

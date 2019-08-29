@@ -16,6 +16,7 @@ import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.assistant.AssistantDoctorOffice;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,11 +125,8 @@ public class UserOrchestratorImpl implements UserOrchestrator {
     
     @Transactional
     @Override
-    public User update(User user){
-        if(user.getId() == null){
-            throw new ItemNotFoundException();
-        }
-        return this.save(user);
+    public Boolean patch(Map<String, Object> userMap){
+        return userDomain.patch(userMap);
     }
     
     @Transactional

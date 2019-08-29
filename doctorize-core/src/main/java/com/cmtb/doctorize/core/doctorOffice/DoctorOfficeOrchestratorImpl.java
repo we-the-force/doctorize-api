@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,5 +109,11 @@ public class DoctorOfficeOrchestratorImpl implements DoctorOfficeOrchestrator {
     @Override
     public Boolean delete(Long doctorOfficeId){
         return doctorOfficeDomain.delete(doctorOfficeId);
+    }
+    
+    @Transactional
+    @Override
+    public Boolean patch(Map<String, Object> doctorOfficeMap){
+        return doctorOfficeDomain.patch(doctorOfficeMap);
     }
 }

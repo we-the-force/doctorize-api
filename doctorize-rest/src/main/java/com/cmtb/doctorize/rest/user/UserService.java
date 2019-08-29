@@ -23,6 +23,7 @@ import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.user.UserNotMatchPasswordException;
 import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -161,10 +162,10 @@ public class UserService {
     }
     
     @RequestMapping(value = "/doctors/{doctorId}", method = RequestMethod.PATCH)
-    public ResponseEntity<?> update(@PathVariable("doctorId") Long doctorId, @RequestBody User user) {
+    public ResponseEntity<?> patch(@PathVariable("doctorId") Long doctorId, @RequestBody Map<String, Object> userMap) {
         try {
-            user.setId(doctorId);
-            User result = userOrchestrator.update(user);
+            userMap.put("id", doctorId);
+            Boolean result = userOrchestrator.patch(userMap);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (ItemNotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);

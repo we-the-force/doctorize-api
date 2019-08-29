@@ -7,6 +7,7 @@ package com.cmtb.doctorize.data.user;
 
 import com.cmtb.doctorize.domain.user.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -19,6 +20,8 @@ public interface UserDao {
     public User getUserByEmail(String email);
     
     public boolean update(User user);
+    
+    public boolean patch(Map<String, Object> userMap);
     
     public boolean updatePhoto(User user);
     

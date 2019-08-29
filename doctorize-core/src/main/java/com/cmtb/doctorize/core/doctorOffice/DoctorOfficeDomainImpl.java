@@ -17,6 +17,7 @@ import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -127,6 +128,36 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
         }else{
             throw new NotFoundException();
         }
+    }
+    
+    @Override
+    public boolean patch(Map<String, Object> doctorOfficeMap){
+        
+        if(!doctorOfficeDao.patch(doctorOfficeMap)){
+            throw new ItemNotFoundException();
+        }
+        
+        if(doctorOfficeMap.containsKey("days")){
+            availableDaysDao.deleteAvailableDaysByDoctorOffice(((Integer)doctorOfficeMap.get("id")).longValue());
+            
+            
+            
+//            for (Byte day : doctorOfficeDisplayObject.getDays()) {
+//                AvailableDays availableDay = new AvailableDays();
+//                availableDay.setDay(day);
+//                days.add(availableDay);
+//            }
+//            
+//            for (AvailableDays day : doctorOffice.getAvailableDays()) {
+//                DoctorOffice myOffice = new DoctorOffice();
+//                myOffice.setId(doctorOffice.getId());
+//
+//                day.setOffice(myOffice);
+//                availableDaysDao.saveAvailableDay(day);
+//            }
+        }
+        
+        return true;
     }
     
 }

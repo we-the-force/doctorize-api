@@ -7,6 +7,7 @@ package com.cmtb.doctorize.data.doctor;
 
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,6 +22,8 @@ public interface DoctorOfficeDao {
     public DoctorOffice getById(Long doctorOfficeId);
     
     public boolean update(DoctorOffice doctorOffice);
+    
+    public boolean patch(Map<String, Object> doctorOfficeMap);
     
     public Boolean delete(Long doctorOfficeId);
     
