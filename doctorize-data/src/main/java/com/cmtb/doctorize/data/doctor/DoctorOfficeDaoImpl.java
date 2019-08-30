@@ -28,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("DoctorOfficeDao")
 public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
     
+    private Boolean needComa = false;
+    
     @Autowired
     private SessionFactory _sessionFactory;
     
@@ -35,7 +37,7 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
         return _sessionFactory.getCurrentSession();
     }
     
-    private String needComa(Boolean needComa){
+    private String needComa(){
         if(needComa){
             return ",";
         }else{
@@ -136,61 +138,61 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
     
     @Override
     public boolean patch(Map<String, Object> doctorOfficeMap){
-        Boolean needComa = false;
+        needComa = false;
         
         StringBuilder builder = new StringBuilder();
         builder.append("update DoctorOffice DO");
         builder.append(" set");
         if(doctorOfficeMap.containsKey("name")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.name=:name");
         }
         if(doctorOfficeMap.containsKey("email")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.email=:email");
         }
         if(doctorOfficeMap.containsKey("phone")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.phone=:phone");
         }
         if(doctorOfficeMap.containsKey("hospital")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.hospital=:hospital");
         }
         if(doctorOfficeMap.containsKey("number")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.number=:number");
         }
         if(doctorOfficeMap.containsKey("address")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.address=:address");
         }
         if(doctorOfficeMap.containsKey("lat") && doctorOfficeMap.get("lat") != null){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.lat=:lat");
         }
         if(doctorOfficeMap.containsKey("lng") && doctorOfficeMap.get("lng") != null){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.lng=:lng");
         }
         if(doctorOfficeMap.containsKey("startTime")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.startTime=:startTime");
         }
         if(doctorOfficeMap.containsKey("closeTime")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.closeTime=:closeTime");
         }
         if(doctorOfficeMap.containsKey("lunchStartTime")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.lunchStartTime=:lunchStartTime");
         }
         if(doctorOfficeMap.containsKey("lunchCloseTime")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.lunchCloseTime=:lunchCloseTime");
         }
         if(doctorOfficeMap.containsKey("duration")){
-            builder.append(needComa(needComa));
+            builder.append(needComa());
             builder.append(" DO.duration=:duration");
         }
         
@@ -242,7 +244,7 @@ public class DoctorOfficeDaoImpl implements DoctorOfficeDao {
             query.setShort("duration", ((Integer)doctorOfficeMap.get("duration")).shortValue());
         }
         
-        query.setLong("doctorOfficeId", ((Integer)doctorOfficeMap.get("id")).longValue());
+        query.setLong("doctorOfficeId", (Long)doctorOfficeMap.get("id"));
         
         int records=query.executeUpdate();
         

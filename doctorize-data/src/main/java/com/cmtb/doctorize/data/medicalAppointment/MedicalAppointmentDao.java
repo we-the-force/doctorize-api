@@ -8,6 +8,7 @@ package com.cmtb.doctorize.data.medicalAppointment;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppoinmentFilterDisplayObject;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -27,7 +28,7 @@ public interface MedicalAppointmentDao {
     
     public Boolean deleteByPatientId(Long patientId);    
     
-    public Boolean update(MedicalAppointment medicalAppointment);    
+    public Boolean patch(Map<String, Object> medicalAppointmentMap);    
     
     public Boolean setPatient(Long patientId, Long appoinmentId);
 }

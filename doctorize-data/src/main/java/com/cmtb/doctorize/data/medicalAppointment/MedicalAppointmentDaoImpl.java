@@ -9,6 +9,7 @@ import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppoinmentFilterDispl
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,11 +27,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("MedicalAppointmentDao")
 public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
     
+    private Boolean needComa = false;
+    
     @Autowired
     private SessionFactory _sessionFactory;
 
     private Session getSession() {
         return _sessionFactory.getCurrentSession();
+    }
+    
+    private String needComa(){
+        if(needComa){
+            return ",";
+        }else{
+            needComa = true;
+            return "";
+        }
     }
     
     @Override
@@ -144,17 +156,40 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
     }
     
     @Override
-    public Boolean update(MedicalAppointment medicalAppointment){
+    public Boolean patch(Map<String, Object> medicalAppointmentMap){
         
         StringBuilder builder = new StringBuilder();
         builder.append("update MedicalAppointment MA");
-        builder.append(" set MA.name=:name, MA.email=:email,");
-        builder.append(" MA.phone=:phone,");
-        builder.append(" MA.date=:date,");
-        if(medicalAppointment.getPatient() != null){
-            builder.append(" MA.patient.id=:patientId,");
+        builder.append(" set");
+        if(medicalAppointmentMap.containsKey("name")){
+            builder.append(needComa());
+            builder.append(" MA.name=:name");
         }
-        builder.append(" MA.doctorOffice.id=:doctorOfficeId");
+        if(medicalAppointmentMap.containsKey("email")){
+            builder.append(needComa());
+            builder.append(" MA.email=:email");
+        }
+        if(medicalAppointmentMap.containsKey("phone")){
+            builder.append(needComa());
+            builder.append(" MA.phone=:phone");
+        }
+        if(medicalAppointmentMap.containsKey("date")){
+            builder.append(needComa());
+            builder.append(" MA.date=:date");
+        }
+        if(medicalAppointmentMap.containsKey("patientId")){
+            builder.append(needComa());
+            builder.append(" MA.patient.id=:patientId");
+        }
+        if(medicalAppointmentMap.containsKey("officeId")){
+            builder.append(needComa());
+            builder.append(" MA.doctorOffice.id=:officeId");
+        }
+        
+        
+        
+        
+        
         builder.append(" where (MA.id=:appointmentId)");
         
         String hql = builder.toString();

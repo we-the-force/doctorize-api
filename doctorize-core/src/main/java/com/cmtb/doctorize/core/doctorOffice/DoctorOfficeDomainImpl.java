@@ -138,23 +138,17 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
         }
         
         if(doctorOfficeMap.containsKey("days")){
-            availableDaysDao.deleteAvailableDaysByDoctorOffice(((Integer)doctorOfficeMap.get("id")).longValue());
-            
-            
-            
-//            for (Byte day : doctorOfficeDisplayObject.getDays()) {
-//                AvailableDays availableDay = new AvailableDays();
-//                availableDay.setDay(day);
-//                days.add(availableDay);
-//            }
-//            
-//            for (AvailableDays day : doctorOffice.getAvailableDays()) {
-//                DoctorOffice myOffice = new DoctorOffice();
-//                myOffice.setId(doctorOffice.getId());
-//
-//                day.setOffice(myOffice);
-//                availableDaysDao.saveAvailableDay(day);
-//            }
+            availableDaysDao.deleteAvailableDaysByDoctorOffice((Long)doctorOfficeMap.get("id"));
+                        
+            for (Integer dayItem : (List<Integer>)doctorOfficeMap.get("days")) {
+                DoctorOffice myOffice = new DoctorOffice();
+                myOffice.setId((Long)doctorOfficeMap.get("id"));
+                
+                AvailableDays day = new AvailableDays();
+                day.setDay(dayItem.byteValue());
+                day.setOffice(myOffice);
+                availableDaysDao.saveAvailableDay(day);
+            }
         }
         
         return true;
