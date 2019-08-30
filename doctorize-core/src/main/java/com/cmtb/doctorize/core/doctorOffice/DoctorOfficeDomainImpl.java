@@ -10,8 +10,6 @@ import com.cmtb.doctorize.data.doctor.DoctorOfficeDao;
 import com.cmtb.doctorize.domain.doctor.AvailableDays;
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
 import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
-import com.cmtb.doctorize.domain.user.User;
-import com.cmtb.doctorize.domain.doctor.UserDoctorOffice;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.shared.StatusEnum;
@@ -133,8 +131,14 @@ public class DoctorOfficeDomainImpl implements DoctorOfficeDomain {
     @Override
     public boolean patch(Map<String, Object> doctorOfficeMap){
         
-        if(!doctorOfficeDao.patch(doctorOfficeMap)){
-            throw new ItemNotFoundException();
+        if(doctorOfficeMap.size() < 2){
+            return false;
+        }
+        
+        if(doctorOfficeMap.size() != 2 || !doctorOfficeMap.containsKey("days")){
+            if(!doctorOfficeDao.patch(doctorOfficeMap)){
+                throw new ItemNotFoundException();
+            }
         }
         
         if(doctorOfficeMap.containsKey("days")){

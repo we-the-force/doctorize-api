@@ -15,6 +15,7 @@ import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -122,9 +123,8 @@ public class MedicalAppointmentDomainImpl implements MedicalAppointmentDomain {
     }
     
     @Override
-    public Boolean update(MedicalAppointmentDisplayObject medicalAppointmentDO){
-        MedicalAppointment medicalAppointment = assemblerMedicalAppointment(medicalAppointmentDO);
-        return medicalAppointmentDao.update(medicalAppointment);
+    public Boolean patch(Map<String, Object> medicalAppointmentDOMap){
+        return medicalAppointmentDao.patch(medicalAppointmentDOMap);
     }
     
     @Override

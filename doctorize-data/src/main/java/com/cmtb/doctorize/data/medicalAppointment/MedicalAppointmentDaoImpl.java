@@ -8,8 +8,16 @@ package com.cmtb.doctorize.data.medicalAppointment;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppoinmentFilterDisplayObject;
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointment;
 import com.cmtb.doctorize.domain.shared.RequiredException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -157,6 +165,7 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
     
     @Override
     public Boolean patch(Map<String, Object> medicalAppointmentMap){
+        needComa = false;
         
         StringBuilder builder = new StringBuilder();
         builder.append("update MedicalAppointment MA");
@@ -186,25 +195,38 @@ public class MedicalAppointmentDaoImpl implements MedicalAppointmentDao {
             builder.append(" MA.doctorOffice.id=:officeId");
         }
         
-        
-        
-        
-        
         builder.append(" where (MA.id=:appointmentId)");
         
         String hql = builder.toString();
 
         Query query = this.getSession().createQuery(hql);
-        query.setString("name", medicalAppointment.getName());
-        query.setString("email", medicalAppointment.getEmail());
-        query.setString("phone", medicalAppointment.getPhone());
-        query.setDate("date", medicalAppointment.getDate());
-        query.setLong("doctorOfficeId", medicalAppointment.getDoctorOffice().getId());
-        
-        query.setLong("appointmentId", medicalAppointment.getId());
-        if(medicalAppointment.getPatient() != null){
-            query.setLong("patientId", medicalAppointment.getPatient().getId());
+        if(medicalAppointmentMap.containsKey("name")){
+            query.setString("name", medicalAppointmentMap.get("name").toString());
         }
+        if(medicalAppointmentMap.containsKey("email")){
+            query.setString("email", medicalAppointmentMap.get("email").toString());
+        }
+        if(medicalAppointmentMap.containsKey("phone")){
+            query.setString("phone", medicalAppointmentMap.get("phone").toString());
+        }
+        if(medicalAppointmentMap.containsKey("date")){
+            SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+            Date date;
+            try {
+                date = formatter.parse(medicalAppointmentMap.get("date").toString());
+                query.setTimestamp("date", date);
+            } catch (ParseException ex) {
+                Logger.getLogger(MedicalAppointmentDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
+        if(medicalAppointmentMap.containsKey("officeId")){
+            query.setLong("officeId", ((Integer)medicalAppointmentMap.get("officeId")).longValue());
+        }
+        if(medicalAppointmentMap.containsKey("patientId")){
+            query.setLong("patientId", ((Integer)medicalAppointmentMap.get("patientId")).longValue());
+        }
+        
+        query.setLong("appointmentId", (Long)medicalAppointmentMap.get("id"));
         
         int records=query.executeUpdate();
         

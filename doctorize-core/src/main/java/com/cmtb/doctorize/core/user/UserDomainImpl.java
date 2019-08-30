@@ -334,9 +334,6 @@ public class UserDomainImpl implements UserDomain {
     @Override
     public boolean patch(Map<String, Object> userMap){
         
-        System.err.println(userMap.containsKey("name"));
-        System.err.println(userMap.containsKey("nam"));
-        
         if(!userMap.containsKey("id")){
             throw new ItemNotFoundException();
         }
@@ -356,6 +353,10 @@ public class UserDomainImpl implements UserDomain {
                 user.setPhoto(results.getPath());
                 this.updatePhoto(user);
             }
+        }
+        
+        if(userMap.size() == 2 && userMap.containsKey("imageData")){
+            return true;
         }
         
         return userDao.patch(userMap);

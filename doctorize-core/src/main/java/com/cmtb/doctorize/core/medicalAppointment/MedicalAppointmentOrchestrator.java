@@ -6,6 +6,7 @@
 package com.cmtb.doctorize.core.medicalAppointment;
 
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointmentDisplayObject;
+import java.util.Map;
 
 /**
  *
@@ -17,6 +18,6 @@ public interface MedicalAppointmentOrchestrator {
     
     public Boolean delete(Long appointmentId);
     
-    public MedicalAppointmentDisplayObject update(MedicalAppointmentDisplayObject medicalAppointmentDO);
+    public Boolean patch(Map<String, Object> medicalAppointmentDOMap);
     
 }

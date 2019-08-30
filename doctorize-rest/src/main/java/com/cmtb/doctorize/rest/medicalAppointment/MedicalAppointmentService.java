@@ -10,6 +10,7 @@ import com.cmtb.doctorize.core.medicalAppointment.MedicalAppointmentOrchestrator
 import com.cmtb.doctorize.domain.medicalAppointment.MedicalAppointmentDisplayObject;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,10 +97,10 @@ public class MedicalAppointmentService {
     
     @RequestMapping(value = "/appointments/{appointmentId}", method = RequestMethod.PATCH)
     public ResponseEntity<?> update(@PathVariable("appointmentId") Long appointmentId, 
-            @RequestBody MedicalAppointmentDisplayObject medicalAppointment) {
+            @RequestBody Map<String, Object> medicalAppointmentDisplayObjectMap) {
         try {
-            medicalAppointment.setId(appointmentId);
-            MedicalAppointmentDisplayObject result = medicalAppointmentOrchestrator.update(medicalAppointment);
+            medicalAppointmentDisplayObjectMap.put("id", appointmentId);
+            Boolean result = medicalAppointmentOrchestrator.patch(medicalAppointmentDisplayObjectMap);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (ItemNotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
