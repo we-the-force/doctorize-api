@@ -6,7 +6,6 @@
 package com.cmtb.doctorize.data.doctor;
 
 import com.cmtb.doctorize.domain.doctor.DoctorOffice;
-import com.cmtb.doctorize.domain.doctor.DoctorOfficeDisplayObject;
 import com.cmtb.doctorize.domain.shared.RequiredException;
 import com.cmtb.doctorize.domain.shared.StatusEnum;
 import java.util.List;
