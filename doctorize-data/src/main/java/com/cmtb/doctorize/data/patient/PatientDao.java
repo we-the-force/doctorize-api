@@ -7,6 +7,7 @@ package com.cmtb.doctorize.data.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -22,7 +23,7 @@ public interface PatientDao {
     
     public Boolean delete(Long patientId);
     
-    public Boolean update(Patient patient);
+    public Boolean patch(Map<String, Object> patientMap);
     
     public Boolean updatePhoto(Patient patient);
     

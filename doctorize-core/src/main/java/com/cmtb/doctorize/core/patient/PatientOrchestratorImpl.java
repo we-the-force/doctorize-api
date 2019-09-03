@@ -8,6 +8,7 @@ package com.cmtb.doctorize.core.patient;
 import com.cmtb.doctorize.core.medicalAppointment.MedicalAppointmentDomain;
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,7 @@ public class PatientOrchestratorImpl implements PatientOrchestrator {
     
     @Transactional
     @Override
-    public PatientDisplayObject update(PatientDisplayObject patientDO){
-        return patientDomain.update(patientDO);
+    public Boolean patch(Map<String,Object> patientDOMap){
+        return patientDomain.patch(patientDOMap);
     }
 }

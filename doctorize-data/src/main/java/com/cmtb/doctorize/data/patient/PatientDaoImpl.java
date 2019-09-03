@@ -7,8 +7,14 @@ package com.cmtb.doctorize.data.patient;
 
 import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.shared.RequiredException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -25,6 +31,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository("PatientDao")
 public class PatientDaoImpl implements PatientDao {
+    
+    private Boolean needComa = false;
+    
+    private String needComa(){
+        if(needComa){
+            return ",";
+        }else{
+            needComa = true;
+            return "";
+        }
+    }
     
     @Autowired
     private SessionFactory _sessionFactory;
@@ -83,39 +100,97 @@ public class PatientDaoImpl implements PatientDao {
     }
     
     @Override
-    public Boolean update(Patient patient){
+    public Boolean patch(Map<String, Object> patientMap){
+        
+        needComa = false;
+        
         StringBuilder builder = new StringBuilder();
         builder.append("update Patient P");
-        builder.append(" set P.name=:name, P.email=:email,");
-        builder.append(" P.cellphone=:cellphone,");
-        builder.append(" P.birthdate=:birthdate,");
-        builder.append(" P.gender=:gender,");
-        builder.append(" P.maritalStatus=:maritalStatus,");
-        builder.append(" P.weight=:weight,");
-        builder.append(" P.height=:height,");
-        builder.append(" P.bloodType=:bloodType,");
-        builder.append(" P.bloodPressure=:bloodPressure,");
-        builder.append(" P.photo=:photo");
+        builder.append(" set");
+        if(patientMap.containsKey("name")){
+            builder.append(needComa());
+            builder.append(" P.name=:name");
+        }
+        if(patientMap.containsKey("email")){
+            builder.append(needComa());
+            builder.append(" P.email=:email");
+        }
+        if(patientMap.containsKey("cellphone")){
+            builder.append(needComa());
+            builder.append(" P.cellphone=:cellphone");
+        }
+        if(patientMap.containsKey("birthdate")){
+            builder.append(needComa());
+            builder.append(" P.birthdate=:birthdate");
+        }
+        if(patientMap.containsKey("gender")){
+            builder.append(needComa());
+            builder.append(" P.gender=:gender");
+        }
+        if(patientMap.containsKey("maritalStatus")){
+            builder.append(needComa());
+            builder.append(" P.maritalStatus=:maritalStatus");
+        }
+        if(patientMap.containsKey("weight")){
+            builder.append(needComa());
+            builder.append(" P.weight=:weight");
+        }
+        if(patientMap.containsKey("height")){
+            builder.append(needComa());
+            builder.append(" P.height=:height");
+        }
+        if(patientMap.containsKey("bloodType")){
+            builder.append(needComa());
+            builder.append(" P.bloodType=:bloodType");
+        }
+        if(patientMap.containsKey("bloodPressure")){
+            builder.append(needComa());
+            builder.append(" P.bloodPressure=:bloodPressure");
+        }
         builder.append(" where (P.id=:patientId)");
         
         String hql = builder.toString();
 
         Query query = this.getSession().createQuery(hql);
-        query.setString("name", patient.getName());
-        query.setString("email", patient.getEmail());
-        query.setString("cellphone", patient.getCellphone());
-        query.setDate("birthdate", patient.getBirthdate());
+        if(patientMap.containsKey("name")){
+            query.setString("name", patientMap.get("name").toString());
+        }
+        if(patientMap.containsKey("email")){
+            query.setString("email", patientMap.get("email").toString());
+        }
+        if(patientMap.containsKey("cellphone")){
+            query.setString("cellphone", patientMap.get("cellphone").toString());
+        }
+        if(patientMap.containsKey("birthdate")){
+            SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
+            Date date;
+            try {
+                date = formatter.parse(patientMap.get("birthdate").toString());
+                query.setTimestamp("birthdate", date);
+            } catch (ParseException ex) {
+                Logger.getLogger(PatientDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if(patientMap.containsKey("gender")){
+            query.setByte("gender", ((Integer)patientMap.get("gender")).byteValue());
+        }
+        if(patientMap.containsKey("maritalStatus")){
+            query.setByte("maritalStatus", ((Integer)patientMap.get("maritalStatus")).byteValue());
+        }
+        if(patientMap.containsKey("weight")){
+            query.setInteger("weight", (Integer)patientMap.get("weight"));
+        }
+        if(patientMap.containsKey("height")){
+            query.setInteger("height", (Integer)patientMap.get("height"));
+        }
+        if(patientMap.containsKey("bloodType")){
+            query.setByte("bloodType", ((Integer)patientMap.get("bloodType")).byteValue());
+        }
+        if(patientMap.containsKey("bloodPressure")){
+            query.setString("bloodPressure", patientMap.get("bloodPressure").toString());
+        }
         
-        query.setByte("gender", patient.getGender());
-        query.setByte("maritalStatus", patient.getMaritalStatus());
-        query.setInteger("weight", patient.getWeight());
-        query.setInteger("height", patient.getHeight());
-        query.setByte("bloodType", patient.getBloodType());
-        query.setString("bloodPressure", patient.getBloodPressure());
-        query.setString("photo", patient.getPhoto());
-        
-        
-        query.setLong("patientId", patient.getId());
+        query.setLong("patientId", (Long)patientMap.get("id"));
         
         int records=query.executeUpdate();
         

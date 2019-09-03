@@ -17,6 +17,7 @@ import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -150,23 +151,34 @@ public class PatientDomainImpl implements PatientDomain {
     }
     
     @Override
-    public PatientDisplayObject update(PatientDisplayObject patientDO){
-        Patient patient = this.assemblerPatientDOtoPatient(patientDO);
+    public Boolean patch(Map<String, Object> patientDOMap){
         
-        AttachmentResultDisplayObject results = patientAttachmentImagesComponent.attachementPhoto(patient);
-        
-        if (results.getUpdated()) {
-            patientDO.setPhoto(results.getPath());
-            patient.setPhoto(results.getPath());
-            updatePhoto(patient);
-        }
-        
-        Boolean result = patientDao.update(patient);
-        if(!result){
+        if(!patientDOMap.containsKey("id")){
             throw new ItemNotFoundException();
         }
         
-        return patientDO;
+        if(patientDOMap.size() < 2){
+            return false;
+        }
+        
+        if(patientDOMap.containsKey("imageData")){
+            Patient patient = new Patient();
+            patient.setId((Long)patientDOMap.get("id"));
+            patient.setImageData(patientDOMap.get("imageData").toString());
+            
+            AttachmentResultDisplayObject results = patientAttachmentImagesComponent.attachementPhoto(patient);
+
+            if (results.getUpdated()) {
+                patient.setPhoto(results.getPath());
+                this.updatePhoto(patient);
+            }
+        }
+        
+        if(patientDOMap.size() == 2 && patientDOMap.containsKey("imageData")){
+            return true;
+        }
+        
+        return patientDao.patch(patientDOMap);
     }
     
     private boolean updatePhoto(Patient patient){

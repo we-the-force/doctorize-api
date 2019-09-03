@@ -9,6 +9,7 @@ import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,7 +27,7 @@ public interface PatientDomain {
     
     public Boolean delete(Long patientId);
     
-    public PatientDisplayObject update(PatientDisplayObject patientDO);
+    public Boolean patch(Map<String, Object> patientDOMap);
     
     public List<PatientDisplayObject> getByFilter(String filter, String value);
     

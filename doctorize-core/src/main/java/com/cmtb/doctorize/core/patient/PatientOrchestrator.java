@@ -5,9 +5,8 @@
  */
 package com.cmtb.doctorize.core.patient;
 
-import com.cmtb.doctorize.domain.patient.Patient;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.Map;
 
 /**
  *
@@ -19,6 +18,6 @@ public interface PatientOrchestrator {
     
     public Boolean delete(Long patientId);
     
-    public PatientDisplayObject update(PatientDisplayObject patientDO);
+    public Boolean patch(Map<String,Object> patientDOMap);
     
 }

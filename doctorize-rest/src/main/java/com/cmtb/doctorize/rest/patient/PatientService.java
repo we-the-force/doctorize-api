@@ -11,6 +11,7 @@ import com.cmtb.doctorize.domain.patient.PatientContainerDisplayObject;
 import com.cmtb.doctorize.domain.patient.PatientDisplayObject;
 import com.cmtb.doctorize.domain.shared.ItemNotFoundException;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,10 +92,10 @@ public class PatientService {
     }
     
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.PATCH)
-    public ResponseEntity<?> update(@PathVariable("id") Long patientId, @RequestBody PatientDisplayObject patientDO) {
+    public ResponseEntity<?> update(@PathVariable("id") Long patientId, @RequestBody Map<String, Object> patientDOMap) {
         try {
-            patientDO.setId(patientId);
-            PatientDisplayObject result = patientOrchestrator.update(patientDO);
+            patientDOMap.put("id", patientId);
+            Boolean result = patientOrchestrator.patch(patientDOMap);
             return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (ItemNotFoundException ex) {
