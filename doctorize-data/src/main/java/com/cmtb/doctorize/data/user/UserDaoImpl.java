@@ -225,6 +225,21 @@ public class UserDaoImpl implements UserDao {
     }
     
     @Override
+    public User getAssistantByIdAndDoctorOffice(Long assistantId, Long doctorOfficeId){
+        String hql = "select U from User U"
+                + " join fetch U.assistantDoctorOffices ADO"
+                + " join fetch ADO.permissions P"
+                + " join fetch ADO.doctorOffice DO"
+                + " where U.id =:assistantId and DO.id =:doctorOfficeId";
+
+        Query query = this.getSession().createQuery(hql);
+        query.setLong("assistantId", assistantId);
+        query.setLong("doctorOfficeId", doctorOfficeId);
+
+        return (User) query.uniqueResult();
+    }
+    
+    @Override
     public boolean confirmationAccount(String email){
         String hql = "update User U"
                 + " set U.status=:status,"

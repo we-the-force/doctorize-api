@@ -20,6 +20,7 @@ import com.cmtb.doctorize.domain.user.UserDisabledException;
 import com.cmtb.doctorize.domain.user.UserDisplayObject;
 import com.cmtb.doctorize.domain.user.UserDuplicateException;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
+import com.cmtb.doctorize.domain.user.LoginContainerDisplayObject;
 import com.cmtb.doctorize.domain.user.UserNotMatchPasswordException;
 import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import java.util.List;
@@ -53,9 +54,13 @@ public class UserService {
     public ResponseEntity<?> login(@RequestBody LoginDisplayObject loginDisplayObject) {
         try {        
             
-            User result = userDomain.login(loginDisplayObject);
-
-            return new ResponseEntity(result, HttpStatus.OK);
+            LoginContainerDisplayObject result = userDomain.login(loginDisplayObject);
+            
+            if(result.getRoleId().equals(RoleEnum.DOCTOR.getId())){
+                return new ResponseEntity(result.getDoctor(), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(result.getAssistant(), HttpStatus.OK);
+            }
             
         } catch (NotFoundException ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);

@@ -13,6 +13,7 @@ public class LoginDisplayObject {
     
     private String password;
     private String email;
+    private Long officeId;
 
     public String getPassword() {
         return password;
@@ -28,5 +29,19 @@ public class LoginDisplayObject {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * @return the officeId
+     */
+    public Long getOfficeId() {
+        return officeId;
+    }
+
+    /**
+     * @param officeId the officeId to set
+     */
+    public void setOfficeId(Long officeId) {
+        this.officeId = officeId;
     }
 }

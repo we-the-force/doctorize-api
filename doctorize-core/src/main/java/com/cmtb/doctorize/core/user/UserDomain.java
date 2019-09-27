@@ -8,6 +8,7 @@ package com.cmtb.doctorize.core.user;
 import com.cmtb.doctorize.domain.assistant.AssistantDisplayObject;
 import com.cmtb.doctorize.domain.assistant.AssistantDisplayObjectNEW;
 import com.cmtb.doctorize.domain.user.ChangePasswordDisplayObject;
+import com.cmtb.doctorize.domain.user.LoginContainerDisplayObject;
 import com.cmtb.doctorize.domain.user.LoginDisplayObject;
 import com.cmtb.doctorize.domain.user.User;
 import com.cmtb.doctorize.domain.user.UserDisplayObject;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 public interface UserDomain {
 
-    public User login(LoginDisplayObject loginDisplayObject);
+    public LoginContainerDisplayObject login(LoginDisplayObject loginDisplayObject);
     
     public Boolean forgotPassword(String email);
             
@@ -55,6 +56,8 @@ public interface UserDomain {
     public UserDisplayObject getById(Long userId);
     
     public AssistantDisplayObjectNEW getAssistantByIdAndDoctor(Long assistantId, Long doctorId);
+    
+    public AssistantDisplayObjectNEW getAssistantByIdAndDoctorOffice(Long assistantId, Long doctorOfficeId);
     
     public Boolean deleteAssistant(Long assistantId);
     

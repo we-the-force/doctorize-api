@@ -29,6 +29,7 @@ import com.cmtb.doctorize.domain.user.UserDisabledException;
 import com.cmtb.doctorize.domain.user.UserDisplayObject;
 import com.cmtb.doctorize.domain.shared.NotFoundException;
 import com.cmtb.doctorize.domain.shared.StatusEnum;
+import com.cmtb.doctorize.domain.user.LoginContainerDisplayObject;
 import com.cmtb.doctorize.domain.user.UserUnconfirmedException;
 import com.cmtb.doctorize.domain.utilities.AttachmentResultDisplayObject;
 import com.cmtb.doctorize.utilities.PasswordEncrypt;
@@ -147,7 +148,11 @@ public class UserDomainImpl implements UserDomain {
             assistantDoctorOfficeDO.setOfficeId(assistanDoctorOfficeItem.getDoctorOffice().getId());
             assistantDoctorOfficeDO.setOfficeName(assistanDoctorOfficeItem.getDoctorOffice().getName());
             assistantDoctorOfficeDO.setPermissions(assistanDoctorOfficeItem.getPermissions());
-            assistantDoctorOfficeDO.setDoctorId(assistanDoctorOfficeItem.getDoctor().getId());
+            try{
+                assistantDoctorOfficeDO.setDoctorId(assistanDoctorOfficeItem.getDoctor().getId());
+            }catch(LazyInitializationException err){
+                System.out.println(err);
+            }
             assistantDO.getOffices().add(assistantDoctorOfficeDO);
         }
         
@@ -232,7 +237,7 @@ public class UserDomainImpl implements UserDomain {
     }
     
     @Override
-    public User login(LoginDisplayObject loginDisplayObject) {
+    public LoginContainerDisplayObject login(LoginDisplayObject loginDisplayObject) {
         User user;
         
         user = this.getUserByEmail(loginDisplayObject.getEmail());
@@ -251,10 +256,20 @@ public class UserDomainImpl implements UserDomain {
             throw new NotFoundException();
         }
         
+        LoginContainerDisplayObject loginContainerDO = new LoginContainerDisplayObject();
+        loginContainerDO.setRoleId(user.getRoleId());
+        
+        if(user.getRoleId().equals(RoleEnum.DOCTOR.getId())){
+            loginContainerDO.setDoctor(this.assembleUser(user));
+        }else{
+            AssistantDisplayObjectNEW assistant = this.getAssistantByIdAndDoctorOffice(user.getId(), loginDisplayObject.getOfficeId());
+            loginContainerDO.setAssistant(assistant);
+        }
+        
 //        String token = securityComponent.createToken(user);
 //        user.setToken(token);
 //        
-        return this.assembleUser(user);
+        return loginContainerDO;
     }
     
     @Override
@@ -518,6 +533,19 @@ public class UserDomainImpl implements UserDomain {
     @Override
     public AssistantDisplayObjectNEW getAssistantByIdAndDoctor(Long assistantId, Long doctorId){
         User user = userDao.getAssistantByIdAndDoctor(assistantId, doctorId);
+        
+        if(user == null || user.getStatus().equals(StatusEnum.DISABLE.getId())){
+            throw new ItemNotFoundException();
+        } else if(user.getStatus().equals(StatusEnum.UNCONFIRMED.getId())){
+            throw new UserUnconfirmedException();
+        }
+        
+        return this.assemblerUserToAssistantDO(user);
+    }
+    
+    @Override
+    public AssistantDisplayObjectNEW getAssistantByIdAndDoctorOffice(Long assistantId, Long doctorOfficeId){
+        User user = userDao.getAssistantByIdAndDoctorOffice(assistantId, doctorOfficeId);
         
         if(user == null || user.getStatus().equals(StatusEnum.DISABLE.getId())){
             throw new ItemNotFoundException();
